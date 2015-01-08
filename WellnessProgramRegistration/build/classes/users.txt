@@ -1,0 +1,21 @@
+username cannot contain dots
+
+{"username":"johndoe01","email":"john.doe.01@gmail.com","password":"Pa$$wprd","external_id":"085001","gender":"male","weight":80,"birth_date":"1698-05-08","sports_activity":2}}
+qCDSb2H1Ba4LHBgp4UNoPA
+
+{"user_register":{"username":"johndoe02","email":"john.doe.02@gmail.com","password":"Pa$$word","external_id":"085002","gender":"male","weight":80,"birth_date":"1698-05-08","sports_activity":2}}
+bM72yorOnhkIsQQlG82Pgw
+
+{"users":[
+{"id":"P5zCrwdJ3giubpwVX2qTrg","username":"foob_sssnsame","email":"john+doe@example.com","index":null,"index_updated_at":1418323947,"external_id":"foob123","gender":"female","weight":1.23,"birth_date":"1982-10-22","sports_activity":2},
+{"id":"O240MaGWkvSokGvmC7rYFA","username":"john_doe_exist","email":"john+doe@exampddddle.com","index":null,"index_updated_at":1418336854,"external_id":"5656866-12","gender":"female","weight":75.6667,"birth_date":"1900-01-31","sports_activity":2},
+{"id":"RtmqIceU7PQBoCatBcekFQ","username":"john_doe","email":"john+doe25@example.com","index":null,"index_updated_at":1418336926,"external_id":"5656866-12","gender":"female","weight":75.6667,"birth_date":"1900-01-31","sports_activity":2},
+{"id":"eWisiXfUXL4INp0P6C5XpQ","username":"john_doe26","email":"john+doe26@example.com","index":null,"index_updated_at":1418337143,"external_id":"5656866-12","gender":"female","weight":75.6667,"birth_date":"1900-01-31","sports_activity":2},
+{"id":"zIyduUEmzYWusDG3ox807A","username":"john_doe27","email":"john+doe27@example.com","index":null,"index_updated_at":1418337270,"external_id":"5656866-12","gender":"female","weight":75.6667,"birth_date":"1900-01-31","sports_activity":2},
+{"id":"nXaR1ftkR5GGNPkgdBcrvg","username":"john_doe28","email":"john+doe28@example.com","index":null,"index_updated_at":null,"external_id":"5656866-12","gender":"female","weight":75.6667,"birth_date":"1900-01-31","sports_activity":2},
+{"id":"P7dbv8BIDbYssTQuTzoafA","username":"foob_ssnames","email":"john+do565@example.com","index":null,"index_updated_at":null,"external_id":"foob123","gender":"female","weight":1.23,"birth_date":"1982-10-22","sports_activity":2},
+{"id":"yePbxNCeNmCCnzbAIrxoiQ","username":"foob_sssnames","email":"john+do566@example.com","index":null,"index_updated_at":null,"external_id":"foob123","gender":"female","weight":1.23,"birth_date":"1982-10-22","sports_activity":2},
+{"id":"uCXjopCG5QpJStbmke6S2w","username":"john_doea","email":"john+doea@exampddddle.com","index":null,"index_updated_at":null,"external_id":"5656866-12","gender":"female","weight":75.6667,"birth_date":"1900-01-31","sports_activity":2},
+{"id":"qCDSb2H1Ba4LHBgp4UNoPA","username":"johndoe01","email":"john.doe.01@gmail.com","index":null,"index_updated_at":null,"external_id":"085001","gender":"male","weight":80,"birth_date":"1698-05-08","sports_activity":2},
+{"id":"bM72yorOnhkIsQQlG82Pgw","username":"johndoe02","email":"john.doe.02@gmail.com","index":null,"index_updated_at":null,"external_id":"085002","gender":"male","weight":80,"birth_date":"1698-05-08","sports_activity":2}
+]}

@@ -1,0 +1,120 @@
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Wellness Program Registration</title>
+<style type="text/css">
+body {
+	background-image: url(./xcpbg_pattern.png);
+	font-size: 12px;
+	font-family: arial;
+}
+td, input, select {
+	font-size: 12px;
+	width: 180px;
+}
+table {
+	background-color: white;
+	border-color: black;
+	border-width: 1px;
+	border-style:solid;
+}
+form {
+}
+.mydiv {
+	width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+	//border-color: black;
+	//border-width: 1px;
+	//border-style:solid;
+	height: 100%;
+    display: table;
+}
+.mydivinner {
+	display: table-cell;
+	//border-color: red;
+	//border-width: 1px;
+	//border-style:solid;
+	vertical-align: middle;
+}     
+.myheader1 {
+	background-color: black;
+	font-size: 18px;
+	color:  #40bfff;
+	height: 50px;
+}
+.myheader2 {
+	background-color: #40bfff;
+	height: 5px;
+	border-top:0.2px solid white;
+}
+</style>
+</head>
+<body>
+<div class="mydiv">
+<div class="mydivinner">
+<form name="test" action="ProcessFormData">
+<table>
+	<tbody>
+		<tr>
+			<td colspan="2" align="center"><img width="300" height="200" src="http://xpression45.iigfrance.com/xFramework/Graphics/Fitness_Couple2_small.png"/></td>
+		</tr>
+		<tr>
+			<td class="myheader1" colspan="2" align="center">
+				It's time to take care of yourself!
+			</td>
+		</tr>
+		<tr>
+			<td class="myheader2" colspan="2" align="center">
+			</td>
+		</tr>
+		<tr>
+			<td>First Name:</td>
+			<td>
+				<input type="text" name="first_name" value="John">
+			</td>
+		</tr>
+		<tr>
+			<td>Last Name:</td>
+			<td>
+				<input type="text" name="last_name" value="Doe">
+			</td>
+		</tr>
+		<tr>
+			<td>Age:</td>
+			<td>
+				<input type="text" name="age" value="35">
+			</td>
+		</tr>
+		<tr>
+			<td>Weight:</td>
+			<td>
+				<input type="text" name="weight" value="70">
+			</td>
+		</tr>
+		<tr>
+			<td>Gender:</td>
+			<td>
+				<select name="gender">
+					<option value="M">Male</option>
+					<option value="F">Female</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>email:</td>
+			<td>
+				<input type="text" name="email" value="john.doe@gmail.com"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<input type="submit" value="Wellness Program Registration">
+			</td>
+		</tr>
+	</tbody>
+</table>
+</form>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://charthelper.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://charthelper.diy.com" xmlns:intf="http://charthelper.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://charthelper.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="generateWeeklyReviewLineChart">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="IndexValues" type="xsd:string"/>
+      <element name="strLastDay" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="generateWeeklyReviewLineChartResponse">
+    <complexType>
+     <sequence>
+      <element name="generateWeeklyReviewLineChartReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="generateWeeklyReviewLineChartResponse">
+
+      <wsdl:part element="impl:generateWeeklyReviewLineChartResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="generateWeeklyReviewLineChartRequest">
+
+      <wsdl:part element="impl:generateWeeklyReviewLineChart" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="LineChartHelper">
+
+      <wsdl:operation name="generateWeeklyReviewLineChart">
+
+         <wsdl:input message="impl:generateWeeklyReviewLineChartRequest" name="generateWeeklyReviewLineChartRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:generateWeeklyReviewLineChartResponse" name="generateWeeklyReviewLineChartResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="LineChartHelperSoapBinding" type="impl:LineChartHelper">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="generateWeeklyReviewLineChart">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="generateWeeklyReviewLineChartRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="generateWeeklyReviewLineChartResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="LineChartHelperService">
+
+      <wsdl:port binding="impl:LineChartHelperSoapBinding" name="LineChartHelper">
+
+         <wsdlsoap:address location="http://localhost:18080/ChartHelper/services/LineChartHelper"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://html.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://html.diy.com" xmlns:intf="http://html.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://html.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="embedImages">
+    <complexType>
+     <sequence>
+      <element name="strHTML" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="embedImagesResponse">
+    <complexType>
+     <sequence>
+      <element name="embedImagesReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="embedImagesRequest">
+
+      <wsdl:part element="impl:embedImages" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="embedImagesResponse">
+
+      <wsdl:part element="impl:embedImagesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="HTMLHelper">
+
+      <wsdl:operation name="embedImages">
+
+         <wsdl:input message="impl:embedImagesRequest" name="embedImagesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:embedImagesResponse" name="embedImagesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="HTMLHelperSoapBinding" type="impl:HTMLHelper">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="embedImages">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="embedImagesRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="embedImagesResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="HTMLHelperService">
+
+      <wsdl:port binding="impl:HTMLHelperSoapBinding" name="HTMLHelper">
+
+         <wsdlsoap:address location="http://localhost:18080/HTMLHelper/services/HTMLHelper"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

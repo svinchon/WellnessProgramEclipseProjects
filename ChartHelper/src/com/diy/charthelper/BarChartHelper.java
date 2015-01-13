@@ -3,6 +3,8 @@ package com.diy.charthelper;
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ResourceBundle;
+import java.util.UUID;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -17,22 +19,48 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class BarChartHelper {
 
-	public BarChartHelper(String paramString)  {
+	public BarChartHelper()  {
 	}
-
-	private static CategoryDataset createDataset()
-	{
-		DefaultCategoryDataset dcd = new DefaultCategoryDataset();
-		//long l = 86400000L;
-		dcd.addValue(70	, "Val1", "Bar1");
-		dcd.addValue(30	, "Val2", "Bar1");
-		//dcd.addValue(20	, "Val3", "Bar1");
-		dcd.addValue(40	, "Val1", "Bar2");
-		dcd.addValue(60	, "Val2", "Bar2");
-		//dcd.addValue(65	, "Val3", "Bar2");
-		return dcd;
+	
+	public static void main(String[] args) {
+		new BarChartHelper().generateWeeklyReviewBarChart(
+			"10", "20", "15", "30"
+		);
 	}
-
+	
+	public String generateWeeklyReviewBarChart(
+			String Index1Value1,
+			String Index1Value2,
+			String Index2Value1,
+			String Index2Value2
+	) {
+		String strReturn = null;
+		try {
+			DefaultCategoryDataset dcd = new DefaultCategoryDataset();
+			dcd.addValue(new Double(Index1Value1), "Val1", "Bar1");
+			dcd.addValue(new Double(Index1Value2), "Val2", "Bar1");
+			dcd.addValue(new Double(Index2Value1), "Val1", "Bar2");
+			dcd.addValue(new Double(Index2Value2), "Val2", "Bar2");
+			JFreeChart jfc = createChart(dcd);
+			String strDir = ResourceBundle.getBundle("ChartHelper").getString("LocalImageFolder");
+			String strFileName = "BarGraphic1_"+generateUniqueIdentifier();
+			creatPNGofChart(
+					jfc,
+					strDir,
+					strFileName,
+					390,
+					100,
+					true
+			);
+			strDir = ResourceBundle.getBundle("ChartHelper").getString("ImageFolderURL");
+			strReturn = strDir + "/" + strFileName + ".png";
+			System.out.println("ChartHelper: URL="+strReturn);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return strReturn;
+	}
+		
 	private static JFreeChart createChart(CategoryDataset paramCategoryDataset) {
 		JFreeChart jfc = ChartFactory.createStackedBarChart(
 				null, //"Stacked Bar Chart Demo 6",
@@ -69,20 +97,6 @@ public class BarChartHelper {
 		return jfc;
 	}
 
-	public static void main(String[] paramArrayOfString)
-	{
-		CategoryDataset cs = createDataset();
-		JFreeChart jfc = createChart(cs);
-		creatPNGofChart(
-				jfc,
-				"D:/xData/Business/Projects/2014/Q3/2014q3-09.WellnessProgram/xDW/Graphics/",
-				"BarGraphic1",
-				390,
-				100,
-				true
-		);
-	}
-	
 	public static void creatPNGofChart(
 			final JFreeChart jfc,
 			final String strDirectory,
@@ -93,7 +107,7 @@ public class BarChartHelper {
 			) {
 
 		final String fileExtension = ".png";
-		final String writtenFile =  strDirectory + aFileName + fileExtension;
+		final String writtenFile =  strDirectory + "/" + aFileName + fileExtension;
 
 		try {
 			jfc.setBackgroundPaint( new Color(255,255,255,0) );
@@ -102,8 +116,9 @@ public class BarChartHelper {
 				plot.setBackgroundPaint( new Color(255,255,255,0) );
 				plot.setBackgroundImageAlpha(0.0f);
 			}
+			FileOutputStream fos = new FileOutputStream(writtenFile);
 			ChartUtilities.writeChartAsPNG(
-					new FileOutputStream(writtenFile),
+					fos,
 					jfc,
 					aWidth,
 					aHeight,
@@ -111,6 +126,7 @@ public class BarChartHelper {
 					true, // encodeAlpha
 					0
 			);
+			fos.close();
 			System.out.println("Wrote PNG (transparent) file " + writtenFile);
 
 		} catch (IOException ioEx) {
@@ -119,4 +135,12 @@ public class BarChartHelper {
 
 		}
 	}
+
+	private static String generateUniqueIdentifier() {
+		String strReturn = null;
+		UUID ui = UUID.randomUUID();
+		strReturn = ui.toString();
+		return strReturn;
+	}
+
 }

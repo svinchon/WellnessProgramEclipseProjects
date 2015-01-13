@@ -8,7 +8,7 @@ public class SOAPQueryRequestMessage {
 			"D:/xData/Business/Projects/2014/Q3/2014q3-09.WellnessProgram/HIP/SOAPQueryTemplate.xml";
 	private String strXML;
 	private String strUniqueId;
-	private String strPATIENT_ID = "WP_PATIENT_ID";
+	private String strPATIENT_ID_PREFIX = "";//"WP_PATIENT_ID_";
 	
 	public static void main(String[] args) {
 		SOAPQueryRequestMessage m = new SOAPQueryRequestMessage("0007");
@@ -35,7 +35,10 @@ public class SOAPQueryRequestMessage {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		strXML = strXML.replaceAll("--"+"PATIENT_ID"		+"--",	this.strPATIENT_ID		+"_"+ this.strUniqueId);
+		strXML = strXML.replaceAll(
+				"--"+"PATIENT_ID" +"--",
+				this.strPATIENT_ID_PREFIX + this.strUniqueId
+		);
 	}
 	
 	private static void Log(String string) {

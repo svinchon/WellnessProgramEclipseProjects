@@ -1,6 +1,7 @@
 package com.diy.hiphelper;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -28,15 +29,35 @@ import com.diy.xmlhelper.XMLHelper;
 public class HIPHelper {
 
 	public static void main(String[] args) {
-		HIPHelper hiphop = new HIPHelper();
-		//hiphop.storeDoc("PAT01", "DOC08", "<root>hello world</root>".getBytes());
-		String[] strDocNames = hiphop.getPatientDocNamesList("PAT01");
-		for (int i=0;i<strDocNames.length;i++) {
-			Log(strDocNames[i]);
+		try {
+			Log("<LOG>");
+			HIPHelper hiphop = new HIPHelper();
+			Log("<CALL>");
+			hiphop.storeDoc("WP_BATCH_RUN", "SEB_DOC_08", "<root>hello world</root>".getBytes());
+			Log("</CALL>");
+			Log("<CALL>");
+			String[] strDocNames = hiphop.getPatientDocNamesList("WP_BATCH_RUN");
+			Log("</CALL>");
+			Log("<OUTPUT>");
+			//Log("nDocuments:");
+			for (int i=0;i<strDocNames.length;i++) {
+				Log(strDocNames[i]);
+			}
+			Log("</OUTPUT>");
+			Log("<CALL>");
+			byte[] bDoc = hiphop.getDocContent("SEB_DOC_08");
+			Log("</CALL>");
+			Log("<OUTPUT>");
+			//Log("Doc content:");
+			Log(new String(bDoc));
+			Log("</OUTPUT>");
+			FileOutputStream fos = new FileOutputStream("C:/Users/vinchs/Desktop/toto.pdf");
+			fos.write(bDoc);
+			fos.close();
+			Log("</LOG>");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		//hiphop.getRetrieveDocForPatient("PAT01", "DOC04");
-		//Log(new String(hiphop.getDocContent("PAT01", "DOC08")));
-		Log(new String(hiphop.getDocContent("WP_DOC_ENTRY_ID_PAT01_DOC08")));
 	}
 
 	public String[] getPatientDocNamesList(String strPatientId) {
@@ -51,7 +72,11 @@ public class HIPHelper {
 			SOAPMessage soapResponse = soapConnection.call(soapRequest, strURL);
 			soapConnection.close();
 			String strSOAPResponse = getSOAPResponseAsString(soapResponse);
-			//Log("SOAP Request:\n"); Log(strSOAPMessage); Log("SOAP Response:\n"); Log(strSOAPResponse);
+			Log("<SOAP_CALL>");
+			Log("<MESSAGE>==================== LIST ====================</MESSAGE>");
+			Log("<REQUEST>"); Log(strSOAPMessage); Log("</REQUEST>"); 
+			Log("<RESPONSE>"); Log(strSOAPResponse.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")); Log("</RESPONSE>");
+			Log("</SOAP_CALL>");
 			String strXPath = "/soap:Envelope/soap:Body/ns4:AdhocQueryResponse/ns2:RegistryObjectList/ns2:ExtrinsicObject/ns2:ExternalIdentifier[ns2:Name/ns2:LocalizedString/@value = \"XDSDocumentEntry.uniqueId\"]/@value";
 			strDocNames = XMLHelper.strGetValuesFromXML(strSOAPResponse, strXPath);
 		} catch (Exception e) {
@@ -60,6 +85,7 @@ public class HIPHelper {
 		return strDocNames;
 	}
 	
+	// first version of code to retrieve doc
 	public String getPatientDocsXML(String strPatientId, String strDocId) {
 		String strReturn = "";
 		try {
@@ -103,7 +129,12 @@ public class HIPHelper {
 			SOAPConnection soapConnection = soapConnectionFactory.createConnection();
 			SOAPMessage soapResponse = soapConnection.call(soapRequest, strURL);
 			soapConnection.close();
-			//String strSOAPResponse = getSOAPResponseAsString(soapResponse); Log("SOAP Request:\n"); Log(strSOAPMessage); Log("SOAP Response:\n"); Log(strSOAPResponse);
+			String strSOAPResponse = getSOAPResponseAsString(soapResponse);
+			Log("<SOAP_CALL>");
+			Log("<MESSAGE>==================== RETRIEVE ====================</MESSAGE>");
+			Log("<REQUEST>"); Log(strSOAPMessage); Log("</REQUEST>"); 
+			Log("<RESPONSE>"); Log(strSOAPResponse.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")); Log("</RESPONSE>");
+			Log("</SOAP_CALL>");
 			Iterator<?> i = soapResponse.getAttachments();
 			if (i.hasNext()) {
 				AttachmentPart ap = (AttachmentPart)(i.next());
@@ -153,10 +184,15 @@ public class HIPHelper {
 			soapRequest.addAttachmentPart(attachmentPart);
 			SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
 			SOAPConnection soapConnection = soapConnectionFactory.createConnection();
-			@SuppressWarnings("unused")
+			//@SuppressWarnings("unused")
 			SOAPMessage soapResponse = soapConnection.call(soapRequest, strURL);
 			soapConnection.close();
-			//String strSOAPResponse = getSOAPResponseAsString(soapResponse); Log("SOAP Request:\n"); Log(strSOAPMessage); Log("SOAP Response:\n"); Log(strSOAPResponse);
+			String strSOAPResponse = getSOAPResponseAsString(soapResponse);
+			Log("<SOAP_CALL>");
+			Log("<MESSAGE>==================== STORE ====================</MESSAGE>");
+			Log("<REQUEST>"); Log(strSOAPMessage); Log("</REQUEST>"); 
+			Log("<RESPONSE>"); Log(strSOAPResponse.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")); Log("</RESPONSE>");
+			Log("</SOAP_CALL>");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -181,7 +217,7 @@ public class HIPHelper {
 	}
 	
 	private static void Log(String string) {
-		System.out.println(string);
+		System.out.println("\n"+string);
 	}
 	
 }

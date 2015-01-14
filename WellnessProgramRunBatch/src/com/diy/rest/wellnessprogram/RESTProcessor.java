@@ -1,5 +1,8 @@
 package com.diy.rest.wellnessprogram;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -24,7 +27,11 @@ public class RESTProcessor {
 	//http://xpression:18080/WellnessProgramRunBatch/api/RESTProcessor/getInfo
     @Path("getInfo")
 	public String getInfo() {
-		return "INFO";
+		return ""+
+		"methods: "+
+		"1/ getInfo (GET), "+
+		"2/ getUsers (GET), "+
+		"3/ submitUserSet (POST, same input format as getUsers output)";
 	}
 	
 	@Produces(MediaType.APPLICATION_JSON)
@@ -52,6 +59,17 @@ public class RESTProcessor {
 		us.setName("TEST");
 		User u1 = new User();
 		u1.setEmail("edvardas@aconnect.co");
+		IndexHistory ih = new IndexHistory();
+		ih.setLast_value_date("test");
+		List<Value> values =  new ArrayList<Value>();
+		Value v1 = new Value();
+		v1.setValue("12586");
+		values.add(v1);
+		Value v2 = new Value();
+		v2.setValue("12586");
+		values.add(v2);
+		ih.setValues(values);
+		u1.setIndex_history(ih);
 		User u2 = new User();
 		u2.setEmail("svinchon@gmail.com");
 		User[] users = new User[2];

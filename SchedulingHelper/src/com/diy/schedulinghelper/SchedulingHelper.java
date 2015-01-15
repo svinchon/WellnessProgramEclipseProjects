@@ -16,16 +16,33 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServlet;
+
+import org.apache.axis.MessageContext;
+import org.apache.axis.transport.http.HTTPConstants;
+
 public class SchedulingHelper {
 
 	Scheduler my_sched;
 	Logger log = LoggerFactory.getLogger(SchedulingHelper.class);    
 	
+	public ServletContext getServletContext() {
+		HttpServlet servlet = (HttpServlet)(
+				MessageContext
+					.getCurrentContext()
+					.getProperty(HTTPConstants.MC_HTTP_SERVLET)
+		);
+		ServletContext ctx = servlet.getServletContext();
+		return ctx;
+	}
+	
 	public static void main(String[] args) {
 		try {
+			//	s.shutdown();
 			SchedulingHelper sh = new SchedulingHelper();
 			sh.startScheduler();
-			sh.scheduleWSCall(new Date(), true, "test");
+			sh.scheduleWSCall("2015-01-15", "17:00", true, "test");
 			Thread.sleep(10000L);
 			sh.getScheduledJobsStats();
 			Thread.sleep(60000L);
@@ -36,12 +53,26 @@ public class SchedulingHelper {
 	}
 	
 	public String startScheduler() {
+	    Log("******************************************************************************");
+	    Log("startScheduler ");
+	    Log("******************************************************************************");
 		String strReturn = null;
 		try {
-			SchedulerFactory sf = new StdSchedulerFactory();
-			my_sched = sf.getScheduler();
+			if (
+				(Scheduler)(getServletContext().getAttribute("Scheduler"))
+				!=
+				null
+			) {
+				my_sched = (Scheduler)(getServletContext().getAttribute("Scheduler"));
+				Log("sched existed");
+			} else {
+				SchedulerFactory sf = new StdSchedulerFactory();
+				my_sched = sf.getScheduler();
+				getServletContext().setAttribute("Scheduler", my_sched);
+				Log("sched did not exist");
+			}
 			my_sched.start();
-			log.info("sched was started");
+			Log("sched was started");
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
@@ -49,13 +80,24 @@ public class SchedulingHelper {
 	}
 	
 	public String stopScheduler() {
+	    Log("******************************************************************************");
+	    Log("stopScheduler ");
+	    Log("******************************************************************************");
 		String strReturn = null;
 		try {
-			if (my_sched!=null) {
+			if (
+				(Scheduler)(getServletContext().getAttribute("Scheduler"))
+				!=
+				null
+			) {
+				my_sched = (Scheduler)(getServletContext().getAttribute("Scheduler"));
 				my_sched.shutdown(true);
-				log.info("sched was stopped");
+				Log("sched existed and was shutdown");
 			} else {
-				log.info("sched was down");
+				//SchedulerFactory sf = new StdSchedulerFactory();
+				//my_sched = sf.getScheduler();
+				//getServletContext().setAttribute("Scheduler", my_sched);
+				Log("sched did not exist");
 			}
 		} catch (SchedulerException e) {
 			e.printStackTrace();
@@ -64,14 +106,23 @@ public class SchedulingHelper {
 	}
 	
 	public String scheduleWSCall(
-			Date d,
+			String strDate,
+			String strTime,
 			Boolean bRecurent,
 			String strSOAPMessage
 	) {
+	    Log("******************************************************************************");
+	    Log("scheduleWSCall ");
+	    Log("******************************************************************************");
 		String strReturn = null;
 		try {
-			Date runTime = DateBuilder.evenMinuteDate(new Date());
-			if (my_sched!=null) {
+			if (
+				(Scheduler)(getServletContext().getAttribute("Scheduler"))
+				!=
+				null
+			) {
+				my_sched = (Scheduler)(getServletContext().getAttribute("Scheduler"));
+				Date runTime = DateBuilder.evenMinuteDate(new Date());
 				JobDetail job = JobBuilder
 						.newJob(WSCallJob.class)
 						.withIdentity("job1", "group1")
@@ -92,9 +143,9 @@ public class SchedulingHelper {
 						//		.modifiedByCalendar("holidays")
 						.build();
 				my_sched.scheduleJob(job, trigger);
-				log.info(job.getKey() + " will run at: " + runTime);
+				Log(job.getKey() + " will run at: " + runTime);
 			} else {
-				log.info("sched was down");
+				Log("sched was down");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -103,25 +154,36 @@ public class SchedulingHelper {
 	}
 	
 	public String getScheduledJobsStats() {
+	    Log("******************************************************************************");
+	    Log("getScheduledJobsStats ");
+	    Log("******************************************************************************");
 		String strReturn = null;
-		log.info("stats requested");
 		try {
-			if (my_sched!=null) {
+			if (
+				(Scheduler)(getServletContext().getAttribute("Scheduler"))
+				!=
+				null
+			) {
+				my_sched = (Scheduler)(getServletContext().getAttribute("Scheduler"));
 				List<String> strGroupsList = my_sched.getJobGroupNames();
 				ListIterator<String> liGroups = strGroupsList.listIterator();
 				if (strGroupsList.isEmpty()) {
-					log.info("no groups");
+					Log("no groups");
 				}
 				while(liGroups.hasNext()) {
-					log.info("Group: "+liGroups.next());					
+					Log("Group: "+liGroups.next());					
 				}
 			} else {
-				log.info("sched was down");
+				Log("sched was down");
 			}
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
 		return strReturn;
+	}
+
+	void Log(String strMessage) {
+		System.out.println(strMessage);
 	}
 
 }

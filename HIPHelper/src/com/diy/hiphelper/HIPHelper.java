@@ -32,9 +32,9 @@ public class HIPHelper {
 		try {
 			Log("<LOG>");
 			HIPHelper hiphop = new HIPHelper();
-			Log("<CALL>");
-			hiphop.storeDoc("WP_BATCH_RUN", "SEB_DOC_08", "<root>hello world</root>".getBytes());
-			Log("</CALL>");
+//			Log("<CALL>");
+//			hiphop.storeDoc("WP_BATCH_RUN", "SEB_DOC_08", "<root>hello world</root>".getBytes());
+//			Log("</CALL>");
 			Log("<CALL>");
 			String[] strDocNames = hiphop.getPatientDocNamesList("WP_BATCH_RUN");
 			Log("</CALL>");
@@ -45,13 +45,13 @@ public class HIPHelper {
 			}
 			Log("</OUTPUT>");
 			Log("<CALL>");
-			byte[] bDoc = hiphop.getDocContent("SEB_DOC_08");
+			byte[] bDoc = hiphop.getDocContent("BATCH_1421309514");
 			Log("</CALL>");
 			Log("<OUTPUT>");
 			//Log("Doc content:");
 			Log(new String(bDoc));
 			Log("</OUTPUT>");
-			FileOutputStream fos = new FileOutputStream("C:/Users/vinchs/Desktop/toto.pdf");
+			FileOutputStream fos = new FileOutputStream("C:/Users/vinchs/Desktop/BATCH_1421309514.xml");
 			fos.write(bDoc);
 			fos.close();
 			Log("</LOG>");
@@ -72,11 +72,13 @@ public class HIPHelper {
 			SOAPMessage soapResponse = soapConnection.call(soapRequest, strURL);
 			soapConnection.close();
 			String strSOAPResponse = getSOAPResponseAsString(soapResponse);
-			Log("<SOAP_CALL>");
-			Log("<MESSAGE>==================== LIST ====================</MESSAGE>");
-			Log("<REQUEST>"); Log(strSOAPMessage); Log("</REQUEST>"); 
-			Log("<RESPONSE>"); Log(strSOAPResponse.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")); Log("</RESPONSE>");
-			Log("</SOAP_CALL>");
+			if (ResourceBundle.getBundle("HIPHelper").getString("DebugGetPatientDocNames").equals("true")) {
+				Log("<SOAP_CALL>");
+				Log("<MESSAGE>==================== LIST ====================</MESSAGE>");
+				Log("<REQUEST>"); Log(strSOAPMessage); Log("</REQUEST>"); 
+				Log("<RESPONSE>"); Log(strSOAPResponse.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")); Log("</RESPONSE>");
+				Log("</SOAP_CALL>");
+			}
 			String strXPath = "/soap:Envelope/soap:Body/ns4:AdhocQueryResponse/ns2:RegistryObjectList/ns2:ExtrinsicObject/ns2:ExternalIdentifier[ns2:Name/ns2:LocalizedString/@value = \"XDSDocumentEntry.uniqueId\"]/@value";
 			strDocNames = XMLHelper.strGetValuesFromXML(strSOAPResponse, strXPath);
 		} catch (Exception e) {
@@ -130,11 +132,13 @@ public class HIPHelper {
 			SOAPMessage soapResponse = soapConnection.call(soapRequest, strURL);
 			soapConnection.close();
 			String strSOAPResponse = getSOAPResponseAsString(soapResponse);
-			Log("<SOAP_CALL>");
-			Log("<MESSAGE>==================== RETRIEVE ====================</MESSAGE>");
-			Log("<REQUEST>"); Log(strSOAPMessage); Log("</REQUEST>"); 
-			Log("<RESPONSE>"); Log(strSOAPResponse.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")); Log("</RESPONSE>");
-			Log("</SOAP_CALL>");
+			if (ResourceBundle.getBundle("HIPHelper").getString("DebugGetDocContent").equals("true")) {
+				Log("<SOAP_CALL>");
+				Log("<MESSAGE>==================== RETRIEVE ====================</MESSAGE>");
+				Log("<REQUEST>"); Log(strSOAPMessage); Log("</REQUEST>"); 
+				Log("<RESPONSE>"); Log(strSOAPResponse.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")); Log("</RESPONSE>");
+				Log("</SOAP_CALL>");				
+			}
 			Iterator<?> i = soapResponse.getAttachments();
 			if (i.hasNext()) {
 				AttachmentPart ap = (AttachmentPart)(i.next());
@@ -188,11 +192,13 @@ public class HIPHelper {
 			SOAPMessage soapResponse = soapConnection.call(soapRequest, strURL);
 			soapConnection.close();
 			String strSOAPResponse = getSOAPResponseAsString(soapResponse);
-			Log("<SOAP_CALL>");
-			Log("<MESSAGE>==================== STORE ====================</MESSAGE>");
-			Log("<REQUEST>"); Log(strSOAPMessage); Log("</REQUEST>"); 
-			Log("<RESPONSE>"); Log(strSOAPResponse.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")); Log("</RESPONSE>");
-			Log("</SOAP_CALL>");
+			if (ResourceBundle.getBundle("HIPHelper").getString("DebugStoreDoc").equals("true")) {
+				Log("<SOAP_CALL>");
+				Log("<MESSAGE>==================== STORE ====================</MESSAGE>");
+				Log("<REQUEST>"); Log(strSOAPMessage); Log("</REQUEST>"); 
+				Log("<RESPONSE>"); Log(strSOAPResponse.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")); Log("</RESPONSE>");
+				Log("</SOAP_CALL>");				
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

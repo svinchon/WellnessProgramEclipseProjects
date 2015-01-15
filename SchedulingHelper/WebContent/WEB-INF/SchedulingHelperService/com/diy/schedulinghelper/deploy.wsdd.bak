@@ -1,0 +1,38 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from SchedulingHelperService WSDL service -->
+
+  <service name="SchedulingHelper" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://schedulinghelper.diy.com"/>
+      <parameter name="wsdlServiceElement" value="SchedulingHelperService"/>
+      <parameter name="schemaQualified" value="http://schedulinghelper.diy.com"/>
+      <parameter name="wsdlServicePort" value="SchedulingHelper"/>
+      <parameter name="className" value="com.diy.schedulinghelper.SchedulingHelperSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="SchedulingHelper"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="startScheduler" qname="operNS:startScheduler" xmlns:operNS="http://schedulinghelper.diy.com" returnQName="retNS:startSchedulerReturn" xmlns:retNS="http://schedulinghelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="scheduleWSCall" qname="operNS:scheduleWSCall" xmlns:operNS="http://schedulinghelper.diy.com" returnQName="retNS:scheduleWSCallReturn" xmlns:retNS="http://schedulinghelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:strDate" xmlns:pns="http://schedulinghelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:strTime" xmlns:pns="http://schedulinghelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:bRecurent" xmlns:pns="http://schedulinghelper.diy.com" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:strSOAPMessage" xmlns:pns="http://schedulinghelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getScheduledJobsStats" qname="operNS:getScheduledJobsStats" xmlns:operNS="http://schedulinghelper.diy.com" returnQName="retNS:getScheduledJobsStatsReturn" xmlns:retNS="http://schedulinghelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="stopScheduler" qname="operNS:stopScheduler" xmlns:operNS="http://schedulinghelper.diy.com" returnQName="retNS:stopSchedulerReturn" xmlns:retNS="http://schedulinghelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <parameter name="allowedMethods" value="stopScheduler getScheduledJobsStats startScheduler scheduleWSCall"/>
+
+  </service>
+</deployment>

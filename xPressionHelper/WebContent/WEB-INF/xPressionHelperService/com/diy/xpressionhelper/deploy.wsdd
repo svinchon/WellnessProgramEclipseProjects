@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from xPressionHelperService WSDL service -->
+
+  <service name="xPressionHelper" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://xpressionhelper.diy.com"/>
+      <parameter name="wsdlServiceElement" value="xPressionHelperService"/>
+      <parameter name="schemaQualified" value="http://xpressionhelper.diy.com"/>
+      <parameter name="wsdlServicePort" value="xPressionHelper"/>
+      <parameter name="className" value="com.diy.xpressionhelper.xPressionHelper"/>
+      <parameter name="wsdlPortType" value="xPressionHelper"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://xpressionhelper.diy.com" xmlns:retNS="http://xpressionhelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="strPublishDocument" qname="operNS:strPublishDocument" returnQName="retNS:strPublishDocumentReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strTemplateName" type="tns:string"/>
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strData" type="tns:string"/>
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strOutputProfileName" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://xpressionhelper.diy.com" xmlns:retNS="http://xpressionhelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="bProcessZIPAndReturnPDF" qname="operNS:bProcessZIPAndReturnPDF" returnQName="retNS:bProcessZIPAndReturnPDFReturn" returnType="rtns:base64Binary" soapAction="">
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:bFileData" type="tns:base64Binary"/>
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strTemplateName" type="tns:string"/>
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strOutputProfileName" type="tns:string"/>
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strIdentifiantUnique" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://xpressionhelper.diy.com" xmlns:retNS="http://xpressionhelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="strUploadFile" qname="operNS:strUploadFile" returnQName="retNS:strUploadFileReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:bFileData" type="tns:base64Binary"/>
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strLocation" type="tns:string"/>
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strFileName" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://xpressionhelper.diy.com" xmlns:retNS="http://xpressionhelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="strProcessZIPAndDistributeAsynchrounously" qname="operNS:strProcessZIPAndDistributeAsynchrounously" returnQName="retNS:strProcessZIPAndDistributeAsynchrounouslyReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:bFileData" type="tns:base64Binary"/>
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strTemplateName" type="tns:string"/>
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strOutputProfileName" type="tns:string"/>
+        <parameter xmlns:pns="http://xpressionhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strIdentifiantUnique" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="strProcessZIPAndDistributeAsynchrounously strUploadFile strPublishDocument bProcessZIPAndReturnPDF"/>
+
+  </service>
+</deployment>

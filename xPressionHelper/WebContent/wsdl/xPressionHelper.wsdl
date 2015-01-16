@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://xpressionhelper.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://xpressionhelper.diy.com" xmlns:intf="http://xpressionhelper.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://xpressionhelper.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="strPublishDocument">
+    <complexType>
+     <sequence>
+      <element name="strTemplateName" type="xsd:string"/>
+      <element name="strData" type="xsd:string"/>
+      <element name="strOutputProfileName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strPublishDocumentResponse">
+    <complexType>
+     <sequence>
+      <element name="strPublishDocumentReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="bProcessZIPAndReturnPDF">
+    <complexType>
+     <sequence>
+      <element name="bFileData" type="xsd:base64Binary"/>
+      <element name="strTemplateName" type="xsd:string"/>
+      <element name="strOutputProfileName" type="xsd:string"/>
+      <element name="strIdentifiantUnique" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="bProcessZIPAndReturnPDFResponse">
+    <complexType>
+     <sequence>
+      <element name="bProcessZIPAndReturnPDFReturn" type="xsd:base64Binary"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strUploadFile">
+    <complexType>
+     <sequence>
+      <element name="bFileData" type="xsd:base64Binary"/>
+      <element name="strLocation" type="xsd:string"/>
+      <element name="strFileName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strUploadFileResponse">
+    <complexType>
+     <sequence>
+      <element name="strUploadFileReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strProcessZIPAndDistributeAsynchrounously">
+    <complexType>
+     <sequence>
+      <element name="bFileData" type="xsd:base64Binary"/>
+      <element name="strTemplateName" type="xsd:string"/>
+      <element name="strOutputProfileName" type="xsd:string"/>
+      <element name="strIdentifiantUnique" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strProcessZIPAndDistributeAsynchrounouslyResponse">
+    <complexType>
+     <sequence>
+      <element name="strProcessZIPAndDistributeAsynchrounouslyReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="bProcessZIPAndReturnPDFResponse">
+
+      <wsdl:part element="impl:bProcessZIPAndReturnPDFResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strPublishDocumentRequest">
+
+      <wsdl:part element="impl:strPublishDocument" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strPublishDocumentResponse">
+
+      <wsdl:part element="impl:strPublishDocumentResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strUploadFileRequest">
+
+      <wsdl:part element="impl:strUploadFile" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="bProcessZIPAndReturnPDFRequest">
+
+      <wsdl:part element="impl:bProcessZIPAndReturnPDF" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strProcessZIPAndDistributeAsynchrounouslyRequest">
+
+      <wsdl:part element="impl:strProcessZIPAndDistributeAsynchrounously" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strUploadFileResponse">
+
+      <wsdl:part element="impl:strUploadFileResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strProcessZIPAndDistributeAsynchrounouslyResponse">
+
+      <wsdl:part element="impl:strProcessZIPAndDistributeAsynchrounouslyResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="xPressionHelper">
+
+      <wsdl:operation name="strPublishDocument">
+
+         <wsdl:input message="impl:strPublishDocumentRequest" name="strPublishDocumentRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:strPublishDocumentResponse" name="strPublishDocumentResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="bProcessZIPAndReturnPDF">
+
+         <wsdl:input message="impl:bProcessZIPAndReturnPDFRequest" name="bProcessZIPAndReturnPDFRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:bProcessZIPAndReturnPDFResponse" name="bProcessZIPAndReturnPDFResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strUploadFile">
+
+         <wsdl:input message="impl:strUploadFileRequest" name="strUploadFileRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:strUploadFileResponse" name="strUploadFileResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strProcessZIPAndDistributeAsynchrounously">
+
+         <wsdl:input message="impl:strProcessZIPAndDistributeAsynchrounouslyRequest" name="strProcessZIPAndDistributeAsynchrounouslyRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:strProcessZIPAndDistributeAsynchrounouslyResponse" name="strProcessZIPAndDistributeAsynchrounouslyResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="xPressionHelperSoapBinding" type="impl:xPressionHelper">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="strPublishDocument">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="strPublishDocumentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="strPublishDocumentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="bProcessZIPAndReturnPDF">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="bProcessZIPAndReturnPDFRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="bProcessZIPAndReturnPDFResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strUploadFile">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="strUploadFileRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="strUploadFileResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strProcessZIPAndDistributeAsynchrounously">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="strProcessZIPAndDistributeAsynchrounouslyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="strProcessZIPAndDistributeAsynchrounouslyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="xPressionHelperService">
+
+      <wsdl:port binding="impl:xPressionHelperSoapBinding" name="xPressionHelper">
+
+         <wsdlsoap:address location="http://localhost:8080/xPressionHelper/services/xPressionHelper"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

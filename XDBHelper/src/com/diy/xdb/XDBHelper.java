@@ -19,6 +19,18 @@ import org.w3c.dom.ls.LSParser;
 import org.w3c.dom.ls.LSSerializer;
 
 public class XDBHelper {
+
+	public XDBHelper() {
+		
+	}
+	
+	public static void main(String[] args) {
+		XDBHelper h = new XDBHelper();
+		h.storeDoc(
+			"C:/tmp/submitForBatch_from0-0-0-0-0-0-0-1_On_2015-01-16@12-00-17-591.xml",
+			"TEST"
+		);		
+	}
 	
 	public String storeDoc(String strFileName, String strDocumentName) {
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
@@ -66,7 +78,7 @@ public class XDBHelper {
 		return "OK";
 	}
 
-	public String removeDoc(String strDocumentName) {
+	public String removeDoc(String strDocumentName) {  
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";

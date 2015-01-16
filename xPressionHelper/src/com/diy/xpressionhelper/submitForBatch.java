@@ -43,13 +43,14 @@ public class submitForBatch extends HttpServlet {
 		    }
 		    String data = buffer.toString();
 			Log(data);
-			String fileName = "C:/Tmp/submitForBatch_from"+fromIP+"_On_"+generateTimeStamp()+".xml";
+			String ts = generateTimeStamp();
+			String fileName = "C:/Tmp/submitForBatch_from"+fromIP+"_On_"+ts+".xml";
 			String2File(data, fileName);
 			XDBHelperProxy xdbhp = new XDBHelperProxy();
 			Log(xdbhp.getEndpoint());
 			xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
 			Log(xdbhp.getEndpoint());
-			xdbhp.storeDoc(fileName, "MyDOC");
+			xdbhp.storeDoc(fileName, ts);
 			resp = "file written to "+fileName;
 		} else {
 			resp="input has to be XML";

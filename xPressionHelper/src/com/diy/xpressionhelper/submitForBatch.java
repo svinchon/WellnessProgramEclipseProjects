@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.diy.xdb.XDBHelperProxy;
+
 
 @WebServlet("/submitForBatch")
 public class submitForBatch extends HttpServlet {
@@ -43,6 +45,11 @@ public class submitForBatch extends HttpServlet {
 			Log(data);
 			String fileName = "C:/Tmp/submitForBatch_from"+fromIP+"_On_"+generateTimeStamp()+".xml";
 			String2File(data, fileName);
+			XDBHelperProxy xdbhp = new XDBHelperProxy();
+			Log(xdbhp.getEndpoint());
+			xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
+			Log(xdbhp.getEndpoint());
+			xdbhp.storeDoc(fileName, "MyDOC");
 			resp = "file written to "+fileName;
 		} else {
 			resp="input has to be XML";

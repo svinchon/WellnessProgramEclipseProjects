@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://xdb.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://xdb.diy.com" xmlns:intf="http://xdb.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://xdb.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="storeDoc">
+    <complexType>
+     <sequence>
+      <element name="strFileName" type="xsd:string"/>
+      <element name="strDocumentName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="storeDocResponse">
+    <complexType>
+     <sequence>
+      <element name="storeDocReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="removeDoc">
+    <complexType>
+     <sequence>
+      <element name="strDocumentName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="removeDocResponse">
+    <complexType>
+     <sequence>
+      <element name="removeDocReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="runXQuery">
+    <complexType>
+     <sequence>
+      <element name="strQuery" type="xsd:string"/>
+      <element name="strFileName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="runXQueryResponse">
+    <complexType>
+     <sequence>
+      <element name="runXQueryReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="runXQueryResponse">
+
+      <wsdl:part element="impl:runXQueryResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="runXQueryRequest">
+
+      <wsdl:part element="impl:runXQuery" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="storeDocResponse">
+
+      <wsdl:part element="impl:storeDocResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="removeDocRequest">
+
+      <wsdl:part element="impl:removeDoc" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="removeDocResponse">
+
+      <wsdl:part element="impl:removeDocResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="storeDocRequest">
+
+      <wsdl:part element="impl:storeDoc" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="XDBHelper">
+
+      <wsdl:operation name="storeDoc">
+
+         <wsdl:input message="impl:storeDocRequest" name="storeDocRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:storeDocResponse" name="storeDocResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeDoc">
+
+         <wsdl:input message="impl:removeDocRequest" name="removeDocRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:removeDocResponse" name="removeDocResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="runXQuery">
+
+         <wsdl:input message="impl:runXQueryRequest" name="runXQueryRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:runXQueryResponse" name="runXQueryResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="XDBHelperSoapBinding" type="impl:XDBHelper">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="storeDoc">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="storeDocRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="storeDocResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removeDoc">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="removeDocRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="removeDocResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="runXQuery">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="runXQueryRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="runXQueryResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="XDBHelperService">
+
+      <wsdl:port binding="impl:XDBHelperSoapBinding" name="XDBHelper">
+
+         <wsdlsoap:address location="http://localhost:18080/XDBHelper/services/XDBHelper"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

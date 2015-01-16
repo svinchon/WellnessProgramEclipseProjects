@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from XDBHelperService WSDL service -->
+
+  <service name="XDBHelper" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://xdb.diy.com"/>
+      <parameter name="wsdlServiceElement" value="XDBHelperService"/>
+      <parameter name="schemaQualified" value="http://xdb.diy.com"/>
+      <parameter name="wsdlServicePort" value="XDBHelper"/>
+      <parameter name="className" value="com.diy.xdb.XDBHelper"/>
+      <parameter name="wsdlPortType" value="XDBHelper"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://xdb.diy.com" xmlns:retNS="http://xdb.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="storeDoc" qname="operNS:storeDoc" returnQName="retNS:storeDocReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strFileName" type="tns:string"/>
+        <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strDocumentName" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://xdb.diy.com" xmlns:retNS="http://xdb.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="removeDoc" qname="operNS:removeDoc" returnQName="retNS:removeDocReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strDocumentName" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://xdb.diy.com" xmlns:retNS="http://xdb.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="runXQuery" qname="operNS:runXQuery" returnQName="retNS:runXQueryReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strQuery" type="tns:string"/>
+        <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strFileName" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="runXQuery removeDoc storeDoc"/>
+
+  </service>
+</deployment>

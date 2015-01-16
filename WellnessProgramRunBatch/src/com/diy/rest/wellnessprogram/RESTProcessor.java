@@ -52,6 +52,7 @@ public class RESTProcessor {
 	}
 	
 	@Produces(MediaType.APPLICATION_JSON)
+	//@Produces(MediaType.APPLICATION_XML)
 	@GET
 	@Path("getUsers")
 	public UserSet getUsers() {
@@ -70,6 +71,14 @@ public class RESTProcessor {
 		values.add(v2);
 		ih.setValues(values);
 		u1.setIndex_history(ih);
+		WeekNumber wn1 = new WeekNumber();
+		wn1.setLabel("V1");
+		WeekNumber wn2 = new WeekNumber();
+		wn2.setLabel("V2");
+		List<WeekNumber> weeknumbers = new ArrayList<WeekNumber>();
+		weeknumbers.add(wn1);
+		weeknumbers.add(wn2);
+		u1.setWeek_numbers(weeknumbers);
 		User u2 = new User();
 		u2.setEmail("svinchon@gmail.com");
 		User[] users = new User[2];

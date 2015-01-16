@@ -1,13 +1,20 @@
 package com.diy.rest.wellnessprogram;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
+//import javax.xml.bind.annotation.XmlElement;
+
+//import javax.ws.rs.JsonSerialize;
 
 @XmlRootElement
+//@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class User {
 	private String id;
 	private String external_id;
 	private String index;
 	private String username;
+	//@XmlElement(nillable=true)
 	private String weight;
 	private String sport_activity;
 	private String birth_date;
@@ -15,6 +22,7 @@ public class User {
 	private String gender;
 	private String index_updated_at;
 	private IndexHistory index_history;
+	private List<WeekNumber> week_numbers;
 	public static void main(String[] args) {
 	}
 	public String getEmail() {
@@ -82,5 +90,11 @@ public class User {
 	}
 	public void setIndex_history(IndexHistory index_history) {
 		this.index_history = index_history;
+	}
+	public List<WeekNumber> getWeek_numbers() {
+		return week_numbers;
+	}
+	public void setWeek_numbers(List<WeekNumber> week_numbers) {
+		this.week_numbers = week_numbers;
 	}
 }

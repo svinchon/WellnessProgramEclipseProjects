@@ -106,7 +106,8 @@ public class HIPHelper {
 			while (i.hasNext()) {
 				Log("Attachement:\n");
 				AttachmentPart ap = (AttachmentPart)(i.next());
-				Source sourceContent = new StreamSource(new StringReader(new String((ap).getRawContentBytes())));
+				Source sourceContent = new StreamSource(new StringReader(new String((String) (ap).getContent())));
+				//.getRawContentBytes())));
 				StringWriter sw = new StringWriter();
 				StreamResult xmlOutput=new StreamResult(sw);
 				transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -142,7 +143,7 @@ public class HIPHelper {
 			Iterator<?> i = soapResponse.getAttachments();
 			if (i.hasNext()) {
 				AttachmentPart ap = (AttachmentPart)(i.next());
-				bReturn = ap.getRawContentBytes();
+				bReturn = ((String)(ap.getContent())).getBytes();
 				//Log("SOAP Attachement:\n"); Log(new String(bReturn));
 			}
 		} catch (Exception e) {
@@ -166,7 +167,8 @@ public class HIPHelper {
 			Iterator<?> i = soapResponse.getAttachments();
 			if (i.hasNext()) {
 				AttachmentPart ap = (AttachmentPart)(i.next());
-				bReturn = ap.getRawContentBytes();
+				bReturn = ((String)(ap.getContent())).getBytes();
+				//bReturn = ap.getRawContentBytes();
 				//Log("SOAP Attachement:\n"); Log(new String(bReturn));
 			}
 		} catch (Exception e) {

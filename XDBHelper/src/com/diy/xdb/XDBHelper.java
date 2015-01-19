@@ -15,7 +15,7 @@ import com.xhive.core.interfaces.XhiveDatabaseIf;
 import com.xhive.core.interfaces.XhiveDriverIf;
 import com.xhive.core.interfaces.XhiveSessionIf;
 import com.xhive.dom.interfaces.XhiveDocumentIf;
-import com.xhive.dom.interfaces.XhiveLibraryChildIf;
+//import com.xhive.dom.interfaces.XhiveLibraryChildIf;
 import com.xhive.dom.interfaces.XhiveLibraryIf;
 import com.xhive.query.interfaces.XhiveXQueryResultIf;
 import com.xhive.query.interfaces.XhiveXQueryValueIf;
@@ -35,6 +35,7 @@ public class XDBHelper {
 	}
 	
 	public String storeDoc(String strFileName, String strDocumentName) {
+		String strReturn = "NA";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
@@ -51,6 +52,7 @@ public class XDBHelper {
 			//currentLirbary = rootLibrary.get(arg0, arg1)
 			LSParser builder = rootLibrary.createLSParser();
 			//builder.getDomConfig().setParameter("error-handler", new SimpleDOMErrorPrinter());
+			Log(strFileName);
 			Document firstDocument = builder.parseURI(new File(strFileName).toURI().toString());
 			String firstDocumentName = strDocumentName;
 			// if it doesn't exist yet: store it
@@ -66,9 +68,11 @@ public class XDBHelper {
 			//	firstDocument = (Document)rootLibrary.get(firstDocumentName);
 			//}
 			session.commit();
+			strReturn = "OK";
 		} catch (Exception e) {
 			System.out.println("StoreDocuments sample failed: ");
 			e.printStackTrace();
+			strReturn = "KO: " + e.getMessage();
 		} finally {
 			// disconnect and remove the session
 			if (session.isOpen()) {
@@ -79,10 +83,11 @@ public class XDBHelper {
 			}
 			driver.close();
 		}
-		return "OK";
+		return strReturn;
 	}
 
 	public String storeStringAsDoc(String string, String strDocumentName) {
+		String strReturn = "NA";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
@@ -122,9 +127,11 @@ public class XDBHelper {
 			//	firstDocument = (Document)rootLibrary.get(firstDocumentName);
 			//}
 			session.commit();
+			strReturn = "OK";
 		} catch (Exception e) {
 			System.out.println("StoreDocuments sample failed: ");
 			e.printStackTrace();
+			strReturn = "KO: " + e.getMessage();
 		} finally {
 			// disconnect and remove the session
 			if (session.isOpen()) {
@@ -135,7 +142,7 @@ public class XDBHelper {
 			}
 			driver.close();
 		}
-		return "OK";
+		return strReturn;
 	}
 
 	public String removeDoc(String strDocumentName) {  
@@ -224,4 +231,9 @@ public class XDBHelper {
 		}
 		return "OK";
 	}
+
+	void Log(String str) {
+		System.out.println(str);
+	}
+	
 }

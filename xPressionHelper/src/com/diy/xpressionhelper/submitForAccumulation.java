@@ -19,11 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.diy.xdb.XDBHelperProxy;
 
 
-@WebServlet("/submitForBatch")
-public class submitForBatch extends HttpServlet {
+@WebServlet("/submitForAccumulation")
+public class submitForAccumulation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public submitForBatch() {
+    public submitForAccumulation() {
         super();
     }
 
@@ -37,7 +37,7 @@ public class submitForBatch extends HttpServlet {
 		if (rct.equals("application/xml")) {
 			String ts = generateTimeStamp();
 			String fromIP = (String)request.getRemoteHost().replace(":", "-");
-			String shortFilename = "submitForBatch_from"+fromIP+"_On_"+ts+".xml";
+			String shortFilename = "submitForAccumulation_from"+fromIP+"_On_"+ts+".xml";
 //			String priority = (String)request.getHeader("Priority");
 //			String template = (String)request.getHeader("Template");
 //			String outputProfile = (String)request.getHeader("OutputProfile");
@@ -65,7 +65,7 @@ public class submitForBatch extends HttpServlet {
 				metadata += "<"+paramName+">"+paramValue+"</"+paramName+">";
 			}
 			metadata += "<"+"file_name"+">"+shortFilename+"</"+"file_name"+">";
-			metadata += "<"+"request_type"+">"+"submitForBatch"+"</"+"request_type"+">";
+			metadata += "<"+"request_type"+">"+"submitForAccumulation"+"</"+"request_type"+">";
 			metadata += "</metadata>";
 			Log(metadata);
 			StringBuilder buffer = new StringBuilder();

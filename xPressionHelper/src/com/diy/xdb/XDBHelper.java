@@ -8,7 +8,9 @@
 package com.diy.xdb;
 
 public interface XDBHelper extends java.rmi.Remote {
+    public void main(java.lang.String[] args) throws java.rmi.RemoteException;
     public java.lang.String storeDoc(java.lang.String strFileName, java.lang.String strDocumentName) throws java.rmi.RemoteException;
     public java.lang.String removeDoc(java.lang.String strDocumentName) throws java.rmi.RemoteException;
     public java.lang.String runXQuery(java.lang.String strQuery, java.lang.String strFileName) throws java.rmi.RemoteException;
+    public java.lang.String storeStringAsDoc(java.lang.String string, java.lang.String strDocumentName) throws java.rmi.RemoteException;
 }

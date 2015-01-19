@@ -44,6 +44,12 @@ public class XDBHelperProxy implements com.diy.xdb.XDBHelper {
     return xDBHelper;
   }
   
+  public void main(java.lang.String[] args) throws java.rmi.RemoteException{
+    if (xDBHelper == null)
+      _initXDBHelperProxy();
+    xDBHelper.main(args);
+  }
+  
   public java.lang.String storeDoc(java.lang.String strFileName, java.lang.String strDocumentName) throws java.rmi.RemoteException{
     if (xDBHelper == null)
       _initXDBHelperProxy();
@@ -60,6 +66,12 @@ public class XDBHelperProxy implements com.diy.xdb.XDBHelper {
     if (xDBHelper == null)
       _initXDBHelperProxy();
     return xDBHelper.runXQuery(strQuery, strFileName);
+  }
+  
+  public java.lang.String storeStringAsDoc(java.lang.String string, java.lang.String strDocumentName) throws java.rmi.RemoteException{
+    if (xDBHelper == null)
+      _initXDBHelperProxy();
+    return xDBHelper.storeStringAsDoc(string, strDocumentName);
   }
   
   

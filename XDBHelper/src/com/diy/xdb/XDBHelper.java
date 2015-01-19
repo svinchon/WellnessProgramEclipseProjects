@@ -4,19 +4,21 @@ import java.io.File;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.ls.LSInput;
+import org.w3c.dom.ls.LSParser;
+import org.w3c.dom.ls.LSSerializer;
+
 import com.xhive.XhiveDriverFactory;
 import com.xhive.core.interfaces.XhiveDatabaseIf;
 import com.xhive.core.interfaces.XhiveDriverIf;
 import com.xhive.core.interfaces.XhiveSessionIf;
 import com.xhive.dom.interfaces.XhiveDocumentIf;
+import com.xhive.dom.interfaces.XhiveLibraryChildIf;
 import com.xhive.dom.interfaces.XhiveLibraryIf;
 import com.xhive.query.interfaces.XhiveXQueryResultIf;
 import com.xhive.query.interfaces.XhiveXQueryValueIf;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.ls.LSParser;
-import org.w3c.dom.ls.LSSerializer;
 
 public class XDBHelper {
 
@@ -45,6 +47,8 @@ public class XDBHelper {
 			session.begin();
 			XhiveDatabaseIf xData = session.getDatabase();
 			XhiveLibraryIf rootLibrary = xData.getRoot();
+			//XhiveLibraryChildIf Library = xData.getRoot().get("submitForBatch");
+			//currentLirbary = rootLibrary.get(arg0, arg1)
 			LSParser builder = rootLibrary.createLSParser();
 			//builder.getDomConfig().setParameter("error-handler", new SimpleDOMErrorPrinter());
 			Document firstDocument = builder.parseURI(new File(strFileName).toURI().toString());
@@ -57,6 +61,62 @@ public class XDBHelper {
 				rootLibrary.appendChild(firstDocument);
 				((XhiveDocumentIf)firstDocument).setName(firstDocumentName);
 				((XhiveDocumentIf)firstDocument).getMetadata().put("FileName", strFileName);
+				((XhiveDocumentIf)firstDocument).getMetadata().put("DateStored", new Date().toString());
+			//} else {
+			//	firstDocument = (Document)rootLibrary.get(firstDocumentName);
+			//}
+			session.commit();
+		} catch (Exception e) {
+			System.out.println("StoreDocuments sample failed: ");
+			e.printStackTrace();
+		} finally {
+			// disconnect and remove the session
+			if (session.isOpen()) {
+				session.rollback();
+			}
+			if (session.isConnected()) {
+				session.disconnect();
+			}
+			driver.close();
+		}
+		return "OK";
+	}
+
+	public String storeStringAsDoc(String string, String strDocumentName) {
+		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
+		String databaseName = rb.getString("DatabaseName");//"xData";
+		String administratorName = rb.getString("AdministratorName");//"Administrator";
+		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
+		XhiveDriverIf driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
+		driver.init();
+		XhiveSessionIf session = driver.createSession();
+		try {
+			session.connect(administratorName, administratorPassword, databaseName);
+			session.begin();
+			XhiveDatabaseIf xData = session.getDatabase();
+			XhiveLibraryIf rootLibrary = xData.getRoot();
+			LSParser builder = rootLibrary.createLSParser();
+			LSInput lsi = rootLibrary.createLSInput();
+			//DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			//DocumentBuilder db = dbf.newDocumentBuilder() ;
+			//Document firstDocument = db.parse(new ByteArrayInputStream(string.getBytes()));
+			//builder.getDomConfig().setParameter("error-handler", new SimpleDOMErrorPrinter());
+			//LSInput lsInput=builder.createLSInput();
+			lsi.setStringData(string);
+			//LSInput lsi;
+			//lsi.setStringData(string);
+			//builder.parse(lsi);
+			Document firstDocument = builder.parse(lsi);
+			//.parse(new InputStream(new StringReader(string)));
+			String firstDocumentName = strDocumentName;
+			// if it doesn't exist yet: store it
+			if (rootLibrary.nameExists(firstDocumentName)) {
+				Document docRetrievedByName = (Document)rootLibrary.get( strDocumentName );
+				rootLibrary.removeChild(docRetrievedByName);				
+			}
+				rootLibrary.appendChild(firstDocument);
+				((XhiveDocumentIf)firstDocument).setName(firstDocumentName);
+				//((XhiveDocumentIf)firstDocument).getMetadata().put("FileName", strFileName);
 				((XhiveDocumentIf)firstDocument).getMetadata().put("DateStored", new Date().toString());
 			//} else {
 			//	firstDocument = (Document)rootLibrary.get(firstDocumentName);

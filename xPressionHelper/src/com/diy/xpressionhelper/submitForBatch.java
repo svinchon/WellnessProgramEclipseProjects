@@ -34,7 +34,27 @@ public class submitForBatch extends HttpServlet {
 		String resp = "";
 		String rct = (String)request.getContentType();
 		if (rct.equals("application/xml")) {
+			String ts = generateTimeStamp();
 			String fromIP = (String)request.getRemoteHost().replace(":", "-");
+//			String priority = (String)request.getHeader("Priority");
+//			String template = (String)request.getHeader("Template");
+//			String outputProfile = (String)request.getHeader("OutputProfile");
+			String priority = (String)request.getParameter("Priority");
+			String template = (String)request.getParameter("Template");
+			String outputProfile = (String)request.getParameter("OutputProfile");
+			Log(template);
+			String metadata = ""
+					+ "<metadata>"
+					+ "<priority>"
+					+ priority
+					+ "</priority>"
+					+ "<template>"
+					+ template
+					+ "</template>"
+					+ "<output_profile>"
+					+ outputProfile
+					+ "</output_profile>"
+					+ "</metadata>";
 			StringBuilder buffer = new StringBuilder();
 		    BufferedReader reader = request.getReader();
 		    String line;
@@ -43,14 +63,15 @@ public class submitForBatch extends HttpServlet {
 		    }
 		    String data = buffer.toString();
 			Log(data);
-			String ts = generateTimeStamp();
-			String fileName = "C:/Tmp/submitForBatch_from"+fromIP+"_On_"+ts+".xml";
+			String shortFilename = "submitForBatch_from"+fromIP+"_On_"+ts+".xml";
+			String fileName = "C:/Tmp/"+shortFilename;
 			String2File(data, fileName);
 			XDBHelperProxy xdbhp = new XDBHelperProxy();
 			Log(xdbhp.getEndpoint());
 			xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
 			Log(xdbhp.getEndpoint());
-			xdbhp.storeDoc(fileName, ts);
+			xdbhp.storeDoc(fileName, shortFilename);
+			xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
 			resp = "file written to "+fileName;
 		} else {
 			resp="input has to be XML";

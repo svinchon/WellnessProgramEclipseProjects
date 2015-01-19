@@ -4,6 +4,16 @@
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://xdb.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="main">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="args" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="mainResponse">
+    <complexType/>
+   </element>
    <element name="storeDoc">
     <complexType>
      <sequence>
@@ -48,8 +58,31 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="storeStringAsDoc">
+    <complexType>
+     <sequence>
+      <element name="string" type="xsd:string"/>
+      <element name="strDocumentName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="storeStringAsDocResponse">
+    <complexType>
+     <sequence>
+      <element name="storeStringAsDocReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
   </schema>
  </wsdl:types>
+
+   <wsdl:message name="storeStringAsDocRequest">
+
+      <wsdl:part element="impl:storeStringAsDoc" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
 
    <wsdl:message name="runXQueryResponse">
 
@@ -75,9 +108,33 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="mainRequest">
+
+      <wsdl:part element="impl:main" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="removeDocRequest">
 
       <wsdl:part element="impl:removeDoc" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="storeStringAsDocResponse">
+
+      <wsdl:part element="impl:storeStringAsDocResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="mainResponse">
+
+      <wsdl:part element="impl:mainResponse" name="parameters">
 
       </wsdl:part>
 
@@ -100,6 +157,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    </wsdl:message>
 
    <wsdl:portType name="XDBHelper">
+
+      <wsdl:operation name="main">
+
+         <wsdl:input message="impl:mainRequest" name="mainRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:mainResponse" name="mainResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="storeDoc">
 
@@ -137,11 +206,41 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="storeStringAsDoc">
+
+         <wsdl:input message="impl:storeStringAsDocRequest" name="storeStringAsDocRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:storeStringAsDocResponse" name="storeStringAsDocResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:portType>
 
    <wsdl:binding name="XDBHelperSoapBinding" type="impl:XDBHelper">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="main">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="mainRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="mainResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="storeDoc">
 
@@ -190,6 +289,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="runXQueryResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="storeStringAsDoc">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="storeStringAsDocRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="storeStringAsDocResponse">
 
             <wsdlsoap:body use="literal"/>
 

@@ -20,6 +20,9 @@
       <parameter name="className" value="com.diy.xdb.XDBHelperSoapBindingImpl"/>
       <parameter name="wsdlPortType" value="XDBHelper"/>
       <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="main" qname="operNS:main" xmlns:operNS="http://xdb.diy.com" soapAction="" >
+        <parameter qname="pns:args" xmlns:pns="http://xdb.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
       <operation name="storeDoc" qname="operNS:storeDoc" xmlns:operNS="http://xdb.diy.com" returnQName="retNS:storeDocReturn" xmlns:retNS="http://xdb.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
         <parameter qname="pns:strFileName" xmlns:pns="http://xdb.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:strDocumentName" xmlns:pns="http://xdb.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
@@ -31,7 +34,11 @@
         <parameter qname="pns:strQuery" xmlns:pns="http://xdb.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:strFileName" xmlns:pns="http://xdb.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <parameter name="allowedMethods" value="runXQuery removeDoc storeDoc"/>
+      <operation name="storeStringAsDoc" qname="operNS:storeStringAsDoc" xmlns:operNS="http://xdb.diy.com" returnQName="retNS:storeStringAsDocReturn" xmlns:retNS="http://xdb.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:string" xmlns:pns="http://xdb.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:strDocumentName" xmlns:pns="http://xdb.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="runXQuery storeStringAsDoc removeDoc storeDoc main"/>
 
   </service>
 </deployment>

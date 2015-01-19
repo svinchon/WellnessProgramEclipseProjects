@@ -23,18 +23,25 @@
  <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
  <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
  <ns1:service name="XDBHelper" provider="java:RPC" style="wrapped" use="literal">
-  <ns2:operation name="storeDoc" qname="ns1:storeDoc" returnQName="ns1:storeDocReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
-   <ns2:parameter qname="ns1:strFileName" type="xsd:string"/>
-   <ns2:parameter qname="ns1:strDocumentName" type="xsd:string"/>
+  <ns2:operation name="main" qname="ns1:main" soapAction="" xmlns:ns1="http://xdb.diy.com" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+   <ns2:parameter qname="ns1:args" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns2:operation>
-  <ns1:operation name="removeDoc" qname="ns2:removeDoc" returnQName="ns2:removeDocReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="storeDoc" qname="ns2:storeDoc" returnQName="ns2:storeDocReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:strFileName" type="xsd:string"/>
    <ns1:parameter qname="ns2:strDocumentName" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="runXQuery" qname="ns3:runXQuery" returnQName="ns3:runXQueryReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns3:strQuery" type="xsd:string"/>
-   <ns1:parameter qname="ns3:strFileName" type="xsd:string"/>
+  <ns1:operation name="removeDoc" qname="ns3:removeDoc" returnQName="ns3:removeDocReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns3:strDocumentName" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="runXQuery removeDoc storeDoc"/>
+  <ns1:operation name="runXQuery" qname="ns4:runXQuery" returnQName="ns4:runXQueryReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns4:strQuery" type="xsd:string"/>
+   <ns1:parameter qname="ns4:strFileName" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="storeStringAsDoc" qname="ns5:storeStringAsDoc" returnQName="ns5:storeStringAsDocReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns5:string" type="xsd:string"/>
+   <ns1:parameter qname="ns5:strDocumentName" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="runXQuery storeStringAsDoc removeDoc storeDoc main"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="XDBHelper"/>
   <ns1:parameter name="className" value="com.diy.xdb.XDBHelper"/>

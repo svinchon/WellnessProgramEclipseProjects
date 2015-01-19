@@ -7,6 +7,7 @@
 
 package com.diy.xdb;
 
+@SuppressWarnings({ "unchecked", "rawtypes", "serial" })
 public class XDBHelperServiceLocator extends org.apache.axis.client.Service implements com.diy.xdb.XDBHelperService {
 
     public XDBHelperServiceLocator() {
@@ -22,7 +23,7 @@ public class XDBHelperServiceLocator extends org.apache.axis.client.Service impl
     }
 
     // Use to get a proxy class for XDBHelper
-    private java.lang.String XDBHelper_address = "http://xpression:18080/XDBHelper/services/XDBHelper";
+    private java.lang.String XDBHelper_address = "http://localhost:18080/XDBHelper/services/XDBHelper";
 
     public java.lang.String getXDBHelperAddress() {
         return XDBHelper_address;
@@ -108,9 +109,9 @@ public class XDBHelperServiceLocator extends org.apache.axis.client.Service impl
         return new javax.xml.namespace.QName("http://xdb.diy.com", "XDBHelperService");
     }
 
-    private java.util.HashSet ports = null;
+	private java.util.HashSet ports = null;
 
-    public java.util.Iterator getPorts() {
+	public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
             ports.add(new javax.xml.namespace.QName("http://xdb.diy.com", "XDBHelper"));

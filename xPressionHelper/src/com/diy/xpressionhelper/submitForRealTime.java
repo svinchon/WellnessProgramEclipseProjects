@@ -57,29 +57,19 @@ public class submitForRealTime extends HttpServlet {
 				metadata += "<"+"file_name"+">"+shortFilename+"</"+"file_name"+">";
 				metadata += "<"+"request_type"+">"+"submitForRealTime"+"</"+"request_type"+">";
 				metadata += "</metadata>";
-				//Log(metadata);
 				StringBuilder buffer = new StringBuilder();
 			    BufferedReader reader = request.getReader();
 			    String line;
-			    while ((line = reader.readLine()) != null) {
-			        buffer.append(line);
-			    }
+			    while ((line = reader.readLine()) != null) { buffer.append(line); }
 			    String data = buffer.toString();
-				//Log(data);
 				String fileName = "C:/Tmp/"+shortFilename;
 				String2File(data, fileName);
 				XDBHelperProxy xdbhp = new XDBHelperProxy();
-				//Log(xdbhp.getEndpoint());
 				xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
-				//Log(xdbhp.getEndpoint());
-				//Log("fn="+fileName);
-				//Log("sfn="+shortFilename);
 				xdbhp.storeDoc(fileName, shortFilename);
 				xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
-				//resp = "file written to "+fileName;
 				QuickDocPortTypeProxy p = new QuickDocPortTypeProxy();
 				p.setEndpoint(p.getEndpoint().replace("localhost:18080", "localhost:8080"));	
-				//Log(p.getEndpoint());
 				String documentName = (request.getParameter("Template").equals("--AUTO--")) ? "MonthlyReport.xdrwv" : request.getParameter("Template");
 				String outputProfileName = (request.getParameter("OutputProfile").equals("--AUTO--")) ? "PDF to File" : request.getParameter("OutputProfile");
 				String requestContext = "<RequestContext><Credentials method=\"UserID and Password\"><UserID>xDesigner</UserID><Password>Pa55word</Password></Credentials><ApplicationName>xPression DevKit</ApplicationName></RequestContext>";
@@ -89,7 +79,7 @@ public class submitForRealTime extends HttpServlet {
 							documentName,
 							data,
 							outputProfileName
-						);
+					);
 				} catch (AxisFault e) {
 					resp = e.getFaultString();
 				}
@@ -97,6 +87,7 @@ public class submitForRealTime extends HttpServlet {
 		} else {
 			resp="input has to be XML";
 		}
+		resp = "{ \"message\": \""+resp+"\" }";
 		response.getWriter().write(resp);
 	}
 

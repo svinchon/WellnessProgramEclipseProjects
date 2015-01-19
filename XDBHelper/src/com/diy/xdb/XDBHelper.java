@@ -48,25 +48,18 @@ public class XDBHelper {
 			session.begin();
 			XhiveDatabaseIf xData = session.getDatabase();
 			XhiveLibraryIf rootLibrary = xData.getRoot();
-			//XhiveLibraryChildIf Library = xData.getRoot().get("submitForBatch");
-			//currentLirbary = rootLibrary.get(arg0, arg1)
 			LSParser builder = rootLibrary.createLSParser();
-			//builder.getDomConfig().setParameter("error-handler", new SimpleDOMErrorPrinter());
-			Log(strFileName);
+			//Log(strFileName);
 			Document firstDocument = builder.parseURI(new File(strFileName).toURI().toString());
 			String firstDocumentName = strDocumentName;
-			// if it doesn't exist yet: store it
 			if (rootLibrary.nameExists(firstDocumentName)) {
 				Document docRetrievedByName = (Document)rootLibrary.get( strDocumentName );
 				rootLibrary.removeChild(docRetrievedByName);				
 			}
-				rootLibrary.appendChild(firstDocument);
-				((XhiveDocumentIf)firstDocument).setName(firstDocumentName);
-				((XhiveDocumentIf)firstDocument).getMetadata().put("FileName", strFileName);
-				((XhiveDocumentIf)firstDocument).getMetadata().put("DateStored", new Date().toString());
-			//} else {
-			//	firstDocument = (Document)rootLibrary.get(firstDocumentName);
-			//}
+			rootLibrary.appendChild(firstDocument);
+			((XhiveDocumentIf)firstDocument).setName(firstDocumentName);
+			((XhiveDocumentIf)firstDocument).getMetadata().put("FileName", strFileName);
+			((XhiveDocumentIf)firstDocument).getMetadata().put("DateStored", new Date().toString());
 			session.commit();
 			strReturn = "OK";
 		} catch (Exception e) {
@@ -102,30 +95,16 @@ public class XDBHelper {
 			XhiveLibraryIf rootLibrary = xData.getRoot();
 			LSParser builder = rootLibrary.createLSParser();
 			LSInput lsi = rootLibrary.createLSInput();
-			//DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			//DocumentBuilder db = dbf.newDocumentBuilder() ;
-			//Document firstDocument = db.parse(new ByteArrayInputStream(string.getBytes()));
-			//builder.getDomConfig().setParameter("error-handler", new SimpleDOMErrorPrinter());
-			//LSInput lsInput=builder.createLSInput();
 			lsi.setStringData(string);
-			//LSInput lsi;
-			//lsi.setStringData(string);
-			//builder.parse(lsi);
 			Document firstDocument = builder.parse(lsi);
-			//.parse(new InputStream(new StringReader(string)));
 			String firstDocumentName = strDocumentName;
-			// if it doesn't exist yet: store it
 			if (rootLibrary.nameExists(firstDocumentName)) {
 				Document docRetrievedByName = (Document)rootLibrary.get( strDocumentName );
 				rootLibrary.removeChild(docRetrievedByName);				
 			}
-				rootLibrary.appendChild(firstDocument);
-				((XhiveDocumentIf)firstDocument).setName(firstDocumentName);
-				//((XhiveDocumentIf)firstDocument).getMetadata().put("FileName", strFileName);
-				((XhiveDocumentIf)firstDocument).getMetadata().put("DateStored", new Date().toString());
-			//} else {
-			//	firstDocument = (Document)rootLibrary.get(firstDocumentName);
-			//}
+			rootLibrary.appendChild(firstDocument);
+			((XhiveDocumentIf)firstDocument).setName(firstDocumentName);
+			((XhiveDocumentIf)firstDocument).getMetadata().put("DateStored", new Date().toString());
 			session.commit();
 			strReturn = "OK";
 		} catch (Exception e) {
@@ -133,7 +112,6 @@ public class XDBHelper {
 			e.printStackTrace();
 			strReturn = "KO: " + e.getMessage();
 		} finally {
-			// disconnect and remove the session
 			if (session.isOpen()) {
 				session.rollback();
 			}

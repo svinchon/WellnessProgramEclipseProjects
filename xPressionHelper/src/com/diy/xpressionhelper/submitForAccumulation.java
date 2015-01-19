@@ -38,26 +38,7 @@ public class submitForAccumulation extends HttpServlet {
 			String ts = generateTimeStamp();
 			String fromIP = (String)request.getRemoteHost().replace(":", "-");
 			String shortFilename = "submitForAccumulation_from"+fromIP+"_On_"+ts+".xml";
-//			String priority = (String)request.getHeader("Priority");
-//			String template = (String)request.getHeader("Template");
-//			String outputProfile = (String)request.getHeader("OutputProfile");
-			String priority = (String)request.getParameter("Priority");
-			String template = (String)request.getParameter("Template");
-			String outputProfile = (String)request.getParameter("OutputProfile");
-			Log(template);
-			String metadata = ""
-					+ "<metadata>"
-					+ "<priority>"
-					+ priority
-					+ "</priority>"
-					+ "<template>"
-					+ template
-					+ "</template>"
-					+ "<output_profile>"
-					+ outputProfile
-					+ "</output_profile>"
-					+ "</metadata>";
-			metadata = "<metadata>";
+			String metadata = "<metadata>";
 			Enumeration<String> parameterNames = request.getParameterNames();
 			while (parameterNames.hasMoreElements()) {
 				String paramName = parameterNames.nextElement();
@@ -67,29 +48,22 @@ public class submitForAccumulation extends HttpServlet {
 			metadata += "<"+"file_name"+">"+shortFilename+"</"+"file_name"+">";
 			metadata += "<"+"request_type"+">"+"submitForAccumulation"+"</"+"request_type"+">";
 			metadata += "</metadata>";
-			Log(metadata);
 			StringBuilder buffer = new StringBuilder();
 		    BufferedReader reader = request.getReader();
 		    String line;
-		    while ((line = reader.readLine()) != null) {
-		        buffer.append(line);
-		    }
+		    while ((line = reader.readLine()) != null) { buffer.append(line); }
 		    String data = buffer.toString();
-			Log(data);
 			String fileName = "C:/Tmp/"+shortFilename;
 			String2File(data, fileName);
 			XDBHelperProxy xdbhp = new XDBHelperProxy();
-			Log(xdbhp.getEndpoint());
 			xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
-			Log(xdbhp.getEndpoint());
-			Log("fn="+fileName);
-			Log("sfn="+shortFilename);
 			xdbhp.storeDoc(fileName, shortFilename);
 			xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
-			resp = "file written to "+fileName;
+			resp = "file written to XDB and "+fileName;
 		} else {
 			resp="input has to be XML";
 		}
+		resp = "{ \"message\": \""+resp+"\" }";
 		response.getWriter().write(resp);
 	}
 

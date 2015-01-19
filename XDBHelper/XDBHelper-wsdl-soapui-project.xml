@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="XDBHelper?wsdl" resourceRoot="" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="XDBHelperSoapBinding" type="wsdl" bindingName="{http://xdb.diy.com}XDBHelperSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:18080/XDBHelper/services/XDBHelper?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:18080/XDBHelper/services/XDBHelper?wsdl"><con:part><con:url>http://localhost:18080/XDBHelper/services/XDBHelper?wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://xdb.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://xdb.diy.com" xmlns:intf="http://xdb.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<con:soapui-project activeEnvironment="Default" name="XDBHelper?wsdl" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="XDBHelperSoapBinding" type="wsdl" bindingName="{http://xdb.diy.com}XDBHelperSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:18080/XDBHelper/services/XDBHelper?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:18080/XDBHelper/services/XDBHelper?wsdl"><con:part><con:url>http://localhost:18080/XDBHelper/services/XDBHelper?wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://xdb.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://xdb.diy.com" xmlns:intf="http://xdb.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <!--WSDL created by Apache Axis version: 1.4
 Built on Apr 22, 2006 (06:55:48 PDT)-->
   <wsdl:types>
@@ -136,7 +136,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <soapenv:Header/>
    <soapenv:Body>
       <xdb:storeDoc>
-         <xdb:strFileName>C:/tmp/submitForBatch_from0-0-0-0-0-0-0-1_On_2015-01-16@12-00-17-591.xml</xdb:strFileName>
+         <xdb:strFileName>c:/tmp/ggsubmitForBatch_from0-0-0-0-0-0-0-1_On_2015-01-19@14-27-15-271.xml</xdb:strFileName>
          <xdb:strDocumentName>Test</xdb:strDocumentName>
       </xdb:storeDoc>
    </soapenv:Body>

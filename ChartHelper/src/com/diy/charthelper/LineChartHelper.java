@@ -66,7 +66,7 @@ public class LineChartHelper {
 				Date dItemDate = cal.getTime();
 				String strItemDate = newDateFormat.format(dItemDate);
 				//System.out.println(strItemDate);
-				dcd.addValue(new Double(IndexValues[i]), "Index", strItemDate.substring(0,3).toUpperCase());
+				dcd.addValue(new Double(IndexValues[i]), "Index", strItemDate.substring(0,2));//.toUpperCase());
 				cal.add(Calendar.DATE, 1);
 			}
 			JFreeChart jfc = createChart(dcd);
@@ -76,7 +76,7 @@ public class LineChartHelper {
 					jfc,
 					strDir,
 					strFileName,
-					390,
+					350,
 					200,
 					true
 			);

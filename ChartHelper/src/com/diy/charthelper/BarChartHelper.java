@@ -48,7 +48,7 @@ public class BarChartHelper {
 					jfc,
 					strDir,
 					strFileName,
-					390,
+					350,
 					100,
 					true
 			);

@@ -25,9 +25,125 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
 
-public class RESTHelperV2 {
+public class VITEXRESTHelper {
+	
+	boolean bDebug = true;
 
-	public RESTCallResultV2 CallRESTService(
+	public String submitNewUser(
+			String strUserName,
+			String strEmail,
+			String strPassword,
+			String strExternalId,
+			String strGender,
+			String strWeight,
+			String strBirthDate,
+			int iSportActivity
+	) {
+		String strResult = "ERROR";
+		try {
+			String strVitexServerHost = ResourceBundle.getBundle("WellnessProgram").getString("VitexServerHost");		
+			VITEXRESTHelper rh = new VITEXRESTHelper();
+			String strJSONInput = ""
+					+ "{"
+					+ "'user_register':{"
+					+ "'username':'"+strUserName+"',"
+					+ "'email':'"+strEmail+"',"
+					+ "'password':'"+strPassword+"',"
+					+ "'external_id':'"+strExternalId+"'," 
+					+ "'gender':'"+strGender+"',"
+					+ "'weight':"+strWeight+","
+					+ "'birth_date':'"+strBirthDate+"'," 
+					+ "'sports_activity':"+iSportActivity
+					+ "}"
+					+ "}";
+			strJSONInput = strJSONInput.replace("'", "\"").replace("\t", " ");
+			RESTCallResultV2 rcr;
+			rcr = rh.CallRESTService(
+					"https://"+strVitexServerHost+"/api/v1/users/",
+					"POST",
+					strJSONInput,
+					"emc_api",
+					"brownwallflying"
+			);
+			if (rcr.boolSuccessfull) {
+				JSONObject obj = new JSONObject(rcr.strResultMessage); 
+				String id = obj.getJSONObject("user").getString("id");
+				strResult = "SUCCESS:id="+id;
+			} else {
+				strResult = "ERROR:"+rcr.strResultMessage;
+				Log("WPR / VITEXRESTHelper / submitNewUser => "+rcr.strResultMessage);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return strResult;
+	}
+
+	public String getUserIndex(
+			String strId
+	) {
+		String strResult = "ERROR";
+		try {
+			String strVitexServerHost = ResourceBundle.getBundle("WellnessProgram").getString("VitexServerHost");		
+			VITEXRESTHelper rh = new VITEXRESTHelper();
+			RESTCallResultV2 rcr;
+			rcr = rh.CallRESTService(
+					"https://"+strVitexServerHost+"/api/v1/users/"+strId+"/status",
+					"GET",
+					"",
+					"emc_api",
+					"brownwallflying"
+			);
+			Log("WPR / VITEXRESTHelper / getUserIndex => "+rcr.strResultMessage);
+			if (rcr.boolSuccessfull) {
+				JSONObject obj = new JSONObject(rcr.strResultMessage); 
+				String index = obj.getJSONObject("user").getString("index");
+				strResult = "SUCCESS:index="+index;
+			} else {
+				strResult = "ERROR";
+				Log("WPR / VITEXRESTHelper / getUserIndex => "+rcr.strResultMessage);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return strResult;
+	}
+
+	public String getUsers(String strFormat) {
+		String strResult = "ERROR";
+		try {
+			String strVitexServerHost = ResourceBundle.getBundle("WellnessProgram").getString("VitexServerHost");		
+			VITEXRESTHelper rh = new VITEXRESTHelper();
+			RESTCallResultV2 rcr;
+			rcr = rh.CallRESTService(
+					"https://"+strVitexServerHost+"/api/v1/users/_all/",
+					"GET",
+					"",
+					"emc_api",
+					"brownwallflying"
+			);
+			if (rcr.boolSuccessfull) {
+				//JSONObject obj = new JSONObject(rcr.strResultMessage); 
+				//String index = obj.getJSONObject("user").getString("index");
+				if (strFormat.equals("JSON")) {
+					strResult = "SUCCESS:msg="+rcr.strResultMessage;		
+				} else {
+					JSONObject obj = new JSONObject(rcr.strResultMessage);
+					String strXML = "<users>"+XML.toString(obj).replace("users", "user")+"</users>";
+					strResult = "SUCCESS:xml="+strXML;
+					//Log("WPR / VITEXRESTHelper / getUsers => \n"+prettyPrintXML(strXML));					
+				}
+			} else {
+				strResult = "ERROR";
+				Log("WPR / VITEXRESTHelper / getUsers => "+rcr.strResultMessage);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return strResult;
+	}
+
+	private RESTCallResultV2 CallRESTService(
 			String RESTEndPoint,
 			String RESTMethod,
 			String strJSONInput,
@@ -36,7 +152,7 @@ public class RESTHelperV2 {
 
 	) {
 		if (!strJSONInput.equals("")) {
-			Log("WPR / RESTHelperV2 / CallRESTService => JSON Input: "+strJSONInput);
+			Log("WPR / VITEXTRESTHelper / CallRESTService => JSON Input: "+strJSONInput);
 		}
 		RESTCallResultV2 rcr = new RESTCallResultV2();
 		rcr.boolSuccessfull = null;
@@ -79,126 +195,11 @@ public class RESTHelperV2 {
 		webResource = null;
 		client = null;
 		clientConfig = null;
-		Log("WPR / RESTHelperV2 / CallRESTService => HTTP Message: " + rcr.strHTTPMessage);
-		Log("WPR / RESTHelperV2 / CallRESTService => Result Message: " + rcr.strResultMessage.replaceAll("\n", "").replaceAll("\t", "").replaceAll(">\\s+<", "><").trim());
-		Log("WPR / RESTHelperV2 / CallRESTService => success? " + rcr.boolSuccessfull);
+		Log("WPR / VITEXRESTHelper / CallRESTService => HTTP Message: " + rcr.strHTTPMessage);
+		Log("WPR / VITEXRESTHelper / CallRESTService => Result Message: " + rcr.strResultMessage.replaceAll("\n", "").replaceAll("\t", "").replaceAll(">\\s+<", "><").trim());
+		Log("WPR / VITEXRESTHelper / CallRESTService => success? " + rcr.boolSuccessfull);
 		return rcr;
-	}
-	
-	public String submitNewUser(
-			String strUserName,
-			String strEmail,
-			String strPassword,
-			String strExternalId,
-			String strGender,
-			String strWeight,
-			String strBirthDate,
-			int iSportActivity
-	) {
-		String strResult = "ERROR";
-		try {
-			String strVitexServerHost = ResourceBundle.getBundle("WellnessProgram").getString("VitexServerHost");		
-			RESTHelperV2 rh = new RESTHelperV2();
-			String strJSONInput = ""
-					+ "{"
-					+ "'user_register':{"
-					+ "'username':'"+strUserName+"',"
-					+ "'email':'"+strEmail+"',"
-					+ "'password':'"+strPassword+"',"
-					+ "'external_id':'"+strExternalId+"'," 
-					+ "'gender':'"+strGender+"',"
-					+ "'weight':"+strWeight+","
-					+ "'birth_date':'"+strBirthDate+"'," 
-					+ "'sports_activity':"+iSportActivity
-					+ "}"
-					+ "}";
-			strJSONInput = strJSONInput.replace("'", "\"").replace("\t", " ");
-			RESTCallResultV2 rcr;
-			rcr = rh.CallRESTService(
-					"https://"+strVitexServerHost+"/api/v1/users/",
-					"POST",
-					strJSONInput,
-					"emc_api",
-					"brownwallflying"
-			);
-			if (rcr.boolSuccessfull) {
-				JSONObject obj = new JSONObject(rcr.strResultMessage); 
-				String id = obj.getJSONObject("user").getString("id");
-				strResult = "SUCCESS:id="+id;
-			} else {
-				strResult = "ERROR";
-				Log("WPR / RestHelperV2 / submitNewUser => "+rcr.strResultMessage);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return strResult;
-	}
-
-	public String getUserIndex(
-			String strId
-	) {
-		String strResult = "ERROR";
-		try {
-			String strVitexServerHost = ResourceBundle.getBundle("WellnessProgram").getString("VitexServerHost");		
-			RESTHelperV2 rh = new RESTHelperV2();
-			RESTCallResultV2 rcr;
-			rcr = rh.CallRESTService(
-					"https://"+strVitexServerHost+"/api/v1/users/"+strId+"/status",
-					"GET",
-					"",
-					"emc_api",
-					"brownwallflying"
-			);
-			if (rcr.boolSuccessfull) {
-				JSONObject obj = new JSONObject(rcr.strResultMessage); 
-				String index = obj.getJSONObject("user").getString("index");
-				strResult = "SUCCESS:index="+index;
-			} else {
-				strResult = "ERROR";
-				Log("WPR / RestHelperV2 / getUserIndex => "+rcr.strResultMessage);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return strResult;
-	}
-
-	public String getUsers(String strFormat) {
-		String strResult = "ERROR";
-		try {
-			String strVitexServerHost = ResourceBundle.getBundle("WellnessProgram").getString("VitexServerHost");		
-			RESTHelperV2 rh = new RESTHelperV2();
-			RESTCallResultV2 rcr;
-			rcr = rh.CallRESTService(
-					"https://"+strVitexServerHost+"/api/v1/users/_all/",
-					"GET",
-					"",
-					"emc_api",
-					"brownwallflying"
-			);
-			if (rcr.boolSuccessfull) {
-				//JSONObject obj = new JSONObject(rcr.strResultMessage); 
-				//String index = obj.getJSONObject("user").getString("index");
-				if (strFormat.equals("JSON")) {
-					strResult = "SUCCESS:msg="+rcr.strResultMessage;		
-				} else {
-					JSONObject obj = new JSONObject(rcr.strResultMessage);
-					String strXML = "<users>"+XML.toString(obj).replace("users", "user")+"</users>";
-					strResult = "SUCCESS:xml="+strXML;
-					//Log("WPR / RestHelperV2 / getUsers => \n"+prettyPrintXML(strXML));					
-				}
-			} else {
-				strResult = "ERROR";
-				Log("WPR / RestHelperV2 / getUsers => "+rcr.strResultMessage);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return strResult;
-	}
-
-	public static String prettyPrintXML(String str) {
+	}	public static String prettyPrintXML(String str) {
 		String strReturn = "";
 		try {
 			Source sourceContent = new StreamSource(new StringReader(str));
@@ -222,8 +223,8 @@ public class RESTHelperV2 {
 	    return strReturn;
 	}
 	
-	private static void Log(String str) {
-		System.out.println("LOG: "+str);
+	private void Log(String str) {
+		if (bDebug) System.out.println("LOG: "+str);
 	}
 	
 }

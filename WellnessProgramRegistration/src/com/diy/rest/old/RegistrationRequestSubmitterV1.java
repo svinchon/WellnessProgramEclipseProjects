@@ -1,4 +1,4 @@
-package com.diy.wellnessprogram;
+package com.diy.rest.old;
 
 import java.io.StringWriter;
 

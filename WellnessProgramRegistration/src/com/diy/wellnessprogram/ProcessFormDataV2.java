@@ -17,6 +17,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import com.diy.rest.old.RegistrationRequestSubmitterV1;
+
 @WebServlet("/ProcessFormData")
 public class ProcessFormDataV2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;

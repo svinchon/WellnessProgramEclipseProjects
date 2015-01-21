@@ -1,4 +1,4 @@
-package com.diy.wellnessprogram;
+package com.diy.rest.old;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;

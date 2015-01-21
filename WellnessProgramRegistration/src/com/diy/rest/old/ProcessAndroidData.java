@@ -1,4 +1,4 @@
-package com.diy.wellnessprogram;
+package com.diy.rest.old;
 
 public class ProcessAndroidData {
 	public String getResult(String str) {

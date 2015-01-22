@@ -56,9 +56,13 @@ public class submitForBatch extends HttpServlet {
 			String fileName = "C:/Tmp/"+shortFilename;
 			String2File(data, fileName);
 			XDBHelperProxy xdbhp = new XDBHelperProxy();
-			xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
+			xdbhp.setEndpoint(xdbhp.getEndpoint().replace("localhost","192.168.3.53"));
 			xdbhp.storeDoc(fileName, shortFilename);
 			xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
+			String strXQ =""
+					+ "let $e:=<event><time>"+ts+"</time><type>submitForBatch</type>"+metadata+"</event> "
+					+ "return insert node $e as first into /audit_trail";
+			xdbhp.runXQuery(strXQ);
 			resp = "file written to XDB and "+fileName;
 		} else {
 			resp="input has to be XML";

@@ -43,16 +43,16 @@ public class notifyNewDataWasStoredInHIP extends HttpServlet {
 			metadata += "<"+paramName+">"+paramValue+"</"+paramName+">";
 		}
 		metadata += "<"+"file_name"+">"+shortFilename+"</"+"file_name"+">";
-		metadata += "<"+"request_type"+">"+"submitForBatch"+"</"+"request_type"+">";
+		metadata += "<"+"request_type"+">"+"notifyNewDataWasStoredInHIP"+"</"+"request_type"+">";
 		metadata += "</metadata>";
 		XDBHelperProxy xdbhp = new XDBHelperProxy();
 		xdbhp.setEndpoint(xdbhp.getEndpoint().replace("localhost","192.168.3.53"));
 		String strXQ =""
-				+ "let $e:=<event><time>"+ts+"</time><type>submitForBatch</type>"+metadata+"</event> "
+				+ "let $e:=<event><time>"+ts+"</time><type>notifyNewDataWasStoredInHIP</type>"+metadata+"</event> "
 				+ "return insert node $e as first into /audit_trail";
 		xdbhp.runXQuery(strXQ);
 		strXQ =""
-				+ "let $e:=<notification><time>"+ts+"</time><type>submitForBatch</type>"+metadata+"</notification> "
+				+ "let $e:=<notification><time>"+ts+"</time><type>notifyNewDataWasStoredInHIP</type>"+metadata+"</notification> "
 				+ "return insert node $e as first into /notifications";
 		xdbhp.runXQuery(strXQ);
 		resp = "notification received";

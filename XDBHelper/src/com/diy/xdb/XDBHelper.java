@@ -28,10 +28,15 @@ public class XDBHelper {
 	
 	public static void main(String[] args) {
 		XDBHelper h = new XDBHelper();
-		h.storeDoc(
+		/*h.storeDoc(
 			"C:/tmp/submitForBatch_from0-0-0-0-0-0-0-1_On_2015-01-16@12-00-17-591.xml",
 			"TEST"
-		);		
+		);*/
+		String strXQ =""
+				+ "let $e:=<event><time>"+"</time><type>submitForBatch</type>"+"</event> "
+				+ "return insert node $e as first into /audit_trail";
+		
+		h.Log(h.runXQuery(strXQ));
 	}
 	
 	public String storeDoc(String strFileName, String strDocumentName) {
@@ -155,7 +160,8 @@ public class XDBHelper {
 		return "OK";
 	}
 
-	public String runXQuery(String strQuery, String strFileName) { 
+	public String runXQuery(String strQuery) {
+		String strReturn = "";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
@@ -189,7 +195,8 @@ public class XDBHelper {
 				Node n = (Node)value;
 				LSSerializer writer = rootLibrary.createLSSerializer(); 
 				writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE); 
-				writer.writeToURI(n, new File(strFileName).toURI().toString());
+				strReturn = writer.writeToString(n);
+				//.writeToURI(n, new File(strFileName).toURI().toString());
 				//String output = writer.writeToString(n);
 				//System.out.println(output);
 			}
@@ -197,6 +204,7 @@ public class XDBHelper {
 		} catch (Exception e) {
 			System.err.println("XQuery sample failed: ");
 			e.printStackTrace();
+			strReturn = "ERRRO";
 		} finally {
 			// disconnect and remove the session
 			if (session.isOpen()) {
@@ -207,7 +215,7 @@ public class XDBHelper {
 			}
 			driver.close();
 		}
-		return "OK";
+		return strReturn;
 	}
 
 	void Log(String str) {

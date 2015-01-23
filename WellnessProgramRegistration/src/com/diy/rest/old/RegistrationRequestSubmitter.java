@@ -6,7 +6,7 @@ import javax.xml.soap.*;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 
-public class RegistrationRequestSubmitterV1 {
+public class RegistrationRequestSubmitter {
 	
 	private String age;
 	private String weight;

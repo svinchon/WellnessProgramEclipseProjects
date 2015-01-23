@@ -28,6 +28,13 @@ import com.sun.jersey.api.json.JSONConfiguration;
 public class VITEXRESTHelper {
 	
 	boolean bDebug = true;
+	
+	public class RESTCallResult {
+		public Boolean boolSuccessfull;
+		public String strResultMessage;
+		public String strHTTPMessage;
+	}
+
 
 	public String submitNewUser(
 			String strUserName,
@@ -57,7 +64,7 @@ public class VITEXRESTHelper {
 					+ "}"
 					+ "}";
 			strJSONInput = strJSONInput.replace("'", "\"").replace("\t", " ");
-			RESTCallResultV2 rcr;
+			RESTCallResult rcr;
 			rcr = rh.CallRESTService(
 					"https://"+strVitexServerHost+"/api/v1/users/",
 					"POST",
@@ -86,7 +93,7 @@ public class VITEXRESTHelper {
 		try {
 			String strVitexServerHost = ResourceBundle.getBundle("WellnessProgram").getString("VitexServerHost");		
 			VITEXRESTHelper rh = new VITEXRESTHelper();
-			RESTCallResultV2 rcr;
+			RESTCallResult rcr;
 			rcr = rh.CallRESTService(
 					"https://"+strVitexServerHost+"/api/v1/users/"+strId+"/status",
 					"GET",
@@ -114,7 +121,7 @@ public class VITEXRESTHelper {
 		try {
 			String strVitexServerHost = ResourceBundle.getBundle("WellnessProgram").getString("VitexServerHost");		
 			VITEXRESTHelper rh = new VITEXRESTHelper();
-			RESTCallResultV2 rcr;
+			RESTCallResult rcr;
 			rcr = rh.CallRESTService(
 					"https://"+strVitexServerHost+"/api/v1/users/_all/",
 					"GET",
@@ -143,7 +150,7 @@ public class VITEXRESTHelper {
 		return strResult;
 	}
 
-	private RESTCallResultV2 CallRESTService(
+	private RESTCallResult CallRESTService(
 			String RESTEndPoint,
 			String RESTMethod,
 			String strJSONInput,
@@ -154,7 +161,7 @@ public class VITEXRESTHelper {
 		if (!strJSONInput.equals("")) {
 			Log("WPR / VITEXTRESTHelper / CallRESTService => JSON Input: "+strJSONInput);
 		}
-		RESTCallResultV2 rcr = new RESTCallResultV2();
+		RESTCallResult rcr = new RESTCallResult();
 		rcr.boolSuccessfull = null;
 		DefaultClientConfig clientConfig = new DefaultClientConfig();
 		clientConfig.getFeatures().put(

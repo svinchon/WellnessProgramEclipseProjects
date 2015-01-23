@@ -30,7 +30,7 @@ public class ProcessFormDataV1 extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RegistrationRequestSubmitterV1 rrs = new RegistrationRequestSubmitterV1();
+		RegistrationRequestSubmitter rrs = new RegistrationRequestSubmitter();
 		rrs.setAge(""+request.getParameter("age"));
 		rrs.setEmail(""+request.getParameter("email"));
 		rrs.setFirstName(""+request.getParameter("first_name"));

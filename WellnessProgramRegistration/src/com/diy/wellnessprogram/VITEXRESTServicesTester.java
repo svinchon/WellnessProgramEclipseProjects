@@ -23,10 +23,9 @@ public class VITEXRESTServicesTester {
 		);
 	}
 	
-	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		VITEXRESTHelper rh = new VITEXRESTHelper();
-		RESTCallResultV2 rcr;
+		//RESTCallResult rcr;
 		UUID ui = UUID.randomUUID();
 		String strGender = "male";
 		String strEmail = "john.doe.02@gmail.com";

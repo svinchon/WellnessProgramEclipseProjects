@@ -17,7 +17,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import com.diy.rest.old.RegistrationRequestSubmitterV1;
+import com.diy.rest.old.RegistrationRequestSubmitter;
 
 @WebServlet("/ProcessFormData")
 public class ProcessFormDataV2 extends HttpServlet {
@@ -32,7 +32,7 @@ public class ProcessFormDataV2 extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RegistrationRequestSubmitterV1 rrs = new RegistrationRequestSubmitterV1();
+		RegistrationRequestSubmitter rrs = new RegistrationRequestSubmitter();
 		rrs.setAge(""+request.getParameter("age"));
 		rrs.setEmail(""+request.getParameter("email"));
 		rrs.setFirstName(""+request.getParameter("first_name"));

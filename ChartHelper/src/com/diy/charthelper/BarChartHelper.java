@@ -3,12 +3,16 @@ package com.diy.charthelper;
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -16,6 +20,7 @@ import org.jfree.chart.renderer.category.StackedBarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.TextAnchor;
 
 public class BarChartHelper {
 
@@ -50,7 +55,7 @@ public class BarChartHelper {
 					strFileName,
 					350,
 					100,
-					true
+					true//transparency
 			);
 			strDir = ResourceBundle.getBundle("ChartHelper").getString("ImageFolderURL");
 			strReturn = strDir + "/" + strFileName + ".png";
@@ -82,19 +87,28 @@ public class BarChartHelper {
 		lcp.getRangeAxis().setUpperMargin(0.0);
 		lcp.getDomainAxis().setVisible(false);
 		
-		//lcp.set
-
-		ChartUtilities.applyCurrentTheme(jfc);
-
-		StackedBarRenderer sbr;
-		sbr = (StackedBarRenderer)lcp.getRenderer();
+		StackedBarRenderer sbr = (StackedBarRenderer)lcp.getRenderer();
 		sbr.setBarPainter(new StandardBarPainter());
 		sbr.setDrawBarOutline(false);
 		sbr.setMaximumBarWidth(.25);
 		sbr.setSeriesPaint(0, new Color(141,198,63,230));
 		sbr.setSeriesPaint(1, new Color(141,198,63,50));
 
-		return jfc;
+	    StandardCategoryItemLabelGenerator lscilg;
+	    lscilg = new StandardCategoryItemLabelGenerator(//);
+	    		"{1}",
+	    		NumberFormat.getInstance()
+	    );
+	    sbr.setItemMargin(0.5D);
+	    sbr.setBaseItemLabelGenerator(lscilg);
+	    sbr.setBaseItemLabelsVisible(true); 
+	    ItemLabelPosition lilp = new ItemLabelPosition(
+	    		ItemLabelAnchor.INSIDE9,
+	    		TextAnchor.CENTER_LEFT
+	    		);
+	    sbr.setBaseItemLabelPaint(Color.white);
+	    sbr.setBasePositiveItemLabelPosition(lilp);
+	    return jfc;
 	}
 
 	public static void creatPNGofChart(

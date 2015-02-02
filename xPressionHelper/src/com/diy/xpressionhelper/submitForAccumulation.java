@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.diy.xdb.XDBHelperProxy;
 
-
 @WebServlet("/submitForAccumulation")
 public class submitForAccumulation extends HttpServlet {
 	private static final long serialVersionUID = 1L;

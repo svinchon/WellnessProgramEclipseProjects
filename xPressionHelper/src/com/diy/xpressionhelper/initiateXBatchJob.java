@@ -15,8 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.diy.QuickDoc.QuickDocPortTypeProxy;
-import com.diy.xADF.xUtilsWSAPI;
+//import com.diy.xADF.xUtilsWSAPI;
 import com.diy.xdb.XDBHelperProxy;
 
 
@@ -71,7 +70,7 @@ public class initiateXBatchJob extends HttpServlet {
 						+ "} "
 						+ "</users>";
 				String strXML = xdbhp.runXQuery(strXQ);
-				String2File(strXML, "C:/tmp/"+"ExtractedForBatch"+ts+".xml");
+				String2File(strXML, "C:/tmp/"+"ExtractedForBatch_On_"+ts+".xml");
 				resp = "data extracted";
 			} else {
 				resp = "wrong value for DataOrigin";

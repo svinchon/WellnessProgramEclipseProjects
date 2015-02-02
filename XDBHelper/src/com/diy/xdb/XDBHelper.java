@@ -178,6 +178,8 @@ public class XDBHelper {
 			XhiveDatabaseIf xData = session.getDatabase();
 			// get a handle to the root library
 			XhiveLibraryIf rootLibrary = xData.getRoot();
+			//XhiveLibraryIf myLibrary;
+			//= xData.ge.get("xPressionHelper");
 			// Create a query (find all the short chapter titles)
 			/*String theQuery = 
 				"<xData>{for $i in document('/')/xData/xTransaction "
@@ -185,7 +187,8 @@ public class XDBHelper {
 				+ "return $i}</xData>";*/
 			// Execute the query (place the results in the new document)
 			//System.out.println("#running query:\n" + strQuery);
-			XhiveXQueryResultIf result = rootLibrary.executeXQuery(strQuery);
+			XhiveXQueryResultIf result = rootLibrary.executeXQuery(strQuery); //rootLibrary
+			//XhiveXQueryResultIf result = myLibrary.executeXQuery(strQuery); //rootLibrary
 			// Process the results
 			while (result.hasNext()) {
 				// Get the next value from the result sequence

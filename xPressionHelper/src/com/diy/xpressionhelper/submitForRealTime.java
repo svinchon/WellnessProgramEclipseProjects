@@ -68,6 +68,10 @@ public class submitForRealTime extends HttpServlet {
 				xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
 				xdbhp.storeDoc(fileName, shortFilename);
 				xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
+				String strXQ =""
+						+ "let $e:=<event><time>"+ts+"</time><type>submitForRealTime</type>"+metadata+"</event> "
+						+ "return insert node $e as first into /audit_trail";
+				xdbhp.runXQuery(strXQ);
 				QuickDocPortTypeProxy p = new QuickDocPortTypeProxy();
 				p.setEndpoint(p.getEndpoint().replace("localhost:18080", "localhost:8080"));	
 				String documentName = (request.getParameter("Template").equals("--AUTO--")) ? "MonthlyReport.xdrwv" : request.getParameter("Template");

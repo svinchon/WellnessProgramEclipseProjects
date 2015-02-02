@@ -184,7 +184,7 @@ public class XDBHelper {
 				//+ "where string-length($i) lt 16 \n"
 				+ "return $i}</xData>";*/
 			// Execute the query (place the results in the new document)
-			System.out.println("#running query:\n" + strQuery);
+			//System.out.println("#running query:\n" + strQuery);
 			XhiveXQueryResultIf result = rootLibrary.executeXQuery(strQuery);
 			// Process the results
 			while (result.hasNext()) {

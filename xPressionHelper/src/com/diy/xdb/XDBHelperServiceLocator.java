@@ -7,7 +7,6 @@
 
 package com.diy.xdb;
 
-@SuppressWarnings({"rawtypes", "unchecked", "serial"})
 public class XDBHelperServiceLocator extends org.apache.axis.client.Service implements com.diy.xdb.XDBHelperService {
 
     public XDBHelperServiceLocator() {

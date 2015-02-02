@@ -83,13 +83,22 @@ public class VITEXRESTServicesTester {
 		Log("WPR / RESTTestClient => "+strXML);
 		Log("WPR / RESTTestClient => "+VITEXRESTHelper.prettyPrintXML(strXML));
 		
-		/* object mapper example 
-		strJSONOutput = "{\"id\":\"eWisiXfUXL4INp0P6C5XpQ\",\"username\":\"john_doe26\",\"index\":null}";
+		/*/ object mapper example 
+		String strJSONOutput = "{\"id\":\"eWisiXfUXL4INp0P6C5XpQ\",\"username\":\"john_doe26\",\"index\":null}";
 		ObjectMapper mapper = new ObjectMapper();
-		User user = mapper.readValue(
-			strJSONOutput,
-			User.class
-		);
+		User user;
+		try {
+			user = mapper.readValue(
+				strJSONOutput,
+				User.class
+			);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Log("------> "+user.getId());
 		*/
 	}

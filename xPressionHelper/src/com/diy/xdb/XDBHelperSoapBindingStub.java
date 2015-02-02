@@ -7,6 +7,7 @@
 
 package com.diy.xdb;
 
+@SuppressWarnings({"rawtypes", "unused"})
 public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implements com.diy.xdb.XDBHelper {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
@@ -112,7 +113,7 @@ public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implem
             if (super.cachedPortName != null) {
                 _call.setPortName(super.cachedPortName);
             }
-            java.util.Enumeration keys = super.cachedProperties.keys();
+			java.util.Enumeration keys = super.cachedProperties.keys();
             while (keys.hasMoreElements()) {
                 java.lang.String key = (java.lang.String) keys.nextElement();
                 _call.setProperty(key, super.cachedProperties.get(key));

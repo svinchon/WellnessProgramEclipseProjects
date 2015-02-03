@@ -451,17 +451,17 @@ public class MailWorker implements Runnable {
 		String htmlText = getHtmlText();
 		htmlText = bindImg2Html(imageFiles, htmlText);
 		//LogManager.logInfo("===========> HTML TEXT: " + htmlText);
-		LogManager.logInfo("===========> Mailworker BEFORE : " + htmlText);
 		if (htmlText.indexOf("<!-- WP-EMBED-IMAGES -->")>=0) {
+			LogManager.logInfo("===========> Mailworker BEFORE : " + htmlText);
 			LogManager.logInfo("Calling HTML Helper BEGIN");
 			HTMLHelperProxy hhp;
 			hhp = new HTMLHelperProxy();
 			htmlText = hhp.embedImages(new String(htmlText));
 			LogManager.logInfo("Calling HTML Helper END");
+			LogManager.logInfo("===========> Mailworker AFTER : " + htmlText);
 		} else {
 			LogManager.logInfo("NOT CALLING HTML Helper");
 		}
-		LogManager.logInfo("===========> Mailworker AFTER : " + htmlText);
 		BodyPart messageBodyPart = new MimeBodyPart();
 		messageBodyPart.setContent(htmlText, "text/html; charset=\"utf-8\"");
 		htmlMultipart.addBodyPart(messageBodyPart);

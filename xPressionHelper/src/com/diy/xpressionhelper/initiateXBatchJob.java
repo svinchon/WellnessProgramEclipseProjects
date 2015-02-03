@@ -62,7 +62,7 @@ public class initiateXBatchJob extends HttpServlet {
 							+ "doc('"+DataFileName+"')/users/* "
 							+ "} "
 							+ "</users>";
-					Log("strXQ="+strXQ);
+					//Log("strXQ="+strXQ);
 					String strXML = xdbhp.runXQuery(strXQ);
 					String2File(strXML, strDataFileFullName);		
 				} else {

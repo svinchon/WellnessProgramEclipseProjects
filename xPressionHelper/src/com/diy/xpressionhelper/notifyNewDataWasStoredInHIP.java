@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.diy.hiphelper.HIPHelperProxy;
 import com.diy.xdb.XDBHelperProxy;
 
 
@@ -33,8 +34,9 @@ public class notifyNewDataWasStoredInHIP extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String resp = "";
 		String ts = generateTimeStamp();
-		String fromIP = (String)request.getRemoteHost().replace(":", "-");
-		String shortFilename = "notifyNewDataWasStoredInHIP_from"+fromIP+"_On_"+ts+".xml";
+		//String fromIP = (String)request.getRemoteHost().replace(":", "-");
+		String shortFilename = "retrievedFromHIP_On_"+ts+".xml";
+		String strDocumentName = request.getParameter("DocumentName");
 		String metadata = "<metadata>";
 		Enumeration<String> parameterNames = request.getParameterNames();
 		while (parameterNames.hasMoreElements()) {
@@ -55,6 +57,10 @@ public class notifyNewDataWasStoredInHIP extends HttpServlet {
 				+ "let $e:=<notification><time>"+ts+"</time><type>notifyNewDataWasStoredInHIP</type>"+metadata+"</notification> "
 				+ "return insert node $e as first into /notifications";
 		xdbhp.runXQuery(strXQ);
+		HIPHelperProxy hhp = new HIPHelperProxy();
+		byte[] bXML = hhp.getDocContentByDocId(strDocumentName);
+		//String2File(new String(bXML), "c:/tmp/BATCH_142187958");
+		xdbhp.storeStringAsDoc(new String(bXML), shortFilename);		
 		resp = "notification received";
 		resp = "{ \"message\": \""+resp+"\" }";
 		response.getWriter().write(resp);

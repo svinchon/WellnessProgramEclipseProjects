@@ -1,4 +1,8 @@
 eclipse.preferences.version=1
+encoding//src/com/diy/hiphelper/HIPHelper.java=UTF-8
+encoding//src/com/diy/hiphelper/HIPHelperService.java=UTF-8
+encoding//src/com/diy/hiphelper/HIPHelperServiceLocator.java=UTF-8
+encoding//src/com/diy/hiphelper/HIPHelperSoapBindingStub.java=UTF-8
 encoding//src/com/diy/xdb/XDBHelper.java=UTF-8
 encoding//src/com/diy/xdb/XDBHelperService.java=UTF-8
 encoding//src/com/diy/xdb/XDBHelperServiceLocator.java=UTF-8

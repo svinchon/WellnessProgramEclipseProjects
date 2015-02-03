@@ -1,6 +1,10 @@
 package com.diy.xADF;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.ResourceBundle;
 
@@ -28,6 +32,8 @@ public class xUtilsWSAPI {
 	String xPressionPort = rb.getString("xPressionPort");
 	String xPressionUser = rb.getString("xPressionUser");
 	String xPressionPassword = rb.getString("xPressionPassword");
+	String OverrideTemplate = rb.getString("OverrideTemplate");
+	String TmpFolder = rb.getString("TmpFolder");
 	String uriGetJobNames = "http://"+xPressionHost+":"+xPressionPort+"/xFramework/restful/services/jobs/all/list/names";
 	String uriStartJobXML = "http://"+xPressionHost+":"+xPressionPort+"/xFramework/restful/services/job/start/xml";
 	String uriGetJobStatus = "http://"+xPressionHost+":"+xPressionPort+"/xFramework/restful/services/job/status";
@@ -85,9 +91,15 @@ public class xUtilsWSAPI {
 	}
 	
 	public String strStartJob(String strJobName, String strJobInputFile) {
+		String strOverride = File2String(OverrideTemplate);
+		strOverride = strOverride.replace("--DATA_FILE--", strJobInputFile);
+		//Log("strStartJob: Override\n"+strOverride);
+		//String strOverrideFile = TmpFolder+"/"+strJobInputFile+".override.xml";
+		String strOverrideFile = strJobInputFile+".override.xml";
+		String2File(strOverride, strOverrideFile);
 		strRC = strRC.replace("{JOB_NAME}", strJobName);
-		strRC = strRC.replace("{JOB_INPUT_FILE}", strJobInputFile);
-		Log("strStartJob:\n"+strRC);
+		strRC = strRC.replace("{JOB_INPUT_FILE}", strOverrideFile);
+		//Log("strStartJob:\n"+strRC);
 		WebResource wr;
 		String strResponse;
 		String uri;
@@ -97,7 +109,7 @@ public class xUtilsWSAPI {
 		wr = c.resource(uri);
 		strResponse = wr.type(MediaType.APPLICATION_XML).accept(MediaType.APPLICATION_XML).entity(strRC).post(String.class); 
 		//System.out.println(strResponse);
-		System.out.println("xUtilsWSAPI.strStartJob: QueueId="+strResponse);
+		//System.out.println("xUtilsWSAPI.strStartJob: QueueId="+strResponse);
 		return strResponse;
 	}
 	
@@ -167,6 +179,36 @@ public class xUtilsWSAPI {
 			e.printStackTrace();
 		}
 		return strReturn;
+	}
+	
+	String File2String(String path) {
+		String strReturn = "";
+		try {
+			File f = new File(path);
+			FileInputStream fis = new FileInputStream(f);
+			byte[] bDoc = new byte[fis.available()];
+			fis.read(bDoc);
+			strReturn = new String(bDoc);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return strReturn;
+	}
+	
+	void String2File(String str, String path) {
+		try {
+			File f = new File(path);
+			FileOutputStream fos = new FileOutputStream(f);
+			fos.write(str.getBytes());
+			fos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	void Log(String msg) {

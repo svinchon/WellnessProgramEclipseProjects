@@ -47,21 +47,13 @@ public class initiateXBatchJob extends HttpServlet {
 				metadata += "<"+paramName+">"+paramValue+"</"+paramName+">";
 			}
 			metadata += "<"+"file_name"+">"+"</"+"file_name"+">";
-			metadata += "<"+"request_type"+">"+"submitForRealTime"+"</"+"request_type"+">";
+			metadata += "<"+"request_type"+">"+"initiateXBatchJob"+"</"+"request_type"+">";
 			metadata += "</metadata>";
 			XDBHelperProxy xdbhp = new XDBHelperProxy();
 			String strQueueId;
 			if (DataOrigin.equals("file")) {
 			} else if (DataOrigin.equals("xquery")) {
 				String strXQ;
-				strXQ = ""
-						+ "<files> "
-						+ "{ "
-						+ "for $e in doc('AuditTrail.xml')/audit_trail/event "
-						+ "where $e/type = \"submitForBatch\" and not ($e[processed]) "
-						+ "return $e/metadata/file_name "
-						+ "} "
-						+ "</files> ";
 				strXQ = ""
 						+ "<users> "
 						+ "{ "

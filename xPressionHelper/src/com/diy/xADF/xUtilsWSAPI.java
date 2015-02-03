@@ -87,7 +87,7 @@ public class xUtilsWSAPI {
 	public String strStartJob(String strJobName, String strJobInputFile) {
 		strRC = strRC.replace("{JOB_NAME}", strJobName);
 		strRC = strRC.replace("{JOB_INPUT_FILE}", strJobInputFile);
-		//System.out.println(strRC);
+		Log("strStartJob:\n"+strRC);
 		WebResource wr;
 		String strResponse;
 		String uri;
@@ -168,4 +168,9 @@ public class xUtilsWSAPI {
 		}
 		return strReturn;
 	}
+	
+	void Log(String msg) {
+		System.out.println("xUtilsWSAPI: "+msg);
+	}
+
  }

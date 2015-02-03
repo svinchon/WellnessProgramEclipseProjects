@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//import com.diy.xADF.xUtilsWSAPI;
+import com.diy.xADF.xUtilsWSAPI;
 import com.diy.xdb.XDBHelperProxy;
 
 
@@ -50,6 +50,7 @@ public class initiateXBatchJob extends HttpServlet {
 			metadata += "<"+"request_type"+">"+"submitForRealTime"+"</"+"request_type"+">";
 			metadata += "</metadata>";
 			XDBHelperProxy xdbhp = new XDBHelperProxy();
+			String strQueueId;
 			if (DataOrigin.equals("file")) {
 			} else if (DataOrigin.equals("xquery")) {
 				String strXQ;
@@ -70,20 +71,21 @@ public class initiateXBatchJob extends HttpServlet {
 						+ "} "
 						+ "</users>";
 				String strXML = xdbhp.runXQuery(strXQ);
-				String2File(strXML, "C:/tmp/"+"ExtractedForBatch_On_"+ts+".xml");
-				resp = "data extracted";
+				String strDataFileFullName = "C:/tmp/"+"ExtractedForBatch_On_"+ts+".xml";
+				String2File(strXML, strDataFileFullName);
+				xUtilsWSAPI xu = new xUtilsWSAPI();
+				strQueueId = xu.strStartJob(JobName, strDataFileFullName);
+				resp = "data extracted and processed"+ " ("+strQueueId+")";
+				strXQ = ""
+						+ "let $e:=<event><time>"+ts+"</time><type>initiateXBatchJob</type><queue_id>"+strQueueId+"</queue_id>"+metadata+"</event> "
+						+ "return insert node $e as first into /audit_trail";
+				xdbhp.runXQuery(strXQ);
 			} else {
 				resp = "wrong value for DataOrigin";
 			}
-			String strXQ =""
-					+ "let $e:=<event><time>"+ts+"</time><type>initiateXBatchJob</type>"+metadata+"</event> "
-					+ "return insert node $e as first into /audit_trail";
-			xdbhp.runXQuery(strXQ);
 		} else {
 			resp = "missing input parameters";
 		}
-		//xUtilsWSAPI xu = new xUtilsWSAPI();
-		//xu.strStartJob(JobName, DataFileName);
 		resp = "{ \"message\": \""+resp+"\" }";
 		response.getWriter().write(resp);
 	}
@@ -106,6 +108,10 @@ public class initiateXBatchJob extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	void Log(String msg) {
+		System.out.println("initiateXBatchJob: ");
 	}
 	
 }

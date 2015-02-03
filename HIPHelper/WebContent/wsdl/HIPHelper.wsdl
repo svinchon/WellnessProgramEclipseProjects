@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://hiphelper.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://hiphelper.diy.com" xmlns:intf="http://hiphelper.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://hiphelper.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getPatientDocNamesList">
+    <complexType>
+     <sequence>
+      <element name="strPatientId" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPatientDocNamesListResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getPatientDocNamesListReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDocContentByDocId">
+    <complexType>
+     <sequence>
+      <element name="strDocId" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDocContentByDocIdResponse">
+    <complexType>
+     <sequence>
+      <element name="getDocContentByDocIdReturn" type="xsd:base64Binary"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPatientDocsXML">
+    <complexType>
+     <sequence>
+      <element name="strPatientId" type="xsd:string"/>
+      <element name="strDocId" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPatientDocsXMLResponse">
+    <complexType>
+     <sequence>
+      <element name="getPatientDocsXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDocContentByPatientIdAndDocId">
+    <complexType>
+     <sequence>
+      <element name="strPatientId" type="xsd:string"/>
+      <element name="strDocId" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getDocContentByPatientIdAndDocIdResponse">
+    <complexType>
+     <sequence>
+      <element name="getDocContentByPatientIdAndDocIdReturn" type="xsd:base64Binary"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="storeDoc">
+    <complexType>
+     <sequence>
+      <element name="strPatientId" type="xsd:string"/>
+      <element name="strDocId" type="xsd:string"/>
+      <element name="bDoc" type="xsd:base64Binary"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="storeDocResponse">
+    <complexType/>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getDocContentByDocIdResponse">
+
+      <wsdl:part element="impl:getDocContentByDocIdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPatientDocNamesListRequest">
+
+      <wsdl:part element="impl:getPatientDocNamesList" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="storeDocRequest">
+
+      <wsdl:part element="impl:storeDoc" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPatientDocsXMLRequest">
+
+      <wsdl:part element="impl:getPatientDocsXML" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDocContentByPatientIdAndDocIdRequest">
+
+      <wsdl:part element="impl:getDocContentByPatientIdAndDocId" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="storeDocResponse">
+
+      <wsdl:part element="impl:storeDocResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPatientDocsXMLResponse">
+
+      <wsdl:part element="impl:getPatientDocsXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDocContentByPatientIdAndDocIdResponse">
+
+      <wsdl:part element="impl:getDocContentByPatientIdAndDocIdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getDocContentByDocIdRequest">
+
+      <wsdl:part element="impl:getDocContentByDocId" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPatientDocNamesListResponse">
+
+      <wsdl:part element="impl:getPatientDocNamesListResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="HIPHelper">
+
+      <wsdl:operation name="getPatientDocNamesList">
+
+         <wsdl:input message="impl:getPatientDocNamesListRequest" name="getPatientDocNamesListRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getPatientDocNamesListResponse" name="getPatientDocNamesListResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDocContentByDocId">
+
+         <wsdl:input message="impl:getDocContentByDocIdRequest" name="getDocContentByDocIdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getDocContentByDocIdResponse" name="getDocContentByDocIdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPatientDocsXML">
+
+         <wsdl:input message="impl:getPatientDocsXMLRequest" name="getPatientDocsXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getPatientDocsXMLResponse" name="getPatientDocsXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDocContentByPatientIdAndDocId">
+
+         <wsdl:input message="impl:getDocContentByPatientIdAndDocIdRequest" name="getDocContentByPatientIdAndDocIdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getDocContentByPatientIdAndDocIdResponse" name="getDocContentByPatientIdAndDocIdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="storeDoc">
+
+         <wsdl:input message="impl:storeDocRequest" name="storeDocRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:storeDocResponse" name="storeDocResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="HIPHelperSoapBinding" type="impl:HIPHelper">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPatientDocNamesList">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPatientDocNamesListRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPatientDocNamesListResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDocContentByDocId">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDocContentByDocIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDocContentByDocIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getPatientDocsXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPatientDocsXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPatientDocsXMLResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getDocContentByPatientIdAndDocId">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getDocContentByPatientIdAndDocIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getDocContentByPatientIdAndDocIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="storeDoc">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="storeDocRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="storeDocResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="HIPHelperService">
+
+      <wsdl:port binding="impl:HIPHelperSoapBinding" name="HIPHelper">
+
+         <wsdlsoap:address location="http://localhost:18080/HIPHelper/services/HIPHelper"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

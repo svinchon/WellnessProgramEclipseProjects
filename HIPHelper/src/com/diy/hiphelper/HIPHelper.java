@@ -45,7 +45,7 @@ public class HIPHelper {
 			}
 			Log("</OUTPUT>");
 			Log("<CALL>");
-			byte[] bDoc = hiphop.getDocContent("BATCH_1421309514");
+			byte[] bDoc = hiphop.getDocContentByDocId("BATCH_1421309514");
 			Log("</CALL>");
 			Log("<OUTPUT>");
 			//Log("Doc content:");
@@ -121,7 +121,7 @@ public class HIPHelper {
 		return strReturn;
 	}
 	
-	public byte[] getDocContent(String strDocId) {
+	public byte[] getDocContentByDocId(String strDocId) {
 		byte[] bReturn = null;
 		try {
 			ResourceBundle rb = ResourceBundle.getBundle("HIPHelper");
@@ -152,7 +152,7 @@ public class HIPHelper {
 		return bReturn;
 	}
 
-	public byte[] getDocContent(String strPatientId, String strDocId) {
+	public byte[] getDocContentByPatientIdAndDocId(String strPatientId, String strDocId) {
 		byte[] bReturn = null;
 		try {
 			ResourceBundle rb = ResourceBundle.getBundle("HIPHelper");

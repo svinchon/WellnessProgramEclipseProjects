@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from HIPHelperService WSDL service -->
+
+  <service name="HIPHelper" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://hiphelper.diy.com"/>
+      <parameter name="wsdlServiceElement" value="HIPHelperService"/>
+      <parameter name="schemaQualified" value="http://hiphelper.diy.com"/>
+      <parameter name="wsdlServicePort" value="HIPHelper"/>
+      <parameter name="className" value="com.diy.hiphelper.HIPHelper"/>
+      <parameter name="wsdlPortType" value="HIPHelper"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://hiphelper.diy.com" xmlns:retNS="http://hiphelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getPatientDocNamesList" qname="operNS:getPatientDocNamesList" returnQName="retNS:getPatientDocNamesListReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://hiphelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strPatientId" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://hiphelper.diy.com" xmlns:retNS="http://hiphelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getDocContentByDocId" qname="operNS:getDocContentByDocId" returnQName="retNS:getDocContentByDocIdReturn" returnType="rtns:base64Binary" soapAction="">
+        <parameter xmlns:pns="http://hiphelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strDocId" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://hiphelper.diy.com" xmlns:retNS="http://hiphelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getPatientDocsXML" qname="operNS:getPatientDocsXML" returnQName="retNS:getPatientDocsXMLReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://hiphelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strPatientId" type="tns:string"/>
+        <parameter xmlns:pns="http://hiphelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strDocId" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://hiphelper.diy.com" xmlns:retNS="http://hiphelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getDocContentByPatientIdAndDocId" qname="operNS:getDocContentByPatientIdAndDocId" returnQName="retNS:getDocContentByPatientIdAndDocIdReturn" returnType="rtns:base64Binary" soapAction="">
+        <parameter xmlns:pns="http://hiphelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strPatientId" type="tns:string"/>
+        <parameter xmlns:pns="http://hiphelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strDocId" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://hiphelper.diy.com" name="storeDoc" qname="operNS:storeDoc" soapAction="">
+        <parameter xmlns:pns="http://hiphelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strPatientId" type="tns:string"/>
+        <parameter xmlns:pns="http://hiphelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strDocId" type="tns:string"/>
+        <parameter xmlns:pns="http://hiphelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:bDoc" type="tns:base64Binary"/>
+      </operation>
+      <parameter name="allowedMethods" value="getPatientDocNamesList getPatientDocsXML getDocContentByDocId getDocContentByPatientIdAndDocId storeDoc"/>
+
+  </service>
+</deployment>

@@ -39,8 +39,9 @@ public class submitForRealTime extends HttpServlet {
 		String rct = (String)request.getContentType();
 		if (rct.equals("application/xml")) {
 			String ts = generateTimeStamp();
-			String fromIP = (String)request.getRemoteHost().replace(":", "-");
-			String shortFilename = "submitForRealTime_from"+fromIP+"_On_"+ts+".xml";
+			//String fromIP = (String)request.getRemoteHost().replace(":", "-");
+			//String shortFilename = "submitForRealTime_from"+fromIP+"_On_"+ts+".xml";
+			String shortFilename = "submitForRealTime_On_"+ts+".xml";
 			//String priority = (String)request.getParameter("Priority");
 			String template = (String)request.getParameter("Template");
 			String outputProfile = (String)request.getParameter("OutputProfile");
@@ -67,7 +68,7 @@ public class submitForRealTime extends HttpServlet {
 				XDBHelperProxy xdbhp = new XDBHelperProxy();
 				xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
 				xdbhp.storeDoc(fileName, shortFilename);
-				xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
+				//xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
 				String strXQ =""
 						+ "let $e:=<event><time>"+ts+"</time><type>submitForRealTime</type>"+metadata+"</event> "
 						+ "return insert node $e as first into /audit_trail";

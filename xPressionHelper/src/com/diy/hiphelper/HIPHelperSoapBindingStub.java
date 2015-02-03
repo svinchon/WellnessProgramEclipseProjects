@@ -7,6 +7,7 @@
 
 package com.diy.hiphelper;
 
+@SuppressWarnings({"rawtypes", "unused"})
 public class HIPHelperSoapBindingStub extends org.apache.axis.client.Stub implements com.diy.hiphelper.HIPHelper {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();

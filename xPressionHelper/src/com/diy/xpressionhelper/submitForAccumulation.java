@@ -35,8 +35,9 @@ public class submitForAccumulation extends HttpServlet {
 		String rct = (String)request.getContentType();
 		if (rct.equals("application/xml")) {
 			String ts = generateTimeStamp();
-			String fromIP = (String)request.getRemoteHost().replace(":", "-");
-			String shortFilename = "submitForAccumulation_from"+fromIP+"_On_"+ts+".xml";
+			//String fromIP = (String)request.getRemoteHost().replace(":", "-");
+			//String shortFilename = "submitForAccumulation_from"+fromIP+"_On_"+ts+".xml";
+			String shortFilename = "submitForAccumulation_On_"+ts+".xml";
 			String metadata = "<metadata>";
 			Enumeration<String> parameterNames = request.getParameterNames();
 			while (parameterNames.hasMoreElements()) {
@@ -57,7 +58,7 @@ public class submitForAccumulation extends HttpServlet {
 			XDBHelperProxy xdbhp = new XDBHelperProxy();
 			xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
 			xdbhp.storeDoc(fileName, shortFilename);
-			xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
+			//xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
 			String strXQ =""
 					+ "let $e:=<event><time>"+ts+"</time><type>submitForAccumulation</type>"+metadata+"</event> "
 					+ "return insert node $e as first into /audit_trail";

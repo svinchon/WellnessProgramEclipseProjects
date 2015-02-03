@@ -7,6 +7,7 @@
 
 package com.diy.hiphelper;
 
+@SuppressWarnings({"serial", "rawtypes", "unchecked"})
 public class HIPHelperServiceLocator extends org.apache.axis.client.Service implements com.diy.hiphelper.HIPHelperService {
 
     public HIPHelperServiceLocator() {

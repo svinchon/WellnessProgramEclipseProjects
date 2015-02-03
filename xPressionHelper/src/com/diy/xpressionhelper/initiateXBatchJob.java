@@ -36,7 +36,7 @@ public class initiateXBatchJob extends HttpServlet {
 		String JobName = request.getParameter("JobName");
 		String DataOrigin = request.getParameter("DataOrigin"); //xquery or file
 		//String XQuery = request.getParameter("XQuery");;
-		//String DataFileName = request.getParameter("DataFileName");;
+		String DataFileName = request.getParameter("DataFileName");;
 		String ts = generateTimeStamp();
 		if (JobName != null && DataOrigin != null) {
 			String metadata = "<metadata>";
@@ -51,27 +51,40 @@ public class initiateXBatchJob extends HttpServlet {
 			metadata += "</metadata>";
 			XDBHelperProxy xdbhp = new XDBHelperProxy();
 			String strQueueId;
-			if (DataOrigin.equals("file")) {
-			} else if (DataOrigin.equals("xquery")) {
-				String strXQ;
-				strXQ = ""
-						+ "<users> "
-						+ "{ "
-						+ "for $e in doc('AuditTrail.xml')/audit_trail/event "
-						+ "where $e/type = \"submitForBatch\" and not ($e[processed]) "
-						+ "return doc($e/metadata/file_name/text())/users/* "
-						+ "} "
-						+ "</users>";
-				String strXML = xdbhp.runXQuery(strXQ);
-				String strDataFileFullName = "C:/tmp/"+"ExtractedForBatch_On_"+ts+".xml";
-				String2File(strXML, strDataFileFullName);
+			String strXQ;
+			if ((DataOrigin.equals("file") && DataFileName!=null) || DataOrigin.equals("xquery")) {
+				String strDataFileFullName;
+				strDataFileFullName = "C:/tmp/"+"ExtractedForBatch_On_"+ts+".xml";
+				if (DataOrigin.equals("file")) {
+					strXQ = ""
+							+ "<users> "
+							+ "{ "
+							+ "doc('"+DataFileName+"')/users/* "
+							+ "} "
+							+ "</users>";
+					Log("strXQ="+strXQ);
+					String strXML = xdbhp.runXQuery(strXQ);
+					String2File(strXML, strDataFileFullName);		
+				} else {
+					strXQ = ""
+							+ "<users> "
+							+ "{ "
+							+ "for $e in doc('AuditTrail.xml')/audit_trail/event "
+							+ "where $e/type = \"submitForBatch\" and not ($e[processed]) "
+							+ "return doc($e/metadata/file_name/text())/users/* "
+							+ "} "
+							+ "</users>";
+					String strXML = xdbhp.runXQuery(strXQ);
+					strDataFileFullName = "C:/tmp/"+"ExtractedForBatch_On_"+ts+".xml";
+					String2File(strXML, strDataFileFullName);			
+				}
 				xUtilsWSAPI xu = new xUtilsWSAPI();
 				strQueueId = xu.strStartJob(JobName, strDataFileFullName);
 				resp = "data extracted and processed"+ " ("+strQueueId+")";
 				strXQ = ""
 						+ "let $e:=<event><time>"+ts+"</time><type>initiateXBatchJob</type><queue_id>"+strQueueId+"</queue_id>"+metadata+"</event> "
 						+ "return insert node $e as first into /audit_trail";
-				xdbhp.runXQuery(strXQ);
+				xdbhp.runXQuery(strXQ);	
 			} else {
 				resp = "wrong value for DataOrigin";
 			}
@@ -103,7 +116,7 @@ public class initiateXBatchJob extends HttpServlet {
 	}
 	
 	void Log(String msg) {
-		System.out.println("initiateXBatchJob: ");
+		System.out.println("initiateXBatchJob: " + msg);
 	}
 	
 }

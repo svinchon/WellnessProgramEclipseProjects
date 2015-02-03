@@ -1,12 +1,13 @@
 package com.diy.hiphelper;
 
 import java.io.FileInputStream;
+import java.util.ResourceBundle;
 
 public class SOAPStoreDocRequestMessage {
 	
-	private String strTemplateLocation =
-			"D:/xData/Business/Projects/2014/Q3/2014q3-09.WellnessProgram/HIP/SOAPStoreDocTemplate.xml";
-			//"SOAPStoreDocTemplate.xml";
+	ResourceBundle rb = ResourceBundle.getBundle("HIPHelper");
+	String strSOAPTemplatesDirectory = rb.getString("SOAPTemplatesDirectory");
+	private String strTemplateLocation = strSOAPTemplatesDirectory + "/SOAPStoreDocTemplate.xml";
 	private String strXML;
 	private String strPatientId;
 	private String strDocId;

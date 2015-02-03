@@ -1,11 +1,13 @@
 package com.diy.hiphelper;
 
 import java.io.FileInputStream;
+import java.util.ResourceBundle;
 
 public class SOAPQueryRequestMessage {
 	
-	private String strTemplateLocation =
-			"D:/xData/Business/Projects/2014/Q3/2014q3-09.WellnessProgram/HIP/SOAPQueryTemplate.xml";
+	ResourceBundle rb = ResourceBundle.getBundle("HIPHelper");
+	String strSOAPTemplatesDirectory = rb.getString("SOAPTemplatesDirectory");
+	private String strTemplateLocation = strSOAPTemplatesDirectory + "/SOAPQueryTemplate.xml";
 	private String strXML;
 	private String strUniqueId;
 	private String strPATIENT_ID_PREFIX = "";//"WP_PATIENT_ID_";

@@ -45,13 +45,13 @@ public class HIPHelper {
 			}
 			Log("</OUTPUT>");
 			Log("<CALL>");
-			byte[] bDoc = hiphop.getDocContentByDocId("BATCH_1421309514");
+			byte[] bDoc = hiphop.getDocContentByDocId("BATCH_1421915624");
 			Log("</CALL>");
 			Log("<OUTPUT>");
 			//Log("Doc content:");
 			Log(new String(bDoc));
 			Log("</OUTPUT>");
-			FileOutputStream fos = new FileOutputStream("C:/Users/vinchs/Desktop/BATCH_1421309514.xml");
+			FileOutputStream fos = new FileOutputStream("C:/Users/admin/Desktop/BATCH_1421309514.xml");
 			fos.write(bDoc);
 			fos.close();
 			Log("</LOG>");
@@ -143,7 +143,9 @@ public class HIPHelper {
 			Iterator<?> i = soapResponse.getAttachments();
 			if (i.hasNext()) {
 				AttachmentPart ap = (AttachmentPart)(i.next());
-				bReturn = ((String)(ap.getContent())).getBytes();
+				StreamSource ss = (StreamSource) ap.getContent();
+				bReturn = new byte[ss.getInputStream().available()];
+				ss.getInputStream().read(bReturn);
 				//Log("SOAP Attachement:\n"); Log(new String(bReturn));
 			}
 		} catch (Exception e) {

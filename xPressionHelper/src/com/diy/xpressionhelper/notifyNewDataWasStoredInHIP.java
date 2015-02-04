@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.diy.hiphelper.HIPHelperProxy;
+import com.diy.xADF.xUtilsWSAPI;
 import com.diy.xdb.XDBHelperProxy;
 
 
@@ -37,6 +38,8 @@ public class notifyNewDataWasStoredInHIP extends HttpServlet {
 		//String fromIP = (String)request.getRemoteHost().replace(":", "-");
 		String shortFilename = "retrievedFromHIP_On_"+ts+".xml";
 		String strDocumentName = request.getParameter("DocumentName");
+		String strNextStepsToTrigger = request.getParameter("NextStepsToTrigger"); // none | retrieveData | retrieveDataAndProcess
+		String strBatchJob = request.getParameter("JobName");
 		String metadata = "<metadata>";
 		Enumeration<String> parameterNames = request.getParameterNames();
 		while (parameterNames.hasMoreElements()) {
@@ -57,11 +60,28 @@ public class notifyNewDataWasStoredInHIP extends HttpServlet {
 				+ "let $e:=<notification><time>"+ts+"</time><type>notifyNewDataWasStoredInHIP</type>"+metadata+"</notification> "
 				+ "return insert node $e as first into /notifications";
 		xdbhp.runXQuery(strXQ);
-		HIPHelperProxy hhp = new HIPHelperProxy();
-		byte[] bXML = hhp.getDocContentByDocId(strDocumentName);
-		//String2File(new String(bXML), "c:/tmp/BATCH_142187958");
-		xdbhp.storeStringAsDoc(new String(bXML), shortFilename);		
 		resp = "notification received";
+		if (strNextStepsToTrigger.indexOf("retrieveData")>=0) {
+			HIPHelperProxy hhp = new HIPHelperProxy();
+			byte[] bXML = hhp.getDocContentByDocId(strDocumentName);
+			xdbhp.storeStringAsDoc(new String(bXML), shortFilename);	
+			resp += " and data retieved from HIP";
+			if (strNextStepsToTrigger.indexOf("retrieveDataAndProcess")>=0) {
+				String strDataFileFullName = "C:/tmp/"+"ExtractedForBatch_On_"+ts+".xml";
+				strXQ = ""
+						+ "<users> "
+						+ "{ "
+						+ "doc('"+shortFilename+"')/users/* "
+						+ "} "
+						+ "</users>";
+				String strXML = xdbhp.runXQuery(strXQ);
+				String2File(strXML, strDataFileFullName);		
+				xUtilsWSAPI xu = new xUtilsWSAPI();
+				xu.strStartJob(strBatchJob, strDataFileFullName);				
+				resp += " and processing started ("+strBatchJob+")";
+			}
+		}
+		//resp = "notification received";
 		resp = "{ \"message\": \""+resp+"\" }";
 		response.getWriter().write(resp);
 	}
@@ -71,7 +91,7 @@ public class notifyNewDataWasStoredInHIP extends HttpServlet {
 	}
 	
 	String generateTimeStamp() {
-		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyy-MM-DD@HH-mm-ss-SSS", Locale.US);
+		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd@HH-mm-ss-SSS", Locale.US);
 		Date d = new Date();
 		return DateFormat.format(d);
 	}

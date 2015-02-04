@@ -75,7 +75,6 @@ public class initiateXBatchJob extends HttpServlet {
 							+ "} "
 							+ "</users>";
 					String strXML = xdbhp.runXQuery(strXQ);
-					strDataFileFullName = "C:/tmp/"+"ExtractedForBatch_On_"+ts+".xml";
 					String2File(strXML, strDataFileFullName);			
 				}
 				xUtilsWSAPI xu = new xUtilsWSAPI();

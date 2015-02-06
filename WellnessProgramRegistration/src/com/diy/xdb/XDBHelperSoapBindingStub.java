@@ -7,6 +7,7 @@
 
 package com.diy.xdb;
 
+@SuppressWarnings({"rawtypes", "unused"})
 public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implements com.diy.xdb.XDBHelper {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();

@@ -1,7 +1,8 @@
 <%@ page
-	language="java"
-	contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+		language="java"
+		contentType="text/html; charset=ISO-8859-1"
+    	pageEncoding="ISO-8859-1"
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -62,9 +63,9 @@ form {
 	<tbody>
 		<tr>
 			<td align="center">
-				Thank you for your request.
-				It is being processed under the reference <%=request.getParameter("WorkflowId")%>.
-				You are going to receive an email from us very soon.
+				<%= ((""+request.getParameter("MessageType")).equals("ERROR"))?"<span style=\"color: red\">":"<span style=\"color: blue\">" %>
+				<br/><%=request.getParameter("Message")%><br/><br/>
+				<%= "</span>" %>
 				<input Type="button" VALUE="Back to Wellness Program Registration" onClick="history.go(-1);return true;">
 			</td>
 		</tr>

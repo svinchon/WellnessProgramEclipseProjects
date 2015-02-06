@@ -1,6 +1,25 @@
+<%@ page
+	language="java"
+	contentType="text/html;
+	charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"
+	import="java.text.SimpleDateFormat,java.util.Locale,java.util.Date,java.lang.String"
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%!
+	String generateTimeStamp() {
+		//SimpleDateFormat DateFormat = new SimpleDateFormat("yyyy-MM-DD@HH-mm-ss-SSS", Locale.US);
+		SimpleDateFormat DateFormat = new SimpleDateFormat("DDHmsSSS", Locale.US);
+		Date d = new Date();
+		return DateFormat.format(d);
+	}
+%>
+<%
+String ts=generateTimeStamp();
+%>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Wellness Program Registration</title>
 <style type="text/css">
 body {
@@ -69,6 +88,12 @@ form {
 			</td>
 		</tr>
 		<tr>
+			<td>Badge Number:</td>
+			<td>
+				<input type="text" name="first_name" value="<%= ts%>">
+			</td>
+		</tr>
+		<tr>
 			<td>First Name:</td>
 			<td>
 				<input type="text" name="first_name" value="John">
@@ -81,30 +106,52 @@ form {
 			</td>
 		</tr>
 		<tr>
-			<td>Age:</td>
+			<td>User Name:</td>
 			<td>
-				<input type="text" name="age" value="35">
+				<input type="text" name="username" value="jdoe<%= ts%>">
 			</td>
 		</tr>
 		<tr>
-			<td>Weight:</td>
+			<td>Password:</td>
+			<td>
+				<input type="text" name="password" value="Pa55word">
+			</td>
+		</tr>
+		<tr>
+			<td>Birth Date:</td>
+			<td>
+				<input type="text" name="birth_date" value="1971-12-14">
+			</td>
+		</tr>
+		<tr>
+			<td>Weight (kg):</td>
 			<td>
 				<input type="text" name="weight" value="70">
+			</td>
+		</tr>
+		<tr>
+			<td>Sport Activity:</td>
+			<td>
+				<select name="iSportActivity">
+					<option value="1">High</option>
+					<option value="2">Medium</option>
+					<option value="3">Low</option>
+				</select>
 			</td>
 		</tr>
 		<tr>
 			<td>Gender:</td>
 			<td>
 				<select name="gender">
-					<option value="M">Male</option>
-					<option value="F">Female</option>
+					<option value="male">Male</option>
+					<option value="female">Female</option>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td>email:</td>
 			<td>
-				<input type="text" name="email" value="john.doe@gmail.com"></td>
+				<input type="text" name="email" value="john.doe<%= ts%>@gmail.com"></td>
 		</tr>
 		<tr>
 			<td colspan="2" align="center">

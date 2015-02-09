@@ -71,8 +71,8 @@ public class GaugeChartHelper {
 					strDir,
 					strFileName,
 					350,
-					100,//65,
-					false//transparency
+					55,//65,
+					true//transparency
 			);
 			strDir = ResourceBundle.getBundle("ChartHelper").getString("ImageFolderURL");
 			strReturn = strDir + "/" + strFileName + ".png";
@@ -85,7 +85,7 @@ public class GaugeChartHelper {
 		
 	private static JFreeChart createChart(String label, String color, CategoryDataset paramCategoryDataset) {
 		JFreeChart jfc = ChartFactory.createStackedBarChart(
-				label, //"Stacked Bar Chart Demo 6",
+				null,//label, //"Stacked Bar Chart Demo 6",
 				null, //"Category",
 				null, //"Value",
 				paramCategoryDataset,
@@ -97,7 +97,7 @@ public class GaugeChartHelper {
 		
 		CategoryPlot lcp;
 		lcp = (CategoryPlot)jfc.getPlot();
-		lcp.setOutlineVisible(false);
+		lcp.setOutlineVisible(true);
 		lcp.setRangeGridlinesVisible(false);
 		lcp.setDomainGridlinesVisible(false);
 		
@@ -113,7 +113,7 @@ public class GaugeChartHelper {
 		CategoryAxis da = lcp.getDomainAxis();
 		da.setVisible(false);
 		// this moves the bar down so labels are visible
-		da.setLowerMargin(0.3);
+		da.setLowerMargin(0.1);
 		da.setUpperMargin(0.0);
 	    da.setCategoryMargin(0.0D);
 	    
@@ -121,7 +121,7 @@ public class GaugeChartHelper {
 		StackedBarRenderer sbr = (StackedBarRenderer)lcp.getRenderer();
 		sbr.setBarPainter(new StandardBarPainter());
 		sbr.setDrawBarOutline(false);
-		sbr.setMaximumBarWidth(.25);
+		sbr.setMaximumBarWidth(.20);
 		// get color from HEX code
 		Color c = Color.decode("0x"+color);
 		// solid

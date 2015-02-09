@@ -23,9 +23,12 @@
       <operation name="startScheduler" qname="operNS:startScheduler" xmlns:operNS="http://schedulinghelper.diy.com" returnQName="retNS:startSchedulerReturn" xmlns:retNS="http://schedulinghelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
       </operation>
       <operation name="scheduleWSCall" qname="operNS:scheduleWSCall" xmlns:operNS="http://schedulinghelper.diy.com" returnQName="retNS:scheduleWSCallReturn" xmlns:retNS="http://schedulinghelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:strName" xmlns:pns="http://schedulinghelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:strDate" xmlns:pns="http://schedulinghelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:strTime" xmlns:pns="http://schedulinghelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:bRecurent" xmlns:pns="http://schedulinghelper.diy.com" type="tns:boolean" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:runCount" xmlns:pns="http://schedulinghelper.diy.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:delay" xmlns:pns="http://schedulinghelper.diy.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:strSOAPMessage" xmlns:pns="http://schedulinghelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
       <operation name="getScheduledJobsStats" qname="operNS:getScheduledJobsStats" xmlns:operNS="http://schedulinghelper.diy.com" returnQName="retNS:getScheduledJobsStatsReturn" xmlns:retNS="http://schedulinghelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >

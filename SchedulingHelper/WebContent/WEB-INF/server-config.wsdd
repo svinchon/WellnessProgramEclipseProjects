@@ -3,7 +3,7 @@
   <ns1:parameter name="sendMultiRefs" value="true"/>
   <ns1:parameter name="disablePrettyXML" value="true"/>
   <ns1:parameter name="adminPassword" value="admin"/>
-  <ns1:parameter name="attachments.Directory" value="D:\xTools\EclipseKeplerWorkspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SchedulingHelper\WEB-INF\attachments"/>
+  <ns1:parameter name="attachments.Directory" value="C:\xStuff\EclipseKeplerWS\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SchedulingHelper\WEB-INF\attachments"/>
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
@@ -25,9 +25,12 @@
  <ns1:service name="SchedulingHelper" provider="java:RPC" style="wrapped" use="literal">
   <ns2:operation name="startScheduler" qname="ns1:startScheduler" returnQName="ns1:startSchedulerReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://schedulinghelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/"/>
   <ns1:operation name="scheduleWSCall" qname="ns2:scheduleWSCall" returnQName="ns2:scheduleWSCallReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://schedulinghelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:strName" type="xsd:string"/>
    <ns1:parameter qname="ns2:strDate" type="xsd:string"/>
    <ns1:parameter qname="ns2:strTime" type="xsd:string"/>
    <ns1:parameter qname="ns2:bRecurent" type="xsd:boolean"/>
+   <ns1:parameter qname="ns2:runCount" type="xsd:int"/>
+   <ns1:parameter qname="ns2:delay" type="xsd:int"/>
    <ns1:parameter qname="ns2:strSOAPMessage" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="getScheduledJobsStats" qname="ns3:getScheduledJobsStats" returnQName="ns3:getScheduledJobsStatsReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://schedulinghelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>

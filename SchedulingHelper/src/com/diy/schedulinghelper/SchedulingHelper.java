@@ -27,7 +27,7 @@ public class SchedulingHelper {
 	Scheduler my_sched;
 	Logger log = LoggerFactory.getLogger(SchedulingHelper.class);    
 	
-	public ServletContext getServletContext() {
+	private ServletContext getServletContext() {
 		HttpServlet servlet = (HttpServlet)(
 				MessageContext
 					.getCurrentContext()
@@ -42,7 +42,7 @@ public class SchedulingHelper {
 			//	s.shutdown();
 			SchedulingHelper sh = new SchedulingHelper();
 			sh.startScheduler();
-			sh.scheduleWSCall("2015-01-15", "17:00", true, "test");
+			sh.scheduleWSCall("joby", "2015-01-15", "17:00", true, 5, 10, "test");
 			Thread.sleep(10000L);
 			sh.getScheduledJobsStats();
 			Thread.sleep(60000L);
@@ -72,9 +72,11 @@ public class SchedulingHelper {
 				Log("sched did not exist");
 			}
 			my_sched.start();
-			Log("sched was started");
+			strReturn = "sched was started";
+			Log(strReturn);
 		} catch (SchedulerException e) {
 			e.printStackTrace();
+			strReturn = e.getMessage();
 		}
 		return strReturn;		
 	}
@@ -106,9 +108,12 @@ public class SchedulingHelper {
 	}
 	
 	public String scheduleWSCall(
+			String strName,
 			String strDate,
 			String strTime,
 			Boolean bRecurent,
+			int runCount,
+			int delay,
 			String strSOAPMessage
 	) {
 	    Log("******************************************************************************");
@@ -125,30 +130,40 @@ public class SchedulingHelper {
 				Date runTime = DateBuilder.evenMinuteDate(new Date());
 				JobDetail job = JobBuilder
 						.newJob(WSCallJob.class)
-						.withIdentity("job1", "group1")
+						.withIdentity(
+								strName+"_Job",
+								"DefaultGroup"
+								)
 						.build();
 				job.getJobDataMap().put("SOAPMessage", "Vive le savon!");
+				SimpleScheduleBuilder
+					.simpleSchedule()
+					.withIntervalInSeconds(10);
 				SimpleTrigger trigger = (SimpleTrigger)TriggerBuilder
 						.newTrigger()
-						.withIdentity("trigger1", "group1")
+						.withIdentity(strName+"_Trig", "DefaultGroup")
 						.startAt(runTime)
 						.withSchedule(
 								SimpleScheduleBuilder
-									.simpleSchedule()
-									.withIntervalInSeconds(10)
 									//.withIntervalInHours(1)
 									//.repeatSecondlyForTotalCount(5)
-									.repeatForever()
+									//.repeatForever()
+									.repeatSecondlyForTotalCount(
+											runCount,
+											delay
+											)
 								)
 						//		.modifiedByCalendar("holidays")
 						.build();
 				my_sched.scheduleJob(job, trigger);
-				Log(job.getKey() + " will run at: " + runTime);
+				strReturn = job.getKey() + " will run at: " + runTime;
 			} else {
-				Log("sched was down");
+				strReturn = "sched was down";
 			}
+			Log(strReturn);
 		} catch (Exception e) {
 			e.printStackTrace();
+			strReturn =  e.getMessage();
 		}
 		return strReturn;		
 	}
@@ -171,7 +186,8 @@ public class SchedulingHelper {
 					Log("no groups");
 				}
 				while(liGroups.hasNext()) {
-					Log("Group: "+liGroups.next());					
+					Log("Group: "+liGroups.next());
+					//my_sched.getJ
 				}
 			} else {
 				Log("sched was down");

@@ -17,9 +17,12 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="scheduleWSCall">
     <complexType>
      <sequence>
+      <element name="strName" type="xsd:string"/>
       <element name="strDate" type="xsd:string"/>
       <element name="strTime" type="xsd:string"/>
       <element name="bRecurent" type="xsd:boolean"/>
+      <element name="runCount" type="xsd:int"/>
+      <element name="delay" type="xsd:int"/>
       <element name="strSOAPMessage" type="xsd:string"/>
      </sequence>
     </complexType>

@@ -35,7 +35,6 @@ public class GaugeChartHelper {
 				//"Steps", "30", "00FF00"
 				"Steps:Go Team! Go!", "30", "FF0000"
 		);
-		///
 	}
 	
 	public String generateWeeklyReviewGaugeChart(

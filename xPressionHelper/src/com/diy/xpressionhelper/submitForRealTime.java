@@ -69,15 +69,13 @@ public class submitForRealTime extends HttpServlet {
 				xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
 				xdbhp.storeDoc(fileName, shortFilename);
 				//xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
-				String strXQ =""
-						+ "let $e:=<event><time>"+ts+"</time><type>submitForRealTime</type>"+metadata+"</event> "
-						+ "return insert node $e as first into /audit_trail";
-				xdbhp.runXQuery(strXQ);
 				QuickDocPortTypeProxy p = new QuickDocPortTypeProxy();
 				p.setEndpoint(p.getEndpoint().replace("localhost:18080", "localhost:8080"));	
 				String documentName = (request.getParameter("Template").equals("--AUTO--")) ? "MonthlyReport.xdrwv" : request.getParameter("Template");
 				String outputProfileName = (request.getParameter("OutputProfile").equals("--AUTO--")) ? "PDF to File" : request.getParameter("OutputProfile");
 				String requestContext = "<RequestContext><Credentials method=\"UserID and Password\"><UserID>xDesigner</UserID><Password>Pa55word</Password></Credentials><ApplicationName>xPression DevKit</ApplicationName></RequestContext>";
+				String strStatus;
+				String strReturnMessage;
 				try {
 					resp = p.publishDocument(
 							requestContext,
@@ -85,9 +83,24 @@ public class submitForRealTime extends HttpServlet {
 							data,
 							outputProfileName
 					);
+					strStatus = "success";
+					strReturnMessage=resp;
 				} catch (AxisFault e) {
 					resp = e.getFaultString();
+					strStatus = "success";
+					strReturnMessage= resp;
 				}
+				String strXQ =""
+						+ "let $e:="
+						+ "<event>"
+						+ "<time>"+ts+"</time>"
+						+ "<type>submitForRealTime</type>"
+						+ "<status>"+strStatus+"</status>"
+						+ "<return_message>"+strReturnMessage+"</return_message>"
+						+ metadata
+						+"</event> "
+						+ "return insert node $e as first into /audit_trail";
+				xdbhp.runXQuery(strXQ);
 			}
 		} else {
 			resp="input has to be XML";

@@ -13,13 +13,16 @@
       <operation xmlns:operNS="http://xdb.diy.com" xmlns:retNS="http://xdb.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="storeDoc" qname="operNS:storeDoc" returnQName="retNS:storeDocReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strFileName" type="tns:string"/>
         <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strDocumentName" type="tns:string"/>
+        <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strLibrary" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://xdb.diy.com" xmlns:retNS="http://xdb.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="storeStringAsDoc" qname="operNS:storeStringAsDoc" returnQName="retNS:storeStringAsDocReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:string" type="tns:string"/>
         <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strDocumentName" type="tns:string"/>
+        <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strLibrary" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://xdb.diy.com" xmlns:retNS="http://xdb.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="removeDoc" qname="operNS:removeDoc" returnQName="retNS:removeDocReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strDocumentName" type="tns:string"/>
+        <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strLibrary" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://xdb.diy.com" xmlns:retNS="http://xdb.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="runXQuery" qname="operNS:runXQuery" returnQName="retNS:runXQueryReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://xdb.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strQuery" type="tns:string"/>

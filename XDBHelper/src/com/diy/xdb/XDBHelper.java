@@ -15,10 +15,12 @@ import com.xhive.core.interfaces.XhiveDatabaseIf;
 import com.xhive.core.interfaces.XhiveDriverIf;
 import com.xhive.core.interfaces.XhiveSessionIf;
 import com.xhive.dom.interfaces.XhiveDocumentIf;
+import com.xhive.dom.interfaces.XhiveLibraryChildIf;
 //import com.xhive.dom.interfaces.XhiveLibraryChildIf;
 import com.xhive.dom.interfaces.XhiveLibraryIf;
 import com.xhive.query.interfaces.XhiveXQueryResultIf;
 import com.xhive.query.interfaces.XhiveXQueryValueIf;
+import com.xhive.util.interfaces.IterableIterator;
 
 public class XDBHelper {
 
@@ -28,18 +30,19 @@ public class XDBHelper {
 	
 	public static void main(String[] args) {
 		XDBHelper h = new XDBHelper();
+		h.Test();
 		/*h.storeDoc(
 			"C:/tmp/submitForBatch_from0-0-0-0-0-0-0-1_On_2015-01-16@12-00-17-591.xml",
 			"TEST"
 		);*/
-		String strXQ =""
+		/*String strXQ =""
 				+ "let $e:=<event><time>"+"</time><type>submitForBatch</type>"+"</event> "
 				+ "return insert node $e as first into /audit_trail";
 		
-		h.Log(h.runXQuery(strXQ));
+		h.Log(h.runXQuery(strXQ));*/
 	}
 	
-	public String storeDoc(String strFileName, String strDocumentName) {
+	public String Test() {
 		String strReturn = "NA";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		String databaseName = rb.getString("DatabaseName");//"xData";
@@ -53,6 +56,51 @@ public class XDBHelper {
 			session.begin();
 			XhiveDatabaseIf xData = session.getDatabase();
 			XhiveLibraryIf rootLibrary = xData.getRoot();
+			XhiveLibraryIf l = (XhiveLibraryIf)rootLibrary.get("xPressionHelper");//Child
+			//IterableIterator<XhiveLibraryChildIf> ii = rootLibrary.getChildren();
+			LSParser builder = l.createLSParser();
+			LSInput lsi = l.createLSInput();
+			lsi.setStringData("<root>ggg</root>");
+			Document firstDocument = builder.parse(lsi);
+			String firstDocumentName = "test.xml";
+			if (l.nameExists(firstDocumentName)) {
+				Document docRetrievedByName = (Document)l.get( firstDocumentName );
+				l.removeChild(docRetrievedByName);				
+			}
+			l.appendChild(firstDocument);
+			((XhiveDocumentIf)firstDocument).setName(firstDocumentName);
+			((XhiveDocumentIf)firstDocument).getMetadata().put("DateStored", new Date().toString());
+			session.commit();
+			strReturn = "OK";
+		} catch (Exception e) {
+			System.out.println("StoreDocuments sample failed: ");
+			e.printStackTrace();
+			strReturn = "KO: " + e.getMessage();
+		} finally {
+			if (session.isOpen()) {
+				session.rollback();
+			}
+			if (session.isConnected()) {
+				session.disconnect();
+			}
+			driver.close();
+		}
+		return strReturn;
+	}
+	public String storeDoc(String strFileName, String strDocumentName, String strLibrary) {
+		String strReturn = "NA";
+		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
+		String databaseName = rb.getString("DatabaseName");//"xData";
+		String administratorName = rb.getString("AdministratorName");//"Administrator";
+		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
+		XhiveDriverIf driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
+		driver.init();
+		XhiveSessionIf session = driver.createSession();
+		try {
+			session.connect(administratorName, administratorPassword, databaseName);
+			session.begin();
+			XhiveDatabaseIf xData = session.getDatabase();
+			XhiveLibraryIf rootLibrary = (XhiveLibraryIf)((XhiveLibraryIf)xData.getRoot().get("xPressionHelper")).get(strLibrary);
 			LSParser builder = rootLibrary.createLSParser();
 			//Log(strFileName);
 			Document firstDocument = builder.parseURI(new File(strFileName).toURI().toString());
@@ -84,7 +132,7 @@ public class XDBHelper {
 		return strReturn;
 	}
 
-	public String storeStringAsDoc(String string, String strDocumentName) {
+	public String storeStringAsDoc(String string, String strDocumentName, String strLibrary) {
 		String strReturn = "NA";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		String databaseName = rb.getString("DatabaseName");//"xData";
@@ -97,7 +145,7 @@ public class XDBHelper {
 			session.connect(administratorName, administratorPassword, databaseName);
 			session.begin();
 			XhiveDatabaseIf xData = session.getDatabase();
-			XhiveLibraryIf rootLibrary = xData.getRoot();
+			XhiveLibraryIf rootLibrary = (XhiveLibraryIf)((XhiveLibraryIf)xData.getRoot().get("xPressionHelper")).get(strLibrary);
 			LSParser builder = rootLibrary.createLSParser();
 			LSInput lsi = rootLibrary.createLSInput();
 			lsi.setStringData(string);
@@ -128,7 +176,7 @@ public class XDBHelper {
 		return strReturn;
 	}
 
-	public String removeDoc(String strDocumentName) {  
+	public String removeDoc(String strDocumentName, String strLibrary) {  
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
@@ -140,7 +188,7 @@ public class XDBHelper {
 			session.connect(administratorName, administratorPassword, databaseName);
 			session.begin();
 			XhiveDatabaseIf xData = session.getDatabase();
-			XhiveLibraryIf rootLibrary = xData.getRoot();
+			XhiveLibraryIf rootLibrary = (XhiveLibraryIf)((XhiveLibraryIf)xData.getRoot().get("xPressionHelper")).get(strLibrary);
 			Document docRetrievedByName = (Document)rootLibrary.get( strDocumentName );
 			rootLibrary.removeChild(docRetrievedByName);
 			session.commit();

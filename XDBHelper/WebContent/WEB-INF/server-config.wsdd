@@ -26,13 +26,16 @@
   <ns2:operation name="storeDoc" qname="ns1:storeDoc" returnQName="ns1:storeDocReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
    <ns2:parameter qname="ns1:strFileName" type="xsd:string"/>
    <ns2:parameter qname="ns1:strDocumentName" type="xsd:string"/>
+   <ns2:parameter qname="ns1:strLibrary" type="xsd:string"/>
   </ns2:operation>
   <ns1:operation name="storeStringAsDoc" qname="ns2:storeStringAsDoc" returnQName="ns2:storeStringAsDocReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns2:string" type="xsd:string"/>
    <ns1:parameter qname="ns2:strDocumentName" type="xsd:string"/>
+   <ns1:parameter qname="ns2:strLibrary" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="removeDoc" qname="ns3:removeDoc" returnQName="ns3:removeDocReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns3:strDocumentName" type="xsd:string"/>
+   <ns1:parameter qname="ns3:strLibrary" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="runXQuery" qname="ns4:runXQuery" returnQName="ns4:runXQueryReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://xdb.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns4:strQuery" type="xsd:string"/>

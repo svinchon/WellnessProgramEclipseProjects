@@ -1,0 +1,49 @@
+<users>
+{
+doc('DataFileName")/users/*
+}
+</users>
+
+<users>
+{
+for $e in doc('AuditTrail.xml')/audit_trail/event
+where $e/type = "submitForBatch" and not ($e[processed])
+return doc($e/metadata/file_name/text())/users/*
+}
+</users>
+
+let $e:=<event><time>ttt</time><type>initiateXBatchJob</type><queue_id>qqq</queue_id></event>
+return insert node $e as first into /audit_trail
+							
+for $x in doc("books.xml")/bookstore/book
+return	if ($x/@category="CHILDREN")
+then <child>{data($x/title)}</child>
+else <adult>{data($x/title)}</adult>
+
+for $prod at $p in (1 to 10)
+return $p
+
+let $cd := current-date()
+let $fd := $cd - xs:dayTimeDuration("P28D")
+return
+<users>
+	{
+	for $m in doc('/Members.xml')/members/member
+	return
+		<user>
+		{
+		for $u in doc('/xPressionHelper/FromHIP')/users/user
+		where $u/external_id = $m/badge_number
+		return
+			<d>
+			{
+			for $prod at $p in (1 to 10)
+			let $d := $fd + xs:dayTimeDuration(concat("P", $p, "D"))
+			return
+				<dd>{$d}</dd>
+			}
+			</d>
+		}
+		</user>
+	}
+</users>

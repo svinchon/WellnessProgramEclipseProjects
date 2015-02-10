@@ -97,7 +97,8 @@ public class GaugeChartHelper {
 		
 		CategoryPlot lcp;
 		lcp = (CategoryPlot)jfc.getPlot();
-		lcp.setOutlineVisible(true);
+		//lcp.setOutlineVisible(true);
+		lcp.setOutlineVisible(false);
 		lcp.setRangeGridlinesVisible(false);
 		lcp.setDomainGridlinesVisible(false);
 		

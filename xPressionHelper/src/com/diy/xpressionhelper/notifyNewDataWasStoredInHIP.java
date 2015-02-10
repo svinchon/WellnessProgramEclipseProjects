@@ -64,7 +64,7 @@ public class notifyNewDataWasStoredInHIP extends HttpServlet {
 		if (strNextStepsToTrigger.indexOf("retrieveData")>=0) {
 			HIPHelperProxy hhp = new HIPHelperProxy();
 			byte[] bXML = hhp.getDocContentByDocId(strDocumentName);
-			xdbhp.storeStringAsDoc(new String(bXML), shortFilename);	
+			xdbhp.storeStringAsDoc(new String(bXML), shortFilename, "notifyNewDataWasStoredInHIP");	
 			resp += " and data retieved from HIP";
 			if (strNextStepsToTrigger.indexOf("retrieveDataAndProcess")>=0) {
 				String strDataFileFullName = "C:/tmp/"+"ExtractedForBatch_On_"+ts+".xml";

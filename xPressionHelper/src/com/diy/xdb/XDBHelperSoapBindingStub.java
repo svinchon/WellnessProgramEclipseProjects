@@ -7,7 +7,7 @@
 
 package com.diy.xdb;
 
-@SuppressWarnings({"rawtypes", "unused"})
+@SuppressWarnings({"unused","rawtypes"})
 public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implements com.diy.xdb.XDBHelper {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
@@ -30,6 +30,8 @@ public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implem
         oper.addParameter(param);
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://xdb.diy.com", "strDocumentName"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://xdb.diy.com", "strLibrary"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         oper.setReturnClass(java.lang.String.class);
         oper.setReturnQName(new javax.xml.namespace.QName("http://xdb.diy.com", "storeDocReturn"));
@@ -43,6 +45,8 @@ public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implem
         oper.addParameter(param);
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://xdb.diy.com", "strDocumentName"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://xdb.diy.com", "strLibrary"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         oper.setReturnClass(java.lang.String.class);
         oper.setReturnQName(new javax.xml.namespace.QName("http://xdb.diy.com", "storeStringAsDocReturn"));
@@ -53,6 +57,8 @@ public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implem
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("removeDoc");
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://xdb.diy.com", "strDocumentName"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://xdb.diy.com", "strLibrary"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         oper.setReturnClass(java.lang.String.class);
@@ -125,7 +131,7 @@ public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implem
         }
     }
 
-    public java.lang.String storeDoc(java.lang.String strFileName, java.lang.String strDocumentName) throws java.rmi.RemoteException {
+    public java.lang.String storeDoc(java.lang.String strFileName, java.lang.String strDocumentName, java.lang.String strLibrary) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -141,7 +147,7 @@ public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implem
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {strFileName, strDocumentName});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {strFileName, strDocumentName, strLibrary});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -159,7 +165,7 @@ public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implem
 }
     }
 
-    public java.lang.String storeStringAsDoc(java.lang.String string, java.lang.String strDocumentName) throws java.rmi.RemoteException {
+    public java.lang.String storeStringAsDoc(java.lang.String string, java.lang.String strDocumentName, java.lang.String strLibrary) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -175,7 +181,7 @@ public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implem
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {string, strDocumentName});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {string, strDocumentName, strLibrary});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -193,7 +199,7 @@ public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implem
 }
     }
 
-    public java.lang.String removeDoc(java.lang.String strDocumentName) throws java.rmi.RemoteException {
+    public java.lang.String removeDoc(java.lang.String strDocumentName, java.lang.String strLibrary) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -209,7 +215,7 @@ public class XDBHelperSoapBindingStub extends org.apache.axis.client.Stub implem
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {strDocumentName});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {strDocumentName, strLibrary});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;

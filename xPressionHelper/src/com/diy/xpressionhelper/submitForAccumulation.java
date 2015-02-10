@@ -57,7 +57,7 @@ public class submitForAccumulation extends HttpServlet {
 			String2File(data, fileName);
 			XDBHelperProxy xdbhp = new XDBHelperProxy();
 			xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
-			xdbhp.storeDoc(fileName, shortFilename);
+			xdbhp.storeDoc(fileName, shortFilename, "submitForAccumulation");
 			//xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
 			String strXQ =""
 					+ "let $e:=<event><time>"+ts+"</time><type>submitForAccumulation</type>"+metadata+"</event> "

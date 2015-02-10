@@ -67,7 +67,7 @@ public class submitForRealTime extends HttpServlet {
 				String2File(data, fileName);
 				XDBHelperProxy xdbhp = new XDBHelperProxy();
 				xdbhp.setEndpoint(xdbhp.getEndpoint().replace("xpression","192.168.3.53"));
-				xdbhp.storeDoc(fileName, shortFilename);
+				xdbhp.storeDoc(fileName, shortFilename, "submitForRealTime");
 				//xdbhp.storeStringAsDoc(metadata, shortFilename+"_metadata.xml");
 				QuickDocPortTypeProxy p = new QuickDocPortTypeProxy();
 				p.setEndpoint(p.getEndpoint().replace("localhost:18080", "localhost:8080"));	

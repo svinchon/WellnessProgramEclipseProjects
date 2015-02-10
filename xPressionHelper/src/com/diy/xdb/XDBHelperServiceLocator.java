@@ -7,7 +7,7 @@
 
 package com.diy.xdb;
 
-@SuppressWarnings({"serial", "rawtypes", "unchecked"})
+@SuppressWarnings({"serial","unchecked","rawtypes"})
 public class XDBHelperServiceLocator extends org.apache.axis.client.Service implements com.diy.xdb.XDBHelperService {
 
     public XDBHelperServiceLocator() {
@@ -71,7 +71,7 @@ public class XDBHelperServiceLocator extends org.apache.axis.client.Service impl
      * If this service has no port for the given interface,
      * then ServiceException is thrown.
      */
-	public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
+    public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
             if (com.diy.xdb.XDBHelper.class.isAssignableFrom(serviceEndpointInterface)) {
                 com.diy.xdb.XDBHelperSoapBindingStub _stub = new com.diy.xdb.XDBHelperSoapBindingStub(new java.net.URL(XDBHelper_address), this);

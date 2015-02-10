@@ -44,22 +44,22 @@ public class XDBHelperProxy implements com.diy.xdb.XDBHelper {
     return xDBHelper;
   }
   
-  public java.lang.String storeDoc(java.lang.String strFileName, java.lang.String strDocumentName) throws java.rmi.RemoteException{
+  public java.lang.String storeDoc(java.lang.String strFileName, java.lang.String strDocumentName, java.lang.String strLibrary) throws java.rmi.RemoteException{
     if (xDBHelper == null)
       _initXDBHelperProxy();
-    return xDBHelper.storeDoc(strFileName, strDocumentName);
+    return xDBHelper.storeDoc(strFileName, strDocumentName, strLibrary);
   }
   
-  public java.lang.String storeStringAsDoc(java.lang.String string, java.lang.String strDocumentName) throws java.rmi.RemoteException{
+  public java.lang.String storeStringAsDoc(java.lang.String string, java.lang.String strDocumentName, java.lang.String strLibrary) throws java.rmi.RemoteException{
     if (xDBHelper == null)
       _initXDBHelperProxy();
-    return xDBHelper.storeStringAsDoc(string, strDocumentName);
+    return xDBHelper.storeStringAsDoc(string, strDocumentName, strLibrary);
   }
   
-  public java.lang.String removeDoc(java.lang.String strDocumentName) throws java.rmi.RemoteException{
+  public java.lang.String removeDoc(java.lang.String strDocumentName, java.lang.String strLibrary) throws java.rmi.RemoteException{
     if (xDBHelper == null)
       _initXDBHelperProxy();
-    return xDBHelper.removeDoc(strDocumentName);
+    return xDBHelper.removeDoc(strDocumentName, strLibrary);
   }
   
   public java.lang.String runXQuery(java.lang.String strQuery) throws java.rmi.RemoteException{

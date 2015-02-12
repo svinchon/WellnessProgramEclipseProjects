@@ -47,3 +47,94 @@ return
 		</user>
 	}
 </users>
+
+************************************************************************************************************************
+let $current_day := xs:date("2015-02-10")
+let $first_day := $current_day - xs:dayTimeDuration("P28D")
+return
+<users>
+{
+for $m in doc('/Members.xml')/members/member
+return
+		<user>
+			<badge_number>{$m/badge_number/text()}</badge_number>
+			<index_history>
+				<items>
+	{
+	for $day_offset in (1 to 28)
+	let $current_date := $first_day + xs:dayTimeDuration(concat("P", $day_offset, "D"))
+	return
+					<item>
+						<day>{$day_offset}</day>
+						<date>{$current_date}</date>
+						<value>
+		{						
+		let $current_date_extract := xs:date(doc('/xPressionHelper/FromHIP/')/users/user[./external_id = $m/badge_number and xs:date(./index_history/last_value_date/text()) = xs:date($current_date)]/index_history/last_value_date/text())
+		let $current_date_day := xs:date($current_date)
+		let $current_value := doc('/xPressionHelper/FromHIP/')/users/user[./external_id = $m/badge_number and xs:date(./index_history/last_value_date/text()) = xs:date($current_date)]/index_history/values/value[7]/text()
+		return 
+		if ($current_date_day=$current_date_extract)
+		then $current_value
+		else 0
+		}
+						</value>
+					</item>
+	}
+				</items>
+			</index_history>
+		</user>
+}
+</users>
+
+*************************************************************************************************************************
+let $current_day := xs:date("2015-02-10")
+let $first_day := $current_day - xs:dayTimeDuration("P28D")
+let $source := doc('/xPressionHelper/FromHIP/')
+return
+<users>
+{
+for $m in doc('/Members.xml')/members/member
+let $u := $source/users/user[./external_id = $m/badge_number][1]
+return
+		<user>
+			<badge_number>{$m/badge_number/text()}</badge_number>
+			<username>{$u/username/text()}</username>
+			<email>{$u/email/text()}</email>
+			<gender>{$u/gender/text()}</gender>
+			<index_history>
+				<update_date>{$current_day}</update_date>
+				<first_date>{$first_day}</first_date>
+				<items>
+	{
+	for $day_offset in (1 to 28)
+	let $current_date := $first_day + xs:dayTimeDuration(concat("P", $day_offset, "D"))
+	return
+					<item>
+						<day_offset>{$day_offset}</day_offset>
+						<date>{$current_date}</date>
+						<value>
+		{						
+		let $current_date_extract := xs:date($source/users/user[
+				./external_id = $m/badge_number
+				and
+				xs:date(./index_history/last_value_date/text()) = xs:date($current_date)
+			]/index_history/last_value_date/text())
+		let $current_date_day := xs:date($current_date)
+		let $current_value := $source/users/user[
+				./external_id = $m/badge_number
+				and
+				xs:date(./index_history/last_value_date/text()) = xs:date($current_date)
+			]/index_history/values/value[7]/text()
+		return 
+			if ($current_date_day=$current_date_extract)
+			then $current_value
+			else 0
+		}
+						</value>
+					</item>
+	}
+				</items>
+			</index_history>
+		</user>
+}
+</users>

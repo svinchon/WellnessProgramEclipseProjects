@@ -1,5 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://schedulinghelper.diy.com">
+<con:soapui-project activeEnvironment="Default" name="SchedulingHelper?wsdl" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="SchedulingHelperSoapBinding" type="wsdl" bindingName="{http://schedulinghelper.diy.com}SchedulingHelperSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:18080/SchedulingHelper/services/SchedulingHelper?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:18080/SchedulingHelper/services/SchedulingHelper?wsdl"><con:part><con:url>http://localhost:18080/SchedulingHelper/services/SchedulingHelper?wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://schedulinghelper.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://schedulinghelper.diy.com" xmlns:intf="http://schedulinghelper.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+  <wsdl:types>
+    <schema elementFormDefault="qualified" targetNamespace="http://schedulinghelper.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="startScheduler">
+        <complexType/>
+      </element>
+      <element name="startSchedulerResponse">
+        <complexType>
+          <sequence>
+            <element name="startSchedulerReturn" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="scheduleWSCall">
+        <complexType>
+          <sequence>
+            <element name="strDate" type="xsd:string"/>
+            <element name="strTime" type="xsd:string"/>
+            <element name="bRecurent" type="xsd:boolean"/>
+            <element name="strSOAPMessage" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="scheduleWSCallResponse">
+        <complexType>
+          <sequence>
+            <element name="scheduleWSCallReturn" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="getScheduledJobsStats">
+        <complexType/>
+      </element>
+      <element name="getScheduledJobsStatsResponse">
+        <complexType>
+          <sequence>
+            <element name="getScheduledJobsStatsReturn" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="stopScheduler">
+        <complexType/>
+      </element>
+      <element name="stopSchedulerResponse">
+        <complexType>
+          <sequence>
+            <element name="stopSchedulerReturn" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="scheduleWSCallRequest">
+    <wsdl:part element="impl:scheduleWSCall" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="stopSchedulerResponse">
+    <wsdl:part element="impl:stopSchedulerResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getScheduledJobsStatsResponse">
+    <wsdl:part element="impl:getScheduledJobsStatsResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startSchedulerRequest">
+    <wsdl:part element="impl:startScheduler" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="scheduleWSCallResponse">
+    <wsdl:part element="impl:scheduleWSCallResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getScheduledJobsStatsRequest">
+    <wsdl:part element="impl:getScheduledJobsStats" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="stopSchedulerRequest">
+    <wsdl:part element="impl:stopScheduler" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="startSchedulerResponse">
+    <wsdl:part element="impl:startSchedulerResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SchedulingHelper">
+    <wsdl:operation name="startScheduler">
+      <wsdl:input message="impl:startSchedulerRequest" name="startSchedulerRequest"></wsdl:input>
+      <wsdl:output message="impl:startSchedulerResponse" name="startSchedulerResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="scheduleWSCall">
+      <wsdl:input message="impl:scheduleWSCallRequest" name="scheduleWSCallRequest"></wsdl:input>
+      <wsdl:output message="impl:scheduleWSCallResponse" name="scheduleWSCallResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getScheduledJobsStats">
+      <wsdl:input message="impl:getScheduledJobsStatsRequest" name="getScheduledJobsStatsRequest"></wsdl:input>
+      <wsdl:output message="impl:getScheduledJobsStatsResponse" name="getScheduledJobsStatsResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="stopScheduler">
+      <wsdl:input message="impl:stopSchedulerRequest" name="stopSchedulerRequest"></wsdl:input>
+      <wsdl:output message="impl:stopSchedulerResponse" name="stopSchedulerResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SchedulingHelperSoapBinding" type="impl:SchedulingHelper">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="startScheduler">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="startSchedulerRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="startSchedulerResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="scheduleWSCall">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="scheduleWSCallRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="scheduleWSCallResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getScheduledJobsStats">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="getScheduledJobsStatsRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getScheduledJobsStatsResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="stopScheduler">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="stopSchedulerRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="stopSchedulerResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SchedulingHelperService">
+    <wsdl:port binding="impl:SchedulingHelperSoapBinding" name="SchedulingHelper">
+      <wsdlsoap:address location="http://localhost:18080/SchedulingHelper/services/SchedulingHelper"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:18080/SchedulingHelper/services/SchedulingHelper</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="getScheduledJobsStats" bindingOperationName="getScheduledJobsStats" type="Request-Response" outputName="getScheduledJobsStatsResponse" inputName="getScheduledJobsStatsRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="stats1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:18080/SchedulingHelper/services/SchedulingHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://schedulinghelper.diy.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sch:getScheduledJobsStats/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://schedulinghelper.diy.com/SchedulingHelper/getScheduledJobsStatsRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="scheduleWSCall" bindingOperationName="scheduleWSCall" type="Request-Response" outputName="scheduleWSCallResponse" inputName="scheduleWSCallRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="sched1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:18080/SchedulingHelper/services/SchedulingHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://schedulinghelper.diy.com">
    <soapenv:Header/>
    <soapenv:Body>
       <sch:scheduleWSCall>
@@ -12,4 +157,14 @@
          <sch:strSOAPMessage>YOOOOOOOOOO</sch:strSOAPMessage>
       </sch:scheduleWSCall>
    </soapenv:Body>
-</soapenv:Envelope>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://schedulinghelper.diy.com/SchedulingHelper/scheduleWSCallRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="startScheduler" bindingOperationName="startScheduler" type="Request-Response" outputName="startSchedulerResponse" inputName="startSchedulerRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="start1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:18080/SchedulingHelper/services/SchedulingHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://schedulinghelper.diy.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sch:startScheduler/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://schedulinghelper.diy.com/SchedulingHelper/startSchedulerRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="stopScheduler" bindingOperationName="stopScheduler" type="Request-Response" outputName="stopSchedulerResponse" inputName="stopSchedulerRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="stop1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:18080/SchedulingHelper/services/SchedulingHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://schedulinghelper.diy.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <sch:stopScheduler/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://schedulinghelper.diy.com/SchedulingHelper/stopSchedulerRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

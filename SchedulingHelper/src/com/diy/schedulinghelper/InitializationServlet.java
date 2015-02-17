@@ -16,6 +16,7 @@ import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
 
+@SuppressWarnings("unused")
 @WebServlet("/InitializationServlet")
 public class InitializationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

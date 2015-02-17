@@ -15,12 +15,10 @@ import com.xhive.core.interfaces.XhiveDatabaseIf;
 import com.xhive.core.interfaces.XhiveDriverIf;
 import com.xhive.core.interfaces.XhiveSessionIf;
 import com.xhive.dom.interfaces.XhiveDocumentIf;
-import com.xhive.dom.interfaces.XhiveLibraryChildIf;
 //import com.xhive.dom.interfaces.XhiveLibraryChildIf;
 import com.xhive.dom.interfaces.XhiveLibraryIf;
 import com.xhive.query.interfaces.XhiveXQueryResultIf;
 import com.xhive.query.interfaces.XhiveXQueryValueIf;
-import com.xhive.util.interfaces.IterableIterator;
 
 public class XDBHelper {
 

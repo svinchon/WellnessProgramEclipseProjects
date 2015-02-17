@@ -358,7 +358,8 @@ Meteogram.prototype.drawWindArrows = function (chart) {
     var meteogram = this;
 
     $.each(chart.series[0].data, function (i, point) {
-        var sprite, arrow, x, y; 
+        //var sprite;
+        var arrow, x, y; 
 
         if (meteogram.resolution > 36e5 || i % 2 === 0) {
 
@@ -529,7 +530,7 @@ Meteogram.prototype.getChartOptions = function () {
                     }
                 } // else return undefined and go auto
 
-                return ret;
+                //return ret;
 
             },
             maxPadding: 0.3,
@@ -671,8 +672,8 @@ Meteogram.prototype.createChart = function () {
 Meteogram.prototype.parseYrData = function () {
 
     var meteogram = this,
-        xml = this.xml,
-        pointStart;
+        xml = this.xml;
+        //pointStart;
 
     if (!xml || !xml.forecast) {
         $('#loading').html('<i class="fa fa-frown-o"></i> Failed loading data, please try again later');
@@ -692,9 +693,9 @@ Meteogram.prototype.parseYrData = function () {
         to = to.replace(/-/g, '/').replace('T', ' ');
         to = Date.parse(to);
 
-        if (to > pointStart + 4 * 24 * 36e5) {
-            return;
-        }
+        //if (to > pointStart + 4 * 24 * 36e5) {
+        //    return;
+        //}
 
         // If it is more than an hour between points, show all symbols
         if (i === 0) {
@@ -761,7 +762,7 @@ $(function () { // On DOM ready...
     $.getJSON(
         'http://www.highcharts.com/samples/data/jsonp.php?url=' + location.hash.substr(1) + '&callback=?',
         function (xml) {
-            var meteogram = new Meteogram(xml, 'container');
+            //var meteogram = new Meteogram(xml, 'container');
         }
     );
 

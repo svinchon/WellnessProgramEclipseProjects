@@ -12,6 +12,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -36,8 +40,14 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.ValueMarker;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.ui.RectangleInsets;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -45,20 +55,111 @@ import org.xml.sax.InputSource;
 public class XML2ChartHelper {
 
 	public static void main(String[] args) {
-		String xml = File2String("C:/GIT/WellnessProgramXPression/xDWTemplates/LineChartData.xml");
-		Log(new XML2ChartHelper().generateLineChartFromXML(xml));
+		String xml = File2String("C:/GIT/WellnessProgramXPression/xDWTemplates/zMonthlyReport/LineChartDataV2.xml");
+		//Log(new XML2ChartHelper().generateLineChartFromXML(xml));
+		Log(new XML2ChartHelper().generatTSChartFromXML(xml));
+	}
+	
+	public String generatTSChartFromXML(String xml) {
+		String r = "";
+		// create data out of xml
+	    TimeSeriesCollection tsc = new TimeSeriesCollection();
+		int itemCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/categories/values/value)"));
+		int dataSetCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/series/serie)"));
+		String[] labels = strGetValuesFromXML(xml, "/chart_data/categories/values/value");
+		for (int ds=1;ds<=dataSetCount;ds++) {
+			String[] values = strGetValuesFromXML(xml, "/chart_data/series/serie["+ds+"]/values/value");
+			String dataSetLabel = strGetValueFromXML(xml, "/chart_data/series/serie["+ds+"]/title");
+			TimeSeries ts = new TimeSeries(dataSetLabel);	
+			for (int l=0;l<itemCount;l++) {
+				//Log(labels[l]+":"+values[l]);	
+				double value = new Double(values[l]);
+				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+			    Date date;
+				try {
+					date = sd.parse(labels[l]);
+				    Calendar cal = Calendar.getInstance();
+				    cal.setTime(date);
+				    int year = cal.get(Calendar.YEAR);
+				    int month = cal.get(Calendar.MONTH)+1;
+				    int day = cal.get(Calendar.DAY_OF_MONTH);
+				    Day jfcday = new Day(day, month, year);
+				    //Log(day+"-"+month+"-"+year);
+					//Day date = new Day(labels[l]);
+					ts.add(jfcday, value);
+				} catch (ParseException e) {
+					e.printStackTrace();
+					Log("incorrect date format in xml for timeserie");
+				}
+			}
+			tsc.addSeries(ts);
+		}
+	    // create chart
+	    JFreeChart jfc = ChartFactory.createTimeSeriesChart(
+			null,						// general title
+			null,						// categoryAxisLabel (X) "Time"
+			null,						// valueAxisLabel (Y) "Value"
+			tsc,						// dataset
+			false,						// legend
+			true,						// tooltips
+			false						// urls
+		);
+	    XYPlot xyp = (XYPlot)jfc.getPlot();
+	    xyp.setInsets(new RectangleInsets(0.0D, 0.0D, 0.0D, 20.0D));
+	    xyp.setInsets(new RectangleInsets(0.0D, 0.0D, 0.0D, 0.0D));
+	    ValueMarker localValueMarker = new ValueMarker(700.0D);
+	    localValueMarker.setPaint(Color.blue);
+	    localValueMarker.setAlpha(0.8F);
+	    xyp.addRangeMarker(localValueMarker);
+	    xyp.setBackgroundPaint(null);
+	    //xyp.setBackgroundImage(JFreeChart.INFO.getLogo());
+	    xyp.getDomainAxis().setLowerMargin(0.0D);
+	    // save chart
+		String strDir;
+		strDir = ResourceBundle.getBundle("ChartHelper").getString("LocalImageFolder");
+		String strFileName = "TSGraphic1_"+generateUniqueIdentifier();
+		String localPath = strDir + "/" + strFileName + ".png";
+		System.out.println("ChartHelper: local ="+localPath);
+		jfc.setBackgroundPaint( new Color(255,255,255,0) );
+		boolean transparent = true;
+		if (transparent) {
+			final Plot plot = jfc.getPlot();
+			plot.setBackgroundPaint( new Color(255,255,255,0) );
+			plot.setBackgroundImageAlpha(0.0f);
+		}
+		try {
+			FileOutputStream fos = new FileOutputStream(strDir+"/"+strFileName+".png");
+			ChartUtilities.writeChartAsPNG(
+				fos,
+				jfc,
+				300,		// width
+				200,		// height
+				null,
+				true,		// encode Alpha
+				0
+			);
+			fos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		strDir = ResourceBundle.getBundle("ChartHelper").getString("ImageFolderURL");
+		r = strDir + "/" + strFileName + ".png";
+		System.out.println("ChartHelper: URL="+r);
+		return r;		
 	}
 	
 	public String generateLineChartFromXML(String xml) {
 		String r = "";
 		// create data out of xml
 		DefaultCategoryDataset dcd = new DefaultCategoryDataset();
-		int itemCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/LineChart/Labels/Label)"));
-		int dataSetCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/LineChart/DataSets/DataSet)"));
-		String[] labels = strGetValuesFromXML(xml, "/LineChart/Labels/Label");
+		int itemCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/categories/values/value)"));
+		int dataSetCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/series/serie)"));
+		String[] labels = strGetValuesFromXML(xml, "/chart_data/categories/values/value");
 		for (int ds=1;ds<=dataSetCount;ds++) {
-			String[] values = strGetValuesFromXML(xml, "/LineChart/DataSets/DataSet["+ds+"]/Values/Value");
-			String dataSetLabel = strGetValueFromXML(xml, "/LineChart/DataSets/DataSet["+ds+"]/Label");
+			String[] values = strGetValuesFromXML(xml, "/chart_data/series/serie["+ds+"]/values/value");
+			String dataSetLabel = strGetValueFromXML(xml, "/chart_data/series/serie["+ds+"]/title");
 			for (int l=0;l<itemCount;l++) {
 				Log(labels[l]+values[l]);	
 				double value = new Double(values[l]);

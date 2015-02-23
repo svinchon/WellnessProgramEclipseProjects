@@ -30,7 +30,8 @@ import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQSequence;
 import javax.xml.xquery.XQStaticContext;
 
-import net.sf.saxon.xqj.SaxonXQDataSource;
+//import net.sf.saxon.xqj.SaxonXQDataSource;
+
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -51,6 +52,8 @@ import org.jfree.ui.RectangleInsets;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
+import com.saxonica.xqj.SaxonXQDataSource;
 
 public class XML2ChartHelper {
 

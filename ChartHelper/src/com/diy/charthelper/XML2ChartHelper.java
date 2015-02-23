@@ -16,22 +16,32 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-import javax.xml.namespace.QName;
+//import javax.security.auth.login.Configuration;
+//import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-import javax.xml.xquery.XQConnection;
-import javax.xml.xquery.XQConstants;
-import javax.xml.xquery.XQPreparedExpression;
-import javax.xml.xquery.XQSequence;
-import javax.xml.xquery.XQStaticContext;
+//import javax.xml.xquery.XQConnection;
+//import javax.xml.xquery.XQConstants;
+//import javax.xml.xquery.XQPreparedExpression;
+//import javax.xml.xquery.XQSequence;
+//import javax.xml.xquery.XQStaticContext;
 
 //import net.sf.saxon.xqj.SaxonXQDataSource;
 
+import net.sf.saxon.Configuration;
+import net.sf.saxon.om.DocumentInfo;
+import net.sf.saxon.query.DynamicQueryContext;
+import net.sf.saxon.query.StaticQueryContext;
+import net.sf.saxon.query.XQueryExpression;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -53,7 +63,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import com.saxonica.xqj.SaxonXQDataSource;
+//import com.saxonica.xqj.SaxonXQDataSource;
 
 public class XML2ChartHelper {
 
@@ -67,8 +77,10 @@ public class XML2ChartHelper {
 		String r = "";
 		// create data out of xml
 	    TimeSeriesCollection tsc = new TimeSeriesCollection();
-		int itemCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/categories/values/value)"));
-		int dataSetCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/series/serie)"));
+		//int itemCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/categories/values/value)"));
+		//int dataSetCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/series/serie)"));
+		int itemCount = new Integer(strRunXQuery(xml, "count(/chart_data/categories/values/value)"));
+		int dataSetCount = new Integer(strRunXQuery(xml, "count(/chart_data/series/serie)"));
 		String[] labels = strGetValuesFromXML(xml, "/chart_data/categories/values/value");
 		for (int ds=1;ds<=dataSetCount;ds++) {
 			String[] values = strGetValuesFromXML(xml, "/chart_data/series/serie["+ds+"]/values/value");
@@ -157,8 +169,10 @@ public class XML2ChartHelper {
 		String r = "";
 		// create data out of xml
 		DefaultCategoryDataset dcd = new DefaultCategoryDataset();
-		int itemCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/categories/values/value)"));
-		int dataSetCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/series/serie)"));
+		//int itemCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/categories/values/value)"));
+		//int dataSetCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/series/serie)"));
+		int itemCount = new Integer(strRunXQuery(xml, "count(/chart_data/categories/values/value)"));
+		int dataSetCount = new Integer(strRunXQuery(xml, "count(/chart_data/series/serie)"));
 		String[] labels = strGetValuesFromXML(xml, "/chart_data/categories/values/value");
 		for (int ds=1;ds<=dataSetCount;ds++) {
 			String[] values = strGetValuesFromXML(xml, "/chart_data/series/serie["+ds+"]/values/value");
@@ -263,7 +277,8 @@ public class XML2ChartHelper {
 		return r;
 	}
 
-	public static String strRunXQuery(String strInputAsString, String strXQUERYAsString) {
+	// saxon 9
+	/*public static String strRunXQuery(String strInputAsString, String strXQUERYAsString) {
 		String strResult = "ERROR";
 		try {
 			//String strInputAsString = "<root><item index='1'>item A</item><item index='2'>item B</item></root>";
@@ -291,8 +306,42 @@ public class XML2ChartHelper {
 			strResult = "ERROR: "+e.getMessage();
 		}
 		return strResult;
-    }
+    }*/
 	
+	// saxon8
+	@SuppressWarnings("deprecation")
+	public static String strRunXQuery(String strInputAsString, String strXQUERYAsString) {
+		String strResult = "ERROR";
+		ByteArrayInputStream queryStream = new ByteArrayInputStream(strXQUERYAsString.getBytes());
+		ByteArrayInputStream XMLStream = new ByteArrayInputStream(strInputAsString.getBytes());
+		ByteArrayOutputStream destStream = new ByteArrayOutputStream();
+		XQueryExpression exp=null;
+		Configuration C = new Configuration();
+		StaticQueryContext SQC=  new StaticQueryContext(C);
+		DynamicQueryContext DQC= new DynamicQueryContext(C);      
+		Properties props=new Properties();
+		props.setProperty(OutputKeys.METHOD,"xml");
+		props.setProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+		props.setProperty(OutputKeys.INDENT,"yes");
+		try {
+			exp = SQC.compileQuery(queryStream,null);
+			SQC = exp.getStaticContext(); 
+		} catch (net.sf.saxon.trans.XPathException e) {System.err.println(e.getMessage());
+		} catch (java.io.IOException e) {System.err.println(e.getMessage());}
+		try{   
+			InputSource XMLSource = new InputSource(XMLStream);
+			SAXSource SAXs = new SAXSource(XMLSource); 
+			DocumentInfo DI = SQC.buildDocument(SAXs);
+			DQC.setContextNode(DI);
+			exp.run(DQC,new StreamResult(destStream),props);
+			destStream.close();
+			strResult = destStream.toString("UTF-8");
+		}catch(net.sf.saxon.trans.XPathException e) {System.err.println(e.getMessage());
+		}catch (java.io.IOException e) {System.err.println(e.getMessage());}
+		Log(strResult);
+		return strResult;
+	}   
+
 	public static String strGetValueFromXML(String strXML, String strXPath) {
 		String result="";
 		try {

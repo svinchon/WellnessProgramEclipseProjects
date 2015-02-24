@@ -72,16 +72,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-
 public class XML2ChartHelper {
 
 	public static void main(String[] args) {
 		String xml = File2String("C:/GIT/WellnessProgramXPression/xDWTemplates/zMonthlyReport/LineChartDataV2.xml");
 		//Log(new XML2ChartHelper().generateLineChartFromXML(xml));
-		Log(new XML2ChartHelper().generatTSChartFromXML(xml));
+		Log(new XML2ChartHelper().generateTSChartFromXML(xml));
 	}
 	
-	public String generatTSChartFromXML(String xml) {
+	public String generateTSChartFromXML(String xml) {
 		String r = "";
 		// create data out of xml
 	    TimeSeriesCollection tsc = new TimeSeriesCollection();
@@ -230,6 +229,11 @@ public class XML2ChartHelper {
 		r = strDir + "/" + strFileName + ".png";
 		System.out.println("ChartHelper: URL="+r);
 		return r;		
+	}
+	
+	public String generateGaugesFromXML(String xml) {
+		String r = "";
+		return r;	
 	}
 	
 	public String generateLineChartFromXML(String xml) {

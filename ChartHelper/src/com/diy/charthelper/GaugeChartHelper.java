@@ -33,7 +33,7 @@ public class GaugeChartHelper {
 	public static void main(String[] args) {
 		new GaugeChartHelper().generateWeeklyReviewGaugeChart(
 				//"Steps", "30", "00FF00"
-				"Steps:Go Team! Go!", "30", "FF0000"
+				"test:ttt", "30", "FF0000"
 		);
 	}
 	
@@ -53,7 +53,7 @@ public class GaugeChartHelper {
 					""+labels[0],
 					"Cat1"
 					 );
-			if (labels.length > 1) { label2 = labels[1]; } else { label2 = ""; }
+			if (labels.length > 1) { label2 = labels[1]; } else { label2 = " "; }
 			dcd.addValue(
 					100 - percentageDone,
 					label2,

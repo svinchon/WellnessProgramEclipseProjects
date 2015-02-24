@@ -18,10 +18,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 import java.util.UUID;
 
-//import javax.security.auth.login.Configuration;
-//import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.sax.SAXSource;
@@ -29,33 +28,43 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
+
+//saxon9
+//import javax.security.auth.login.Configuration;
+//import javax.xml.namespace.QName;
 //import javax.xml.xquery.XQConnection;
 //import javax.xml.xquery.XQConstants;
 //import javax.xml.xquery.XQPreparedExpression;
 //import javax.xml.xquery.XQSequence;
 //import javax.xml.xquery.XQStaticContext;
 
+//saxon8
 //import net.sf.saxon.xqj.SaxonXQDataSource;
-
-import net.sf.saxon.Configuration;
+import net.sf.saxon.query.XQueryExpression;
 import net.sf.saxon.om.DocumentInfo;
 import net.sf.saxon.query.DynamicQueryContext;
 import net.sf.saxon.query.StaticQueryContext;
-import net.sf.saxon.query.XQueryExpression;
+import net.sf.saxon.Configuration;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.PeriodAxis;
+import org.jfree.chart.axis.PeriodAxisLabelInfo;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.Range;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.Day;
+import org.jfree.data.time.Month;
+import org.jfree.data.time.TimePeriodAnchor;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.RectangleInsets;
@@ -63,7 +72,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-//import com.saxonica.xqj.SaxonXQDataSource;
 
 public class XML2ChartHelper {
 
@@ -108,7 +116,7 @@ public class XML2ChartHelper {
 				}
 			}
 			tsc.addSeries(ts);
-		}
+			tsc.setXPosition(TimePeriodAnchor.MIDDLE);		}
 	    // create chart
 	    JFreeChart jfc = ChartFactory.createTimeSeriesChart(
 			null,						// general title
@@ -119,27 +127,86 @@ public class XML2ChartHelper {
 			true,						// tooltips
 			false						// urls
 		);
+	    
+	      
+	    //adjust chart properties
 	    XYPlot xyp = (XYPlot)jfc.getPlot();
-	    xyp.setInsets(new RectangleInsets(0.0D, 0.0D, 0.0D, 20.0D));
-	    xyp.setInsets(new RectangleInsets(0.0D, 0.0D, 0.0D, 0.0D));
-	    ValueMarker localValueMarker = new ValueMarker(700.0D);
+	    // margins
+	    //xyp.setInsets(new RectangleInsets(0.0D, 0.0D, 0.0D, 20.0D));
+	    //xyp.setInsets(new RectangleInsets(0.0D, 0.0D, 0.0D, 0.0D));
+	    //outside border
+	    xyp.setOutlineVisible(false);
+	    //xyp.setDomainCrosshairVisible(true);
+	    //xyp.setRangeCrosshairVisible(true);
+	    xyp.setDomainGridlinesVisible(false);
+	    
+	    NumberAxis da;
+	    da = (NumberAxis)xyp.getRangeAxis();
+	    da.setRangeWithMargins(new Range(0, 500));
+	    //da.setVisible(false);
+	    da.setUpperMargin(100);
+	    
+	    PeriodAxis pa = new PeriodAxis("Date");
+	    //pa.set
+	    pa.setTimeZone(TimeZone.getDefault());
+	    pa.setAutoRangeTimePeriodClass(Day.class);
+	    PeriodAxisLabelInfo[] arrayOfPeriodAxisLabelInfo = new PeriodAxisLabelInfo[2];
+	    arrayOfPeriodAxisLabelInfo[0] = new PeriodAxisLabelInfo(
+	    		Day.class,
+	    		new SimpleDateFormat("d"),
+	    		new RectangleInsets(2.0D, 2.0D, 2.0D, 2.0D),
+	    		new Font("SansSerif", 1, 10),
+	    		Color.white,
+	    		false,
+	    		new BasicStroke(0.0F),
+	    		Color.lightGray
+	    );
+	    arrayOfPeriodAxisLabelInfo[1] = new PeriodAxisLabelInfo(
+	    		Month.class,
+	    		new SimpleDateFormat("MMM"),
+	    		new RectangleInsets(2.0D, 2.0D, 2.0D, 2.0D),
+	    		new Font("SansSerif", 1, 10),
+	    		Color.white,
+	    		false,
+	    		new BasicStroke(0.0F),
+	    		Color.lightGray
+	    );
+	    //arrayOfPeriodAxisLabelInfo[2] = new PeriodAxisLabelInfo(Year.class, new SimpleDateFormat("yyyy"));
+	    pa.setLabelInfo(arrayOfPeriodAxisLabelInfo);
+	    //pa.setVisible(false);
+	    xyp.setDomainAxis(pa);
+	    
+	    
+	    
+	    //adjust line properties
+	    XYLineAndShapeRenderer lsr = (XYLineAndShapeRenderer)xyp.getRenderer();
+	    //show or not dots
+	    lsr.setBaseShapesVisible(false);
+	    //lsr.setDrawSeriesLineAsPath(true);
+	    //needed for line changes to be taken
+	    lsr.setAutoPopulateSeriesStroke(false);
+	    // line with width 2
+	    lsr.setBaseStroke(new BasicStroke(2.0F, 1, 2), false);
+	    //line color white for first serie
+	    lsr.setSeriesPaint(0, Color.white);
+	    //horizontal line to mark threshold 
+	    ValueMarker localValueMarker = new ValueMarker(300.0D);
 	    localValueMarker.setPaint(Color.blue);
 	    localValueMarker.setAlpha(0.8F);
 	    xyp.addRangeMarker(localValueMarker);
-	    xyp.setBackgroundPaint(null);
-	    //xyp.setBackgroundImage(JFreeChart.INFO.getLogo());
-	    xyp.getDomainAxis().setLowerMargin(0.0D);
+	    //xyp.getDomainAxis().setLowerMargin(0.0D);
+	    
 	    // save chart
 		String strDir;
 		strDir = ResourceBundle.getBundle("ChartHelper").getString("LocalImageFolder");
 		String strFileName = "TSGraphic1_"+generateUniqueIdentifier();
 		String localPath = strDir + "/" + strFileName + ".png";
 		System.out.println("ChartHelper: local ="+localPath);
-		jfc.setBackgroundPaint( new Color(255,255,255,0) );
+		jfc.setBackgroundPaint(new Color(255,255,255,0));
 		boolean transparent = true;
 		if (transparent) {
 			final Plot plot = jfc.getPlot();
-			plot.setBackgroundPaint( new Color(255,255,255,0) );
+			plot.setBackgroundPaint(new Color(255,255,255,0));
 			plot.setBackgroundImageAlpha(0.0f);
 		}
 		try {
@@ -338,7 +405,7 @@ public class XML2ChartHelper {
 			strResult = destStream.toString("UTF-8");
 		}catch(net.sf.saxon.trans.XPathException e) {System.err.println(e.getMessage());
 		}catch (java.io.IOException e) {System.err.println(e.getMessage());}
-		Log(strResult);
+		//Log(strResult);
 		return strResult;
 	}   
 

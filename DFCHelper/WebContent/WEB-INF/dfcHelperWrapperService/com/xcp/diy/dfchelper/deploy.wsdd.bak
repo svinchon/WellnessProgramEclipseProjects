@@ -20,13 +20,20 @@
       <parameter name="className" value="com.xcp.diy.dfchelper.DfcHelperWrapperSoapBindingImpl"/>
       <parameter name="wsdlPortType" value="dfcHelperWrapper"/>
       <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="addUserToGroup" qname="operNS:AddUserToGroup" xmlns:operNS="http://dfchelper.diy.xcp.com" returnQName="retNS:AddUserToGroupReturn" xmlns:retNS="http://dfchelper.diy.xcp.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:strAdminUser" xmlns:pns="http://dfchelper.diy.xcp.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:strAdminPassword" xmlns:pns="http://dfchelper.diy.xcp.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:strRepository" xmlns:pns="http://dfchelper.diy.xcp.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:strUser" xmlns:pns="http://dfchelper.diy.xcp.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:strGroup" xmlns:pns="http://dfchelper.diy.xcp.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
       <operation name="killAllProcess" qname="operNS:killAllProcess" xmlns:operNS="http://dfchelper.diy.xcp.com" returnQName="retNS:killAllProcessReturn" xmlns:retNS="http://dfchelper.diy.xcp.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
         <parameter qname="pns:strAdminUser" xmlns:pns="http://dfchelper.diy.xcp.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:strAdminPassword" xmlns:pns="http://dfchelper.diy.xcp.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:strRepository" xmlns:pns="http://dfchelper.diy.xcp.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:strProcessName" xmlns:pns="http://dfchelper.diy.xcp.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <parameter name="allowedMethods" value="killAllProcess"/>
+      <parameter name="allowedMethods" value="killAllProcess addUserToGroup"/>
 
   </service>
 </deployment>

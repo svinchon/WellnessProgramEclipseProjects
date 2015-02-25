@@ -69,7 +69,7 @@ public class dfcHelper extends DfSingleDocbaseModule {
 		return "SUCCESS";
 	}
 	
-	public static String AddUserToGroup(
+	public String AddUserToGroup(
 		String strRep,
 		String strAdminUserName,
 		String strAdminPassword,

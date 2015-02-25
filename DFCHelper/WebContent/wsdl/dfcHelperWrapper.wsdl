@@ -4,6 +4,24 @@
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://dfchelper.diy.xcp.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="AddUserToGroup">
+    <complexType>
+     <sequence>
+      <element name="strAdminUser" type="xsd:string"/>
+      <element name="strAdminPassword" type="xsd:string"/>
+      <element name="strRepository" type="xsd:string"/>
+      <element name="strUser" type="xsd:string"/>
+      <element name="strGroup" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="AddUserToGroupResponse">
+    <complexType>
+     <sequence>
+      <element name="AddUserToGroupReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="killAllProcess">
     <complexType>
      <sequence>
@@ -24,6 +42,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
   </schema>
  </wsdl:types>
 
+   <wsdl:message name="AddUserToGroupResponse">
+
+      <wsdl:part element="impl:AddUserToGroupResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="AddUserToGroupRequest">
+
+      <wsdl:part element="impl:AddUserToGroup" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="killAllProcessResponse">
 
       <wsdl:part element="impl:killAllProcessResponse" name="parameters">
@@ -42,6 +76,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:portType name="dfcHelperWrapper">
 
+      <wsdl:operation name="AddUserToGroup">
+
+         <wsdl:input message="impl:AddUserToGroupRequest" name="AddUserToGroupRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:AddUserToGroupResponse" name="AddUserToGroupResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="killAllProcess">
 
          <wsdl:input message="impl:killAllProcessRequest" name="killAllProcessRequest">
@@ -59,6 +105,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:binding name="dfcHelperWrapperSoapBinding" type="impl:dfcHelperWrapper">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="AddUserToGroup">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="AddUserToGroupRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="AddUserToGroupResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="killAllProcess">
 

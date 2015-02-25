@@ -21,4 +21,32 @@ public class dfcHelperWrapper {
 		return "SUCSESS";
 	}
 
+	public String AddUserToGroup(
+			String strAdminUser,
+			String strAdminPassword,
+			String strRepository,
+			String strUser,
+			String strGroup
+		) {
+		try {
+			new dfcHelperSession(
+					strAdminUser, 
+					strAdminPassword, 
+					strRepository
+			);
+			dfcHelper dfch = new dfcHelper();
+			dfch.AddUserToGroup(
+					strRepository, 
+					strAdminUser, 
+					strAdminPassword, 
+					strUser, 
+					strGroup
+			);
+		} catch (DfException e) {
+			e.printStackTrace();
+			return "ERROR";
+		}
+		return "SUCSESS";
+	}
+
 }

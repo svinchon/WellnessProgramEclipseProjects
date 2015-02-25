@@ -53,6 +53,7 @@ public class ProcessFormData extends HttpServlet {
 		this.doPost(request, response);
 	}
 
+	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Log("doPost");
 		VITEXRESTHelper vrh = new VITEXRESTHelper();
@@ -113,7 +114,7 @@ public class ProcessFormData extends HttpServlet {
 			response.sendRedirect("DisplayMessage.jsp?MessageType=ERROR&Message=Incorrect Data: "+strErrors);
 		} else {
 			int sport_activity = new Integer(request.getParameter("iSportActivity"));
-			String strVitexReturn = vrh.submitNewUser(
+			/*String strVitexReturn = vrh.submitNewUser(
 					username,
 					email,
 					password,
@@ -122,7 +123,8 @@ public class ProcessFormData extends HttpServlet {
 					weight,
 					birth_date,
 					sport_activity
-			);
+			);*/
+			String strVitexReturn = "SUCCESS:id="+badge_number;
 			if (strVitexReturn.indexOf("ERROR")>=0) {
 				Log(strVitexReturn);
 				String strRegEx = "\\{\"errors\":\\[\"([^}]*)\"\\]\\}";
@@ -187,9 +189,15 @@ public class ProcessFormData extends HttpServlet {
 				parameters.setEmail_type("NA");
 				parameters.setEmail_count(new BigInteger("0"));
 				parameters.setEmail(email);
-				DefaultResponse dr = wp02p.submitRegistration(parameters);
-				String wi = dr.getWorkflowId();
-				response.sendRedirect("DisplayMessage.jsp?Message=New user successfully created under Vitex Id '"+vitex_id+"' and xCP registration workflow started ('" + wi + "')");
+				String msg;
+				try {
+					DefaultResponse dr = wp02p.submitRegistration(parameters);
+					String wi = dr.getWorkflowId();
+					msg = "New user successfully created under Vitex Id '"+vitex_id+"' and xCP registration workflow started ('" + wi + "')";
+				} catch (Exception e) {
+					msg = "Unable to connect to xCP";				
+				}
+				response.sendRedirect("DisplayMessage.jsp?Message="+msg);
 			}
 			// create xCP/DCTM user
 			// Send welcome email

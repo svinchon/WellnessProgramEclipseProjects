@@ -1,6 +1,7 @@
 package com.diy.wellnessprogram;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+
+import WellnessProgram.DefaultResponse;
+import WellnessProgram.SubmitRegistrationRequest;
+import WellnessProgram.WP02Proxy;
 
 import com.diy.xdb.XDBHelperProxy;
 
@@ -51,54 +56,54 @@ public class ProcessFormData extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Log("doPost");
 		VITEXRESTHelper vrh = new VITEXRESTHelper();
-		String strUserName = ""+request.getParameter("username");
-		String strPassword = ""+request.getParameter("password");
-		String strExternalId = ""+request.getParameter("badge_number");
-		String strGender = ""+request.getParameter("gender");
-		String strEmail = ""+request.getParameter("email");
-		String strWeight = ""+request.getParameter("weight");
-		String strBirthDate = ""+request.getParameter("birth_date");
-		String strFirstName = ""+request.getParameter("first_name");
-		String strLastName = ""+request.getParameter("last_name");
+		String username = ""+request.getParameter("username");
+		String password = ""+request.getParameter("password");
+		String badge_number = ""+request.getParameter("badge_number");
+		String gender = ""+request.getParameter("gender");
+		String email = ""+request.getParameter("email");
+		String weight = ""+request.getParameter("weight");
+		String birth_date = ""+request.getParameter("birth_date");
+		String first_name = ""+request.getParameter("first_name");
+		String last_name = ""+request.getParameter("last_name");
 		//Log(""+strEmail.matches("[a-zA-Z0-9_.]*@[a-zA-Z0-9]*\\.[a-zA-Z]*"));
 		ArrayList<String> Errors = new ArrayList<String>();
 		if (
-			!strUserName.matches("[a-zA-Z0-9_.]*"))
+			!username.matches("[a-zA-Z0-9_.]*"))
 		{
 			Errors.add("Incorrect User Name");
 		}
 		if (
-			strPassword.length()<6)
+			password.length()<6)
 		{
 			Errors.add("Too short password");
 		}
 		if (
-			!strBirthDate.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")
+			!birth_date.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")
 		) {
 			Errors.add("Incorrect birth date format (YYYY-MM-DD)");
 		}
 		if (
-			!strEmail.matches("[a-zA-Z0-9_.]*@[a-zA-Z0-9]*\\.[a-zA-Z]*")		
+			!email.matches("[a-zA-Z0-9_.]*@[a-zA-Z0-9]*\\.[a-zA-Z]*")		
 		) {
 			Errors.add("Incorrect Email");
 		}
 		if (
-			!strWeight.matches("[0-9][0-9]*")
+			!weight.matches("[0-9][0-9]*")
 		) {
-			Errors.add("Incorrect Weight: '"+strWeight+"'");
+			Errors.add("Incorrect Weight: '"+weight+"'");
 		}
 		if (
-			!strFirstName.matches("[a-zA-Z0-9 -]*")
+			!first_name.matches("[a-zA-Z0-9 -]*")
 		) {
 			Errors.add("Incorrect First Name");
 		}
 		if (
-			!strLastName.matches("[a-zA-Z0-9 -]*")
+			!last_name.matches("[a-zA-Z0-9 -]*")
 		) {
 			Errors.add("Incorrect Last Name");
 		}
 		if (
-			strExternalId.matches("[0-9]*")
+			!badge_number.matches("[0-9]*")
 		) {
 			Errors.add("Incorrect Badge Number");
 		}
@@ -107,16 +112,16 @@ public class ProcessFormData extends HttpServlet {
 			String strErrors = StringUtils.join(ErrorsArray, ",");
 			response.sendRedirect("DisplayMessage.jsp?MessageType=ERROR&Message=Incorrect Data: "+strErrors);
 		} else {
-			int iSportActivity = new Integer(request.getParameter("iSportActivity"));
+			int sport_activity = new Integer(request.getParameter("iSportActivity"));
 			String strVitexReturn = vrh.submitNewUser(
-					strUserName,
-					strEmail,
-					strPassword,
-					strExternalId,
-					strGender,
-					strWeight,
-					strBirthDate,
-					iSportActivity
+					username,
+					email,
+					password,
+					badge_number,
+					gender,
+					weight,
+					birth_date,
+					sport_activity
 			);
 			if (strVitexReturn.indexOf("ERROR")>=0) {
 				Log(strVitexReturn);
@@ -134,8 +139,7 @@ public class ProcessFormData extends HttpServlet {
 				String strErrors = StringUtils.join(ErrorsArray, "  ");
 				response.sendRedirect("DisplayMessage.jsp?MessageType=ERROR&Message="+strErrors);
 			} else {
-				String strVitexId = strVitexReturn.substring("SUCCESS:id=".length());
-				response.sendRedirect("DisplayMessage.jsp?Message=New user successfully created under Vitex Id '"+strVitexId+"'");
+				String vitex_id = strVitexReturn.substring("SUCCESS:id=".length());
 				String ts = generateTimeStamp();
 				String metadata = "<metadata>";
 				Enumeration<String> parameterNames = request.getParameterNames();
@@ -147,6 +151,7 @@ public class ProcessFormData extends HttpServlet {
 				metadata += "<"+"request_type"+">"+"registerNewUser"+"</"+"request_type"+">";
 				metadata += "</metadata>";
 				XDBHelperProxy xdbh = new XDBHelperProxy();
+				xdbh.setEndpoint(xdbh.getEndpoint().replace("localhost:18080", "localhost:8080"));
 				String strQuery;
 				strQuery= ""
 					+ "let $e:="
@@ -160,21 +165,38 @@ public class ProcessFormData extends HttpServlet {
 				strQuery= ""
 						+ "let $e:="
 						+ "<member>"
-						+ "<badge_number>"+strExternalId+"</badge_number>"
-						+ "<first_name>"+strFirstName+"</first_name>"
-						+ "<last_name>"+strLastName+"</last_name>"
-						+ "<vitex_id>"+strVitexId+"</vitex_id>"
+						+ "<badge_number>"+badge_number+"</badge_number>"
+						+ "<first_name>"+first_name+"</first_name>"
+						+ "<last_name>"+last_name+"</last_name>"
+						+ "<vitex_id>"+vitex_id+"</vitex_id>"
 						+ "</member> "
 						+ "return insert node $e as first into /members";
-				xdbh.runXQuery(strQuery );				
+				xdbh.runXQuery(strQuery );
+				WP02Proxy wp02p = new WP02Proxy();
+				SubmitRegistrationRequest parameters = new SubmitRegistrationRequest();
+				parameters.setUsername(username);
+				parameters.setBirth_date(birth_date);
+				parameters.setBadge_number(badge_number);
+				parameters.setFirst_name(first_name);
+				parameters.setGender(gender);
+				parameters.setLast_name(last_name);
+				parameters.setLogin(username);
+				parameters.setPassword(password);
+				parameters.setVitex_id(vitex_id);
+				parameters.setWeight(new Float(weight));
+				parameters.setEmail_type("NA");
+				parameters.setEmail_count(new BigInteger("0"));
+				parameters.setEmail(email);
+				DefaultResponse dr = wp02p.submitRegistration(parameters);
+				String wi = dr.getWorkflowId();
+				response.sendRedirect("DisplayMessage.jsp?Message=New user successfully created under Vitex Id '"+vitex_id+"' and xCP registration workflow started ('" + wi + "')");
 			}
-
+			// create xCP/DCTM user
 			// Send welcome email
 			// else
 				// Send Sorry email
 			// end if			
 		}
-
 	}
 
 	String generateTimeStamp() {

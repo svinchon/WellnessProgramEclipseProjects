@@ -1,4 +1,10 @@
 eclipse.preferences.version=1
+encoding//src/WellnessProgram/DefaultResponse.java=UTF-8
+encoding//src/WellnessProgram/SubmitRegistrationRequest.java=UTF-8
+encoding//src/WellnessProgram/WP02.java=UTF-8
+encoding//src/WellnessProgram/WP02BindingStub.java=UTF-8
+encoding//src/WellnessProgram/WP02Service.java=UTF-8
+encoding//src/WellnessProgram/WP02ServiceLocator.java=UTF-8
 encoding//src/com/diy/xdb/XDBHelper.java=UTF-8
 encoding//src/com/diy/xdb/XDBHelperService.java=UTF-8
 encoding//src/com/diy/xdb/XDBHelperServiceLocator.java=UTF-8

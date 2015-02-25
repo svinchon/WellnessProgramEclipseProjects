@@ -76,7 +76,7 @@ form {
 <table>
 	<tbody>
 		<tr>
-			<td colspan="2" align="center"><img width="300" height="200" src="http://xpression45.iigfrance.com/xFramework/Graphics/Fitness_Couple2_small.png"/></td>
+			<td colspan="2" align="center"><img width="300" height="200" src="WellnessProgramRegistrationCouple.png"/></td>
 		</tr>
 		<tr>
 			<td class="myheader1" colspan="2" align="center">
@@ -90,7 +90,7 @@ form {
 		<tr>
 			<td>Badge Number:</td>
 			<td>
-				<input type="text" name="first_name" value="<%= ts%>">
+				<input type="text" name="badge_number" value="<%= ts%>">
 			</td>
 		</tr>
 		<tr>

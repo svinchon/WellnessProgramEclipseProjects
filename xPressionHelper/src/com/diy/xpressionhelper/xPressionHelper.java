@@ -228,9 +228,14 @@ public class xPressionHelper {
 						"<ERROR>"+
 						e.getMessage()+
 						"\n</ERROR>";
+				Log(e.getMessage());
 			}
 			//System.out.println("xPressionHelper => END");
 			return strReturn;
 		}
+	
+	private void Log(String str) {
+		System.out.println("xPressionHelper => "+str);
+	}
 }
 

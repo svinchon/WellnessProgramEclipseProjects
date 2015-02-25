@@ -21,7 +21,7 @@ public class dfcHelperWrapper {
 		return "SUCSESS";
 	}
 
-	public String AddUserToGroup(
+	public String addUserToGroup(
 			String strAdminUser,
 			String strAdminPassword,
 			String strRepository,

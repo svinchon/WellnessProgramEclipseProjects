@@ -7,6 +7,7 @@
 
 package WellnessProgram;
 
+@SuppressWarnings({"serial", "rawtypes", "unchecked"})
 public class WP02ServiceLocator extends org.apache.axis.client.Service implements WellnessProgram.WP02Service {
 
     public WP02ServiceLocator() {

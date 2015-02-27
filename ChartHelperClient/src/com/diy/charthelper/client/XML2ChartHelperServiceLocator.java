@@ -7,6 +7,7 @@
 
 package com.diy.charthelper.client;
 
+@SuppressWarnings({"serial", "rawtypes", "unchecked"})
 public class XML2ChartHelperServiceLocator extends org.apache.axis.client.Service implements com.diy.charthelper.client.XML2ChartHelperService {
 
     public XML2ChartHelperServiceLocator() {

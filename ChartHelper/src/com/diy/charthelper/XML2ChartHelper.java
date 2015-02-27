@@ -21,6 +21,10 @@ import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.util.UUID;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.sax.SAXSource;
@@ -68,9 +72,6 @@ import org.jfree.data.time.TimePeriodAnchor;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.RectangleInsets;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 public class XML2ChartHelper {
 
@@ -88,18 +89,32 @@ public class XML2ChartHelper {
 		//int dataSetCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/series/serie)"));
 		int itemCount = new Integer(strRunXQuery(xml, "count(/chart_data/categories/values/value)"));
 		int dataSetCount = new Integer(strRunXQuery(xml, "count(/chart_data/series/serie)"));
-		String[] labels = strGetValuesFromXML(xml, "/chart_data/categories/values/value");
+		String labels = strRunXQuery(
+				xml,
+				"string-join(for $v in /chart_data/categories/values/value return $v, ';')"
+		);
+		String[] labelsArray = labels.split(";");
+		//String[] labelsArray = strGetValuesFromXML(xml, "/chart_data/categories/values/value");
 		for (int ds=1;ds<=dataSetCount;ds++) {
-			String[] values = strGetValuesFromXML(xml, "/chart_data/series/serie["+ds+"]/values/value");
-			String dataSetLabel = strGetValueFromXML(xml, "/chart_data/series/serie["+ds+"]/title");
+			//String[] values = strGetValuesFromXML(xml, "/chart_data/series/serie["+ds+"]/values/value");
+			String values = strRunXQuery(
+					xml,
+					"string-join(for $v in /chart_data/series/serie["+ds+"]/values/value return $v, ';')"
+			);
+			String[] valuesArray = values.split(";");
+			//String dataSetLabel = strGetValueFromXML(xml, "/chart_data/series/serie["+ds+"]/title");
+			String dataSetLabel = strRunXQuery(
+					xml,
+					"/chart_data/series/serie["+ds+"]/title"
+			);
 			TimeSeries ts = new TimeSeries(dataSetLabel);	
 			for (int l=0;l<itemCount;l++) {
 				//Log(labels[l]+":"+values[l]);	
-				double value = new Double(values[l]);
+				double value = new Double(valuesArray[l]);
 				SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 			    Date date;
 				try {
-					date = sd.parse(labels[l]);
+					date = sd.parse(labelsArray[l]);
 				    Calendar cal = Calendar.getInstance();
 				    cal.setTime(date);
 				    int year = cal.get(Calendar.YEAR);
@@ -450,44 +465,6 @@ public class XML2ChartHelper {
 				new InputSource(new StringReader(strXML))
 			);
 			XPath xpath = XPathFactory.newInstance().newXPath();
-			/*NamespaceContext ns = new NamespaceContext() {
-				
-				@SuppressWarnings("rawtypes")
-				@Override
-				public Iterator getPrefixes(String namespaceURI) {
-					return null;
-				}
-				
-				@Override
-				public String getPrefix(String namespaceURI) {
-					ResourceBundle rb = ResourceBundle.getBundle("HIPHelper");
-					HashMap<String, String> m1 = new HashMap<String, String>();
-					HashMap<String, String> m2 = new HashMap<String, String>();
-					String namespaces = rb.getString("namespaces");
-					String[] namespace = namespaces.split(";");
-					for (int i=0;i<namespace.length;i++) {
-						String[] ns = namespace[i].split(" ");
-						m1.put(ns[0], ns[1]);
-						m2.put(ns[1], ns[0]);
-					}
-					return (String)m2.get(namespaceURI);
-				}
-				
-				@Override
-				public String getNamespaceURI(String prefix) {
-					ResourceBundle rb = ResourceBundle.getBundle("HIPHelper");
-					HashMap<String, String> m1 = new HashMap<String, String>();
-					HashMap<String, String> m2 = new HashMap<String, String>();
-					String namespaces = rb.getString("namespaces");
-					String[] namespace = namespaces.split(";");
-					for (int i=0;i<namespace.length;i++) {
-						String[] ns = namespace[i].split(" ");
-						m1.put(ns[0], ns[1]);
-						m2.put(ns[1], ns[0]);
-					}
-					return (String)m1.get(prefix);				}
-			};
-			xpath.setNamespaceContext(ns);*/
 			NodeList nodes = (NodeList) xpath.evaluate(strXPath, doc, XPathConstants.NODESET);
 			if (nodes!=null && nodes.getLength()>0) {
 				int iArraySize = nodes.getLength();
@@ -545,3 +522,42 @@ public class XML2ChartHelper {
 	}
 	
 }
+
+/*NamespaceContext ns = new NamespaceContext() {
+
+@SuppressWarnings("rawtypes")
+@Override
+public Iterator getPrefixes(String namespaceURI) {
+	return null;
+}
+
+@Override
+public String getPrefix(String namespaceURI) {
+	ResourceBundle rb = ResourceBundle.getBundle("HIPHelper");
+	HashMap<String, String> m1 = new HashMap<String, String>();
+	HashMap<String, String> m2 = new HashMap<String, String>();
+	String namespaces = rb.getString("namespaces");
+	String[] namespace = namespaces.split(";");
+	for (int i=0;i<namespace.length;i++) {
+		String[] ns = namespace[i].split(" ");
+		m1.put(ns[0], ns[1]);
+		m2.put(ns[1], ns[0]);
+	}
+	return (String)m2.get(namespaceURI);
+}
+
+@Override
+public String getNamespaceURI(String prefix) {
+	ResourceBundle rb = ResourceBundle.getBundle("HIPHelper");
+	HashMap<String, String> m1 = new HashMap<String, String>();
+	HashMap<String, String> m2 = new HashMap<String, String>();
+	String namespaces = rb.getString("namespaces");
+	String[] namespace = namespaces.split(";");
+	for (int i=0;i<namespace.length;i++) {
+		String[] ns = namespace[i].split(" ");
+		m1.put(ns[0], ns[1]);
+		m2.put(ns[1], ns[0]);
+	}
+	return (String)m1.get(prefix);				}
+};
+xpath.setNamespaceContext(ns);*/

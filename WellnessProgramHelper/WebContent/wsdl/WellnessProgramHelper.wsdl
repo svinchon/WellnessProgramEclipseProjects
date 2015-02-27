@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://wellnessprogram.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://wellnessprogram.diy.com" xmlns:intf="http://wellnessprogram.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://wellnessprogram.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="writeToLog">
+    <complexType>
+     <sequence>
+      <element name="str" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="writeToLogResponse">
+    <complexType/>
+   </element>
+   <element name="getRandomInteger">
+    <complexType>
+     <sequence>
+      <element name="min" type="xsd:int"/>
+      <element name="max" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getRandomIntegerResponse">
+    <complexType>
+     <sequence>
+      <element name="getRandomIntegerReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getMemberPerformances">
+    <complexType>
+     <sequence>
+      <element name="strMemberId" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getMemberPerformancesResponse">
+    <complexType>
+     <sequence>
+      <element name="getMemberPerformancesReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getEmailPrefix">
+    <complexType>
+     <sequence>
+      <element name="strEmail" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getEmailPrefixResponse">
+    <complexType>
+     <sequence>
+      <element name="getEmailPrefixReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deAccent">
+    <complexType>
+     <sequence>
+      <element name="str" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deAccentResponse">
+    <complexType>
+     <sequence>
+      <element name="deAccentReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getMemberPerformancesRequest">
+
+      <wsdl:part element="impl:getMemberPerformances" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMemberPerformancesResponse">
+
+      <wsdl:part element="impl:getMemberPerformancesResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deAccentResponse">
+
+      <wsdl:part element="impl:deAccentResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="writeToLogResponse">
+
+      <wsdl:part element="impl:writeToLogResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deAccentRequest">
+
+      <wsdl:part element="impl:deAccent" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEmailPrefixResponse">
+
+      <wsdl:part element="impl:getEmailPrefixResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getRandomIntegerRequest">
+
+      <wsdl:part element="impl:getRandomInteger" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getEmailPrefixRequest">
+
+      <wsdl:part element="impl:getEmailPrefix" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getRandomIntegerResponse">
+
+      <wsdl:part element="impl:getRandomIntegerResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="writeToLogRequest">
+
+      <wsdl:part element="impl:writeToLog" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="WellnessProgramHelper">
+
+      <wsdl:operation name="writeToLog">
+
+         <wsdl:input message="impl:writeToLogRequest" name="writeToLogRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:writeToLogResponse" name="writeToLogResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getRandomInteger">
+
+         <wsdl:input message="impl:getRandomIntegerRequest" name="getRandomIntegerRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getRandomIntegerResponse" name="getRandomIntegerResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMemberPerformances">
+
+         <wsdl:input message="impl:getMemberPerformancesRequest" name="getMemberPerformancesRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getMemberPerformancesResponse" name="getMemberPerformancesResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getEmailPrefix">
+
+         <wsdl:input message="impl:getEmailPrefixRequest" name="getEmailPrefixRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getEmailPrefixResponse" name="getEmailPrefixResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deAccent">
+
+         <wsdl:input message="impl:deAccentRequest" name="deAccentRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deAccentResponse" name="deAccentResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="WellnessProgramHelperSoapBinding" type="impl:WellnessProgramHelper">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="writeToLog">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="writeToLogRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="writeToLogResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getRandomInteger">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getRandomIntegerRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getRandomIntegerResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMemberPerformances">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getMemberPerformancesRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getMemberPerformancesResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getEmailPrefix">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getEmailPrefixRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getEmailPrefixResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deAccent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deAccentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deAccentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="WellnessProgramHelperService">
+
+      <wsdl:port binding="impl:WellnessProgramHelperSoapBinding" name="WellnessProgramHelper">
+
+         <wsdlsoap:address location="http://localhost:8080/WellnessProgramHelper/services/WellnessProgramHelper"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

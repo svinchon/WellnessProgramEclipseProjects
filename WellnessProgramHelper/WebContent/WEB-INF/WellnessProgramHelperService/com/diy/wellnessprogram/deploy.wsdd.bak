@@ -1,0 +1,42 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from WellnessProgramHelperService WSDL service -->
+
+  <service name="WellnessProgramHelper" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://wellnessprogram.diy.com"/>
+      <parameter name="wsdlServiceElement" value="WellnessProgramHelperService"/>
+      <parameter name="schemaQualified" value="http://wellnessprogram.diy.com"/>
+      <parameter name="wsdlServicePort" value="WellnessProgramHelper"/>
+      <parameter name="className" value="com.diy.wellnessprogram.WellnessProgramHelperSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="WellnessProgramHelper"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="writeToLog" qname="operNS:writeToLog" xmlns:operNS="http://wellnessprogram.diy.com" soapAction="" >
+        <parameter qname="pns:str" xmlns:pns="http://wellnessprogram.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getRandomInteger" qname="operNS:getRandomInteger" xmlns:operNS="http://wellnessprogram.diy.com" returnQName="retNS:getRandomIntegerReturn" xmlns:retNS="http://wellnessprogram.diy.com" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:min" xmlns:pns="http://wellnessprogram.diy.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:max" xmlns:pns="http://wellnessprogram.diy.com" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getMemberPerformances" qname="operNS:getMemberPerformances" xmlns:operNS="http://wellnessprogram.diy.com" returnQName="retNS:getMemberPerformancesReturn" xmlns:retNS="http://wellnessprogram.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:strMemberId" xmlns:pns="http://wellnessprogram.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getEmailPrefix" qname="operNS:getEmailPrefix" xmlns:operNS="http://wellnessprogram.diy.com" returnQName="retNS:getEmailPrefixReturn" xmlns:retNS="http://wellnessprogram.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:strEmail" xmlns:pns="http://wellnessprogram.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="deAccent" qname="operNS:deAccent" xmlns:operNS="http://wellnessprogram.diy.com" returnQName="retNS:deAccentReturn" xmlns:retNS="http://wellnessprogram.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:str" xmlns:pns="http://wellnessprogram.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="getMemberPerformances deAccent getEmailPrefix getRandomInteger writeToLog"/>
+
+  </service>
+</deployment>

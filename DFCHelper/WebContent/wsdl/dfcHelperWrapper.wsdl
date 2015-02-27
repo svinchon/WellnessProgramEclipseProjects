@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://dfchelper.diy.xcp.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://dfchelper.diy.xcp.com" xmlns:intf="http://dfchelper.diy.xcp.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://dfchelper.diy.xcp.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="AddUserToGroup">
+    <complexType>
+     <sequence>
+      <element name="strAdminUser" type="xsd:string"/>
+      <element name="strAdminPassword" type="xsd:string"/>
+      <element name="strRepository" type="xsd:string"/>
+      <element name="strUser" type="xsd:string"/>
+      <element name="strGroup" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="AddUserToGroupResponse">
+    <complexType>
+     <sequence>
+      <element name="AddUserToGroupReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="killAllProcess">
+    <complexType>
+     <sequence>
+      <element name="strAdminUser" type="xsd:string"/>
+      <element name="strAdminPassword" type="xsd:string"/>
+      <element name="strRepository" type="xsd:string"/>
+      <element name="strProcessName" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="killAllProcessResponse">
+    <complexType>
+     <sequence>
+      <element name="killAllProcessReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="AddUserToGroupResponse">
+
+      <wsdl:part element="impl:AddUserToGroupResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="AddUserToGroupRequest">
+
+      <wsdl:part element="impl:AddUserToGroup" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="killAllProcessResponse">
+
+      <wsdl:part element="impl:killAllProcessResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="killAllProcessRequest">
+
+      <wsdl:part element="impl:killAllProcess" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="dfcHelperWrapper">
+
+      <wsdl:operation name="AddUserToGroup">
+
+         <wsdl:input message="impl:AddUserToGroupRequest" name="AddUserToGroupRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:AddUserToGroupResponse" name="AddUserToGroupResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="killAllProcess">
+
+         <wsdl:input message="impl:killAllProcessRequest" name="killAllProcessRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:killAllProcessResponse" name="killAllProcessResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="dfcHelperWrapperSoapBinding" type="impl:dfcHelperWrapper">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="AddUserToGroup">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="AddUserToGroupRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="AddUserToGroupResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="killAllProcess">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="killAllProcessRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="killAllProcessResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="dfcHelperWrapperService">
+
+      <wsdl:port binding="impl:dfcHelperWrapperSoapBinding" name="dfcHelperWrapper">
+
+         <wsdlsoap:address location="http://localhost:8080/DFCHelper/services/dfcHelperWrapper"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://charthelper.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://charthelper.diy.com" xmlns:intf="http://charthelper.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://charthelper.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="main">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="args" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="mainResponse">
+    <complexType/>
+   </element>
+   <element name="generateTSChartFromXML">
+    <complexType>
+     <sequence>
+      <element name="xml" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="generateTSChartFromXMLResponse">
+    <complexType>
+     <sequence>
+      <element name="generateTSChartFromXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strRunXQuery">
+    <complexType>
+     <sequence>
+      <element name="strInputAsString" type="xsd:string"/>
+      <element name="strXQUERYAsString" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strRunXQueryResponse">
+    <complexType>
+     <sequence>
+      <element name="strRunXQueryReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strGetValuesFromXML">
+    <complexType>
+     <sequence>
+      <element name="strXML" type="xsd:string"/>
+      <element name="strXPath" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strGetValuesFromXMLResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="strGetValuesFromXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strGetValueFromXML">
+    <complexType>
+     <sequence>
+      <element name="strXML" type="xsd:string"/>
+      <element name="strXPath" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strGetValueFromXMLResponse">
+    <complexType>
+     <sequence>
+      <element name="strGetValueFromXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="generateGaugesFromXML">
+    <complexType>
+     <sequence>
+      <element name="xml" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="generateGaugesFromXMLResponse">
+    <complexType>
+     <sequence>
+      <element name="generateGaugesFromXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="generateLineChartFromXML">
+    <complexType>
+     <sequence>
+      <element name="xml" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="generateLineChartFromXMLResponse">
+    <complexType>
+     <sequence>
+      <element name="generateLineChartFromXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="generateLineChartFromXMLResponse">
+
+      <wsdl:part element="impl:generateLineChartFromXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="generateTSChartFromXMLResponse">
+
+      <wsdl:part element="impl:generateTSChartFromXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="generateLineChartFromXMLRequest">
+
+      <wsdl:part element="impl:generateLineChartFromXML" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strRunXQueryResponse">
+
+      <wsdl:part element="impl:strRunXQueryResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="generateTSChartFromXMLRequest">
+
+      <wsdl:part element="impl:generateTSChartFromXML" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strGetValueFromXMLRequest">
+
+      <wsdl:part element="impl:strGetValueFromXML" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strGetValuesFromXMLRequest">
+
+      <wsdl:part element="impl:strGetValuesFromXML" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strGetValuesFromXMLResponse">
+
+      <wsdl:part element="impl:strGetValuesFromXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="generateGaugesFromXMLResponse">
+
+      <wsdl:part element="impl:generateGaugesFromXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="mainResponse">
+
+      <wsdl:part element="impl:mainResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strGetValueFromXMLResponse">
+
+      <wsdl:part element="impl:strGetValueFromXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="generateGaugesFromXMLRequest">
+
+      <wsdl:part element="impl:generateGaugesFromXML" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strRunXQueryRequest">
+
+      <wsdl:part element="impl:strRunXQuery" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="mainRequest">
+
+      <wsdl:part element="impl:main" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="XML2ChartHelper">
+
+      <wsdl:operation name="main">
+
+         <wsdl:input message="impl:mainRequest" name="mainRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:mainResponse" name="mainResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="generateTSChartFromXML">
+
+         <wsdl:input message="impl:generateTSChartFromXMLRequest" name="generateTSChartFromXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:generateTSChartFromXMLResponse" name="generateTSChartFromXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strRunXQuery">
+
+         <wsdl:input message="impl:strRunXQueryRequest" name="strRunXQueryRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:strRunXQueryResponse" name="strRunXQueryResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strGetValuesFromXML">
+
+         <wsdl:input message="impl:strGetValuesFromXMLRequest" name="strGetValuesFromXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:strGetValuesFromXMLResponse" name="strGetValuesFromXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strGetValueFromXML">
+
+         <wsdl:input message="impl:strGetValueFromXMLRequest" name="strGetValueFromXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:strGetValueFromXMLResponse" name="strGetValueFromXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="generateGaugesFromXML">
+
+         <wsdl:input message="impl:generateGaugesFromXMLRequest" name="generateGaugesFromXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:generateGaugesFromXMLResponse" name="generateGaugesFromXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="generateLineChartFromXML">
+
+         <wsdl:input message="impl:generateLineChartFromXMLRequest" name="generateLineChartFromXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:generateLineChartFromXMLResponse" name="generateLineChartFromXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="XML2ChartHelperSoapBinding" type="impl:XML2ChartHelper">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="main">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="mainRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="mainResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="generateTSChartFromXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="generateTSChartFromXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="generateTSChartFromXMLResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strRunXQuery">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="strRunXQueryRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="strRunXQueryResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strGetValuesFromXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="strGetValuesFromXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="strGetValuesFromXMLResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strGetValueFromXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="strGetValueFromXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="strGetValueFromXMLResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="generateGaugesFromXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="generateGaugesFromXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="generateGaugesFromXMLResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="generateLineChartFromXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="generateLineChartFromXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="generateLineChartFromXMLResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="XML2ChartHelperService">
+
+      <wsdl:port binding="impl:XML2ChartHelperSoapBinding" name="XML2ChartHelper">
+
+         <wsdlsoap:address location="http://localhost:18080/ChartHelper/services/XML2ChartHelper"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

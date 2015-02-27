@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -30,13 +30,47 @@
    <ns2:parameter qname="ns1:Index2Value2" type="xsd:string"/>
   </ns2:operation>
   <ns1:parameter name="allowedMethods" value="generateWeeklyReviewBarChart"/>
-  <ns1:parameter name="wsdlPortType" value="BarChartHelper"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="schemaQualified" value="http://charthelper.diy.com"/>
-  <ns1:parameter name="wsdlServicePort" value="BarChartHelper"/>
+  <ns1:parameter name="wsdlPortType" value="BarChartHelper"/>
   <ns1:parameter name="className" value="com.diy.charthelper.BarChartHelper"/>
+  <ns1:parameter name="wsdlServicePort" value="BarChartHelper"/>
+  <ns1:parameter name="schemaQualified" value="http://charthelper.diy.com"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://charthelper.diy.com"/>
   <ns1:parameter name="wsdlServiceElement" value="BarChartHelperService"/>
+ </ns1:service>
+ <ns1:service name="XML2ChartHelper" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="main" qname="ns2:main" soapAction="" xmlns:ns2="http://charthelper.diy.com">
+   <ns1:parameter qname="ns2:args" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="generateTSChartFromXML" qname="ns3:generateTSChartFromXML" returnQName="ns3:generateTSChartFromXMLReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://charthelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns3:xml" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="strRunXQuery" qname="ns4:strRunXQuery" returnQName="ns4:strRunXQueryReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://charthelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns4:strInputAsString" type="xsd:string"/>
+   <ns1:parameter qname="ns4:strXQUERYAsString" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="strGetValuesFromXML" qname="ns5:strGetValuesFromXML" returnQName="ns5:strGetValuesFromXMLReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://charthelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns5:strXML" type="xsd:string"/>
+   <ns1:parameter qname="ns5:strXPath" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="strGetValueFromXML" qname="ns6:strGetValueFromXML" returnQName="ns6:strGetValueFromXMLReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://charthelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns6:strXML" type="xsd:string"/>
+   <ns1:parameter qname="ns6:strXPath" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="generateGaugesFromXML" qname="ns7:generateGaugesFromXML" returnQName="ns7:generateGaugesFromXMLReturn" returnType="xsd:string" soapAction="" xmlns:ns7="http://charthelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns7:xml" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="generateLineChartFromXML" qname="ns8:generateLineChartFromXML" returnQName="ns8:generateLineChartFromXMLReturn" returnType="xsd:string" soapAction="" xmlns:ns8="http://charthelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns8:xml" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="generateTSChartFromXML strGetValueFromXML generateGaugesFromXML strGetValuesFromXML strRunXQuery generateLineChartFromXML main"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="XML2ChartHelper"/>
+  <ns1:parameter name="className" value="com.diy.charthelper.XML2ChartHelper"/>
+  <ns1:parameter name="wsdlServicePort" value="XML2ChartHelper"/>
+  <ns1:parameter name="schemaQualified" value="http://charthelper.diy.com"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://charthelper.diy.com"/>
+  <ns1:parameter name="wsdlServiceElement" value="XML2ChartHelperService"/>
  </ns1:service>
  <ns1:service name="AdminService" provider="java:MSG">
   <ns1:parameter name="allowedMethods" value="AdminService"/>
@@ -45,16 +79,16 @@
   <ns1:namespace>http://xml.apache.org/axis/wsdd/</ns1:namespace>
  </ns1:service>
  <ns1:service name="LineChartHelper" provider="java:RPC" style="wrapped" use="literal">
-  <ns1:operation name="generateWeeklyReviewLineChart" qname="ns2:generateWeeklyReviewLineChart" returnQName="ns2:generateWeeklyReviewLineChartReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://charthelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns2:IndexValues" type="xsd:string"/>
-   <ns1:parameter qname="ns2:strLastDay" type="xsd:string"/>
+  <ns1:operation name="generateWeeklyReviewLineChart" qname="ns9:generateWeeklyReviewLineChart" returnQName="ns9:generateWeeklyReviewLineChartReturn" returnType="xsd:string" soapAction="" xmlns:ns9="http://charthelper.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns9:IndexValues" type="xsd:string"/>
+   <ns1:parameter qname="ns9:strLastDay" type="xsd:string"/>
   </ns1:operation>
   <ns1:parameter name="allowedMethods" value="generateWeeklyReviewLineChart"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="LineChartHelper"/>
-  <ns1:parameter name="className" value="com.diy.charthelper.LineChartHelper"/>
-  <ns1:parameter name="wsdlServicePort" value="LineChartHelper"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="schemaQualified" value="http://charthelper.diy.com"/>
+  <ns1:parameter name="wsdlServicePort" value="LineChartHelper"/>
+  <ns1:parameter name="className" value="com.diy.charthelper.LineChartHelper"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://charthelper.diy.com"/>
   <ns1:parameter name="wsdlServiceElement" value="LineChartHelperService"/>
  </ns1:service>

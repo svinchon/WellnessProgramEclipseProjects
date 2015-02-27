@@ -1,6 +1,7 @@
 package com.diy.xpressionhelper;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +37,7 @@ public class initiateXBatchJob extends HttpServlet {
 		String resp = "";
 		String JobName = request.getParameter("JobName");
 		String DataOrigin = request.getParameter("DataOrigin"); //xquery or file
-		//String XQuery = request.getParameter("XQuery");;
+		String XQuery = ""+request.getParameter("XQuery");;
 		String DataFileName = request.getParameter("DataFileName");;
 		String ts = generateTimeStamp();
 		if (JobName != null && DataOrigin != null) {
@@ -49,14 +51,15 @@ public class initiateXBatchJob extends HttpServlet {
 			metadata += "<"+"file_name"+">"+"</"+"file_name"+">";
 			metadata += "<"+"request_type"+">"+"initiateXBatchJob"+"</"+"request_type"+">";
 			metadata += "</metadata>";
-			XDBHelperProxy xdbhp = new XDBHelperProxy();
+			XDBHelperProxy xdbhp = new XDBHelperProxy("http://xcp:8080/XDBHelper/services/XDBHelper");
+			Log("XDBHelper created with endpoint: "+xdbhp.getEndpoint());
 			String strQueueId;
 			String strXQ;
 			if ((DataOrigin.equals("file") && DataFileName!=null) || DataOrigin.equals("xquery")) {
 				String strDataFileFullName;
-				strDataFileFullName = "C:/tmp/"+"ExtractedForBatch_On_"+ts+".xml";
+				strDataFileFullName = ResourceBundle.getBundle("xPressionHelper").getString("TmpFolder")+"/"+"ExtractedForBatch_On_"+ts+".xml";
 				if (DataOrigin.equals("file")) {
-					strXQ = ""
+					/*strXQ = ""
 							+ "<users> "
 							+ "{ "
 							+ "doc('"+DataFileName+"')/users/* "
@@ -64,16 +67,10 @@ public class initiateXBatchJob extends HttpServlet {
 							+ "</users>";
 					//Log("strXQ="+strXQ);
 					String strXML = xdbhp.runXQuery(strXQ);
-					String2File(strXML, strDataFileFullName);		
+					String2File(strXML, strDataFileFullName);*/		
 				} else {
-					strXQ = ""
-							+ "<users> "
-							+ "{ "
-							+ "for $e in doc('AuditTrail.xml')/audit_trail/event "
-							+ "where $e/type = \"submitForBatch\" and not ($e[processed]) "
-							+ "return doc($e/metadata/file_name/text())/users/* "
-							+ "} "
-							+ "</users>";
+					String xqfolder = this.getServletContext().getRealPath("/xq");
+					strXQ = File2String(xqfolder + "/" + XQuery);
 					String strXML = xdbhp.runXQuery(strXQ);
 					String2File(strXML, strDataFileFullName);			
 				}
@@ -112,6 +109,23 @@ public class initiateXBatchJob extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	String File2String(String strFileName) {
+		String s = "";
+		try {
+			File inFile = new File(strFileName);
+			FileInputStream fis = new FileInputStream(inFile);
+			byte[] b = new byte[fis.available()];
+			fis.read(b);
+			fis.close();
+			 s = new String(b);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return s;
 	}
 	
 	void Log(String msg) {

@@ -221,14 +221,15 @@ public class xPressionHelper {
 					    strOutputProfileName
 					);
 				} else {
-					System.out.println("xPressionHelper => Data: "+ strData);
+					Log("Simulating xPression!");
+					Log("Data: "+ strData);
 				}
 			} catch (Exception e) {
 				strReturn = ""+
 						"<ERROR>"+
 						e.getMessage()+
 						"\n</ERROR>";
-				Log(e.getMessage());
+				Log("ERROR talking to xVM");
 			}
 			//System.out.println("xPressionHelper => END");
 			return strReturn;

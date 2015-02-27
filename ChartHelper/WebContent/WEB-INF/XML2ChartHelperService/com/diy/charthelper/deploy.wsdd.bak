@@ -1,0 +1,50 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from XML2ChartHelperService WSDL service -->
+
+  <service name="XML2ChartHelper" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://charthelper.diy.com"/>
+      <parameter name="wsdlServiceElement" value="XML2ChartHelperService"/>
+      <parameter name="schemaQualified" value="http://charthelper.diy.com"/>
+      <parameter name="wsdlServicePort" value="XML2ChartHelper"/>
+      <parameter name="className" value="com.diy.charthelper.XML2ChartHelperSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="XML2ChartHelper"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="main" qname="operNS:main" xmlns:operNS="http://charthelper.diy.com" soapAction="" >
+        <parameter qname="pns:args" xmlns:pns="http://charthelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="generateTSChartFromXML" qname="operNS:generateTSChartFromXML" xmlns:operNS="http://charthelper.diy.com" returnQName="retNS:generateTSChartFromXMLReturn" xmlns:retNS="http://charthelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:xml" xmlns:pns="http://charthelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="strRunXQuery" qname="operNS:strRunXQuery" xmlns:operNS="http://charthelper.diy.com" returnQName="retNS:strRunXQueryReturn" xmlns:retNS="http://charthelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:strInputAsString" xmlns:pns="http://charthelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:strXQUERYAsString" xmlns:pns="http://charthelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="strGetValuesFromXML" qname="operNS:strGetValuesFromXML" xmlns:operNS="http://charthelper.diy.com" returnQName="retNS:strGetValuesFromXMLReturn" xmlns:retNS="http://charthelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:strXML" xmlns:pns="http://charthelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:strXPath" xmlns:pns="http://charthelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="strGetValueFromXML" qname="operNS:strGetValueFromXML" xmlns:operNS="http://charthelper.diy.com" returnQName="retNS:strGetValueFromXMLReturn" xmlns:retNS="http://charthelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:strXML" xmlns:pns="http://charthelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:strXPath" xmlns:pns="http://charthelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="generateGaugesFromXML" qname="operNS:generateGaugesFromXML" xmlns:operNS="http://charthelper.diy.com" returnQName="retNS:generateGaugesFromXMLReturn" xmlns:retNS="http://charthelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:xml" xmlns:pns="http://charthelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="generateLineChartFromXML" qname="operNS:generateLineChartFromXML" xmlns:operNS="http://charthelper.diy.com" returnQName="retNS:generateLineChartFromXMLReturn" xmlns:retNS="http://charthelper.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:xml" xmlns:pns="http://charthelper.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="generateTSChartFromXML strGetValueFromXML generateGaugesFromXML strGetValuesFromXML strRunXQuery generateLineChartFromXML main"/>
+
+  </service>
+</deployment>

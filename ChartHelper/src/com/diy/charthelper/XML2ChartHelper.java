@@ -75,7 +75,7 @@ import org.xml.sax.InputSource;
 public class XML2ChartHelper {
 
 	public static void main(String[] args) {
-		String xml = File2String("C:/GIT/WellnessProgramXPression/xDWTemplates/zMonthlyReport/LineChartDataV2.xml");
+		String xml = File2String("C:/GIT/WellnessProgramXPression/xDWTemplates/zWeeklyReport/LineChartData.xml");
 		//Log(new XML2ChartHelper().generateLineChartFromXML(xml));
 		Log(new XML2ChartHelper().generateTSChartFromXML(xml));
 	}

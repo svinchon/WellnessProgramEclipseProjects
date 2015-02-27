@@ -33,7 +33,7 @@ public class GaugeChartHelper {
 	public static void main(String[] args) {
 		new GaugeChartHelper().generateWeeklyReviewGaugeChart(
 				//"Steps", "30", "00FF00"
-				"test:ttt", "30", "FF0000"
+				"test1", "30", "FF0000"
 		);
 	}
 	
@@ -42,9 +42,11 @@ public class GaugeChartHelper {
 			String percentageOfGoal,
 			String color
 	) {
+		Log(label + ", " + percentageOfGoal + ", " + color);
 		String strReturn = null;
 		try {
 			String[] labels = label.split(":");
+			Log(""+labels.length);
 			String label2;
 			Double percentageDone = new Double(percentageOfGoal);
 			DefaultCategoryDataset dcd = new DefaultCategoryDataset();
@@ -54,6 +56,8 @@ public class GaugeChartHelper {
 					"Cat1"
 					 );
 			if (labels.length > 1) { label2 = labels[1]; } else { label2 = " "; }
+			Log(labels[0]);
+			Log(label2);
 			dcd.addValue(
 					100 - percentageDone,
 					label2,

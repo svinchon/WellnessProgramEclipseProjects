@@ -1,13 +1,13 @@
 let $source1 := doc('/xPressionHelper/FromWeeklyUpdates/')
 let $source2 := doc('/xPressionHelper/FromDailyUpdates/')
 return
-<reports>
+<documents>
 {
 for $m in doc('/Members.xml')/members/member
 for $r in $source1/weekly_data/weekly_member_data[./member_id = $m/badge_number]
 return
-	<report>
-		<report_type>Weekly</report_type>
+	<document>
+		<document_type>Weekly</document_type>
 		<badge_number>{$m/badge_number/text()}</badge_number>
 		<email>{$m/email/text()}</email>
 		<first_name>{$m/first_name/text()}</first_name>
@@ -131,6 +131,6 @@ return
 	)
 	}
 		</index_history_xml>
-	</report>
+	</document>
 }
-</reports>
+</documents>

@@ -4,13 +4,13 @@ let $source := doc('/xPressionHelper/FromDailyUpdates/')
 let $award_threshold := 300
 let $award_days_above_threshold_required := 1
 return
-<reports>
+<documents>
 {
 for $m in doc('/Members.xml')/members/member
 let $days_above_threshold := count(distinct-values($source/daily_data/daily_member_data[./member_id = $m/badge_number and xs:date(./date_stamp) > $first_day and xs:date(./date_stamp) < $current_day and ./daily_index_value > $award_threshold]/date_stamp))
 return
-	<report>
-		<report_type>Monthly</report_type>
+	<document>
+		<document_type>Monthly</document_type>
 		<badge_number>{$m/badge_number/text()}</badge_number>
 		<email>{$m/email/text()}</email>
 		<first_name>{$m/first_name/text()}</first_name>
@@ -137,6 +137,6 @@ return
 	)
 	}
 		</index_history_xml>
-	</report>
+	</document>
 }
-</reports>
+</documents>

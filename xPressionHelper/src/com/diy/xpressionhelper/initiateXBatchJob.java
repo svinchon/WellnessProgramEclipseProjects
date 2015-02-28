@@ -52,7 +52,7 @@ public class initiateXBatchJob extends HttpServlet {
 			metadata += "<"+"request_type"+">"+"initiateXBatchJob"+"</"+"request_type"+">";
 			metadata += "</metadata>";
 			XDBHelperProxy xdbhp = new XDBHelperProxy("http://xcp:8080/XDBHelper/services/XDBHelper");
-			Log("XDBHelper created with endpoint: "+xdbhp.getEndpoint());
+			//Log("XDBHelper created with endpoint: "+xdbhp.getEndpoint());
 			String strQueueId;
 			String strXQ;
 			if ((DataOrigin.equals("file") && DataFileName!=null) || DataOrigin.equals("xquery")) {

@@ -1018,3 +1018,19 @@ return
 	</WeeklyReport>
 }
 </WeeklyReports>
+
+***********
+let $start_date := xs:date("2015-02-25")
+return
+<chart>
+{
+for $day_offset in (1 to 7)
+let $current_date := xs:date($start_date) + xs:dayTimeDuration(concat("P", $day_offset, "D"))
+return
+	<item>
+		<count_events>{count(doc('/AuditTrail.xml')/audit_trail/event[xs:date(substring(./time/text(), 1, 10)) = $current_date])}</count_events>
+		<count_IBJ>{count(doc('/AuditTrail.xml')/audit_trail/event[xs:date(substring(./time/text(), 1, 10)) = $current_date and ./type = "initiateXBatchJob"])}</count_IBJ>
+		<count_RNU>{count(doc('/AuditTrail.xml')/audit_trail/event[xs:date(substring(./time/text(), 1, 10)) = $current_date and ./type = "registerNewUser"])}</count_RNU>
+	</item>
+}
+</chart>

@@ -34,6 +34,7 @@ public class initiateXBatchJob extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Log("START");
 		String resp = "";
 		String JobName = request.getParameter("JobName");
 		String DataOrigin = request.getParameter("DataOrigin"); //xquery or file
@@ -88,6 +89,7 @@ public class initiateXBatchJob extends HttpServlet {
 			resp = "missing input parameters";
 		}
 		resp = "{ \"message\": \""+resp+"\" }";
+		Log("END with message "+resp);
 		response.getWriter().write(resp);
 	}
 
@@ -129,7 +131,7 @@ public class initiateXBatchJob extends HttpServlet {
 	}
 	
 	void Log(String msg) {
-		System.out.println("initiateXBatchJob: " + msg);
+		System.out.println("xPressionHelper => initiateXBatchJob: " + msg);
 	}
 	
 }

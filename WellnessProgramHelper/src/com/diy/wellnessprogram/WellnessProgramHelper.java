@@ -79,6 +79,6 @@ public class WellnessProgramHelper {
 	}
 
 	public static void writeToLog(String str) {
-		System.out.println(str);
+		System.out.println("WellnessProgramHelper => "+str);
 	}
 }

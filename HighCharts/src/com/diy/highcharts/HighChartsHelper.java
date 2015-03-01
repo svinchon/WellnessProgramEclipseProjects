@@ -36,7 +36,7 @@ public class HighChartsHelper extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//String xml = request.getParameter("xml");
-		String xml = File2String("C:/GIT/WellnessProgramXPression/xDWTemplates/LineChartData.xml");
+		String xml = File2String("C:/GIT/WellnessProgramXPression/xDWTemplates/zMonthlyReport/LineChartDataV1.xml");
 		String xqfolder = this.getServletContext().getRealPath("/xq");
 		String xquery = File2String(xqfolder+"/LineChart1.xq");
 		String html = strRunXQuery(xml, xquery);

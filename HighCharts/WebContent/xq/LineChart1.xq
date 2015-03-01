@@ -4,6 +4,7 @@ declare variable $doc external;
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>Highcharts Example</title>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">//keep it</script>
+		<script type="text/javascript" src="http://localhost:8080/HighCharts/jQuery/jquery.min.js">//keep it</script>
 		<script type="text/javascript">
 $(function () {{
     $('#container').highcharts({{
@@ -16,7 +17,7 @@ $(function () {{
             x: -20
         }},*/
         xAxis: {{
-            categories: [{fn:string-join(for $x in $doc/LineChart/Labels/Label return concat("'", string($x),"'"),",")}]
+            categories: [{fn:string-join(for $x in $doc/ChartData/Labels/Label return concat("'", string($x),"'"),",")}]
         }},
         yAxis: {{
             title: {{
@@ -39,7 +40,7 @@ $(function () {{
         }},
         series: [{
 		string-join(
-		for $ds at $dsp in $doc/LineChart/DataSets/DataSet
+		for $ds at $dsp in $doc/ChartData/DataSets/DataSet
 		return concat(
 			'{
 			name: "',
@@ -58,8 +59,8 @@ $(function () {{
 		</script>
 	</head>
 	<body>
-<script src="http://localhost:18080/HighCharts/Highcharts-4.0.4/js/highcharts.js">//keep this</script>
-<script src="http://localhost:18080/HighCharts/Highcharts-4.0.4/js/modules/exporting.js">//keep that</script>
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<script src="http://localhost:8080/HighCharts/Highcharts-4.0.4/js/highcharts.js">//keep this</script>
+<script src="http://localhost:8080/HighCharts/Highcharts-4.0.4/js/modules/exporting.js">//keep that</script>
+<div id="container" style="min-width: 310px; height: 350px; margin: 0 auto"></div>
 	</body>
 </html>

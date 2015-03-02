@@ -1,6 +1,12 @@
 package com.diy.xdb;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -28,7 +34,7 @@ public class XDBHelper {
 	
 	public static void main(String[] args) {
 		XDBHelper h = new XDBHelper();
-		h.Test();
+		Log(h.runXQueryFile("http://localhost:8080/XDBHelper/xq/HRStats.xq"));
 		/*h.storeDoc(
 			"C:/tmp/submitForBatch_from0-0-0-0-0-0-0-1_On_2015-01-16@12-00-17-591.xml",
 			"TEST"
@@ -213,7 +219,81 @@ public class XDBHelper {
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
 		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
 		XhiveDriverIf driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
-		driver.init();
+		if (!driver.isInitialized()) driver.init();
+		XhiveSessionIf session = driver.createSession();
+		try {
+			// open a connection to the database
+			session.connect(administratorName, administratorPassword, databaseName);
+			// begin the transaction
+			session.begin();
+			// get a handle to the database
+			XhiveDatabaseIf xData = session.getDatabase();
+			// get a handle to the root library
+			XhiveLibraryIf rootLibrary = xData.getRoot();
+			//XhiveLibraryIf myLibrary;
+			//= xData.ge.get("xPressionHelper");
+			// Create a query (find all the short chapter titles)
+			/*String theQuery = 
+				"<xData>{for $i in document('/')/xData/xTransaction "
+				//+ "where string-length($i) lt 16 \n"
+				+ "return $i}</xData>";*/
+			// Execute the query (place the results in the new document)
+			//System.out.println("#running query:\n" + strQuery);
+			XhiveXQueryResultIf result = rootLibrary.executeXQuery(strQuery); //rootLibrary
+			//XhiveXQueryResultIf result = myLibrary.executeXQuery(strQuery); //rootLibrary
+			// Process the results
+			while (result.hasNext()) {
+				// Get the next value from the result sequence
+				XhiveXQueryValueIf value = result.next();
+				// Print this value
+				//System.out.println(value.toString());
+				Node n = (Node)value;
+				LSSerializer writer = rootLibrary.createLSSerializer(); 
+				writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE); 
+				strReturn = writer.writeToString(n);
+				n = null;
+				writer = null;
+				//.writeToURI(n, new File(strFileName).toURI().toString());
+				//String output = writer.writeToString(n);
+				//System.out.println(output);
+			}
+			result.close();
+			rootLibrary = null;
+			xData = null;
+			session.commit();
+			//session = null;
+			//dr
+		} catch (Exception e) {
+			Log("XQuery sample failed: ");
+			Log("ERROR: " + e.getMessage());
+			e.printStackTrace();
+			strReturn = "ERROR: " + e.getMessage();
+		} finally {
+			// disconnect and remove the session
+			if (session.isOpen()) {
+				session.rollback();
+			}
+			if (session.isConnected()) {
+				session.disconnect();
+			}
+			driver.close();
+		}
+		return strReturn;
+	}
+
+	public String runXQueryFile(String strQueryFile) {
+		String strReturn = "";
+		//String xqfolder = this.getServletContext().getRealPath("/xq");
+		//Log(xqfolder);
+		//String xquery = File2String(xqfolder + "/" + strQueryFile);
+		String xquery = URL2String(strQueryFile);
+		String strQuery = xquery;
+		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
+		String databaseName = rb.getString("DatabaseName");//"xData";
+		String administratorName = rb.getString("AdministratorName");//"Administrator";
+		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
+		XhiveDriverIf driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
+		if (!driver.isInitialized()) driver.init();
 		XhiveSessionIf session = driver.createSession();
 		try {
 			// open a connection to the database
@@ -250,10 +330,16 @@ public class XDBHelper {
 				//System.out.println(output);
 			}
 			session.commit();
+			//session.disconnect();
+			//session = null;
+			//driver.close();
+			//driver = null;
 		} catch (Exception e) {
 			System.err.println("XQuery sample failed: ");
 			e.printStackTrace();
-			strReturn = "ERRRO";
+			strReturn = "ERROR: " + e.getMessage();
+			Log("XQuery:" + strQuery);
+			Log("ERROR:" + e.getMessage());
 		} finally {
 			// disconnect and remove the session
 			if (session.isOpen()) {
@@ -264,11 +350,46 @@ public class XDBHelper {
 			}
 			driver.close();
 		}
+		//driver.
+		return strReturn;
+	}
+	
+	static String File2String(String path) {
+		String strReturn = "";
+		try {
+			File f = new File(path);
+			FileInputStream fis = new FileInputStream(f);
+			byte[] bDoc = new byte[fis.available()];
+			fis.read(bDoc);
+			strReturn = new String(bDoc);
+			fis.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return strReturn;
 	}
 
-	void Log(String str) {
-		System.out.println(str);
+	static String URL2String(String strurl) {
+		String ret = "";
+		try {
+			URL url = new URL(strurl);
+			InputStream ir = url.openStream();
+			byte[] bDoc = new byte[ir.available()];
+			ir.read(bDoc);
+			ret = new String(bDoc);
+			ir.close();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+   	    return ret;
+	 }
+	
+	static void Log(String str) {
+		System.out.println("XDBHelper => "+str);
 	}
 	
 }

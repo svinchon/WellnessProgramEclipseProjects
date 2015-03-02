@@ -19,6 +19,8 @@ import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQSequence;
 import javax.xml.xquery.XQStaticContext;
 
+import com.diy.xdb.XDBHelperProxy;
+
 import net.sf.saxon.xqj.SaxonXQDataSource;
 
 
@@ -35,16 +37,31 @@ public class HighChartsHelper extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String xq = request.getParameter("xq");
+		xq = "TS1";
 		//String xml = request.getParameter("xml");
-		String xml = File2String("C:/GIT/WellnessProgramXPression/xDWTemplates/zMonthlyReport/LineChartDataV1.xml");
+		//String xml = File2String("C:/GIT/WellnessProgramXPression/xDWTemplates/zMonthlyReport/LineChartDataV1.xml");
+		//String xqfolder = this.getServletContext().getRealPath("/xq");
+		//String xqfolder = this.getServletContext().getRealPath("/xq");
+		//String xquery = File2String(xqfolder + "/" + "HRStats.xq");
+		String xquery = File2String("c:/zWP/HRStats.xq");
+		//String html = strRunXQuery(xml, xquery);
+		XDBHelperProxy xdhp = new XDBHelperProxy();
+		//Log(xdhp.getEndpoint());
+		//String xml = xdhp.runXQueryFile("http://localhost:8080/XDBHelper/xq/HRStats.xq");
+		String xml = xdhp.runXQuery(xquery);
+		xdhp = null;
+		Log("From XDBHelperProxy: " +xml);
 		String xqfolder = this.getServletContext().getRealPath("/xq");
-		String xquery = File2String(xqfolder+"/LineChart1.xq");
-		String html = strRunXQuery(xml, xquery);
+		xquery = File2String(xqfolder+"/" +xq+ ".xq");
+		//xquery = File2String(xqfolder+"/TS1.xq");
+		Log(xquery);
+		String html = strRunXQuerySaxon(xml, xquery);
 		response.getWriter().write(html);
-		//System.out.println(html); 
+		Log(html); 
 	}
 
-	public static String strRunXQuery(String strInputAsString, String strXQUERYAsString) {
+	public String strRunXQuerySaxon(String strInputAsString, String strXQUERYAsString) {
 		String strResult = "ERROR";
 		try {
 			//String strInputAsString = "<root><item index='1'>item A</item><item index='2'>item B</item></root>";
@@ -66,10 +83,10 @@ public class HighChartsHelper extends HttpServlet {
 			con.close();
 		} catch (Exception e) {
 			//e.printStackTrace();
-			System.out.println("Input data: "+strInputAsString.replaceAll("[\n\t]",""));
-			System.out.println("Input xquery: "+strXQUERYAsString.replaceAll("[\n\t]",""));
-			System.out.println("Error message : "+e.getMessage());
-			strResult = "ERROR: "+e.getMessage();
+			Log("strRunXQuerySaxon: Input data: "+strInputAsString.replaceAll("[\r\n\t]*","").replaceAll("> *<", "><"));
+			Log("strRunXQuerySaxon: Input xquery: "+strXQUERYAsString.replaceAll("[\r\n\t]*",""));
+			Log("strRunXQuerySaxon: Error message : "+e.getMessage());
+			strResult = "strRunXQuerySaxon: ERROR: "+e.getMessage();
 		}
 		return strResult;
     }
@@ -89,6 +106,10 @@ public class HighChartsHelper extends HttpServlet {
 			e.printStackTrace();
 		}
 		return strReturn;
+	}
+	
+	static void Log(String str) {
+		System.out.println("HighChartsHelper => " + str);
 	}
 	
 }

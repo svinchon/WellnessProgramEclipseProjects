@@ -1,10 +1,11 @@
 declare variable $doc external;
-let $day := substring($doc/hr_stats/start_date,9,2),
-$month := substring($doc/hr_stats/start_date,6,2)
+let $date := $doc/hr_stats/last_four_weeks_history/item[1]/date,
+$day := substring($date,9,2),
+$month := xs:int(substring($date,6,2)) - 1
 return
 <html>
 	<head>
-		<test>{$day}</test>
+		<test></test>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>Highcharts Example</title>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">//keep it</script>
@@ -30,7 +31,7 @@ $(function () {{
         yAxis: {{
             min: 0,
             title: {{
-                text: 'Value'
+                text: 'count'
             }}
         }},
         legend: {{
@@ -59,7 +60,7 @@ $(function () {{
         }},
 
         series: [{{
-            type: 'area',
+            type: 'spline',
             name: 'Enrollment Request Total',
             pointInterval: 24 * 3600 * 1000,
             pointStart: Date.UTC(2016, {$month}, {$day}),

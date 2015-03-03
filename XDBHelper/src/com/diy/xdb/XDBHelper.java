@@ -215,6 +215,7 @@ public class XDBHelper {
 	public String runXQuery(String strQuery) {
 		String strReturn = "";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
+		Log("runXQuery on "+rb.getString("XDBHost"));
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
 		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
@@ -283,12 +284,13 @@ public class XDBHelper {
 
 	public String runXQueryFile(String strQueryFile) {
 		String strReturn = "";
+		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
+		Log("runXQueryFile: xdbhost="+rb.getString("XDBHost"));
 		//String xqfolder = this.getServletContext().getRealPath("/xq");
 		//Log(xqfolder);
 		//String xquery = File2String(xqfolder + "/" + strQueryFile);
 		String xquery = URL2String(strQueryFile);
 		String strQuery = xquery;
-		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
 		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";

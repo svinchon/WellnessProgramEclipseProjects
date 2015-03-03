@@ -152,7 +152,8 @@ public class ProcessFormData extends HttpServlet {
 				}
 				metadata += "<"+"request_type"+">"+"registerNewUser"+"</"+"request_type"+">";
 				metadata += "</metadata>";
-				XDBHelperProxy xdbh = new XDBHelperProxy();
+				XDBHelperProxy xdbh = new XDBHelperProxy("http://xpression:18080/XDBHelper/services/XDBHelper");
+				//XDBHelperProxy xdbh = new XDBHelperProxy();
 				xdbh.setEndpoint(xdbh.getEndpoint().replace("localhost:18080", "localhost:8080"));
 				String strQuery;
 				strQuery= ""
@@ -163,16 +164,6 @@ public class ProcessFormData extends HttpServlet {
 					+ metadata
 					+ "</event> "
 					+ "return insert node $e as first into /audit_trail";
-				xdbh.runXQuery(strQuery );
-				strQuery= ""
-						+ "let $e:="
-						+ "<member>"
-						+ "<badge_number>"+badge_number+"</badge_number>"
-						+ "<first_name>"+first_name+"</first_name>"
-						+ "<last_name>"+last_name+"</last_name>"
-						+ "<vitex_id>"+vitex_id+"</vitex_id>"
-						+ "</member> "
-						+ "return insert node $e as first into /members";
 				xdbh.runXQuery(strQuery );
 				WP02Proxy wp02p = new WP02Proxy();
 				SubmitRegistrationRequest parameters = new SubmitRegistrationRequest();
@@ -194,6 +185,16 @@ public class ProcessFormData extends HttpServlet {
 					DefaultResponse dr = wp02p.submitRegistration(parameters);
 					String wi = dr.getWorkflowId();
 					msg = "New user successfully created under Vitex Id '"+vitex_id+"' and xCP registration workflow started ('" + wi + "')";
+					strQuery= ""
+							+ "let $e:="
+							+ "<member>"
+							+ "<badge_number>"+badge_number+"</badge_number>"
+							+ "<first_name>"+first_name+"</first_name>"
+							+ "<last_name>"+last_name+"</last_name>"
+							+ "<vitex_id>"+vitex_id+"</vitex_id>"
+							+ "</member> "
+							+ "return insert node $e as first into /members";
+					xdbh.runXQuery(strQuery );
 				} catch (Exception e) {
 					msg = "Unable to connect to xCP";				
 				}
@@ -208,7 +209,7 @@ public class ProcessFormData extends HttpServlet {
 	}
 
 	String generateTimeStamp() {
-		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyy-MM-DD@HH-mm-ss-SSS", Locale.US);
+		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd@HH-mm-ss-SSS", Locale.US);
 		Date d = new Date();
 		return DateFormat.format(d);
 	}

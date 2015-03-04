@@ -7,7 +7,7 @@
 
 package com.diy.xdb;
 
-@SuppressWarnings({"serial", "rawtypes", "unchecked"})
+@SuppressWarnings({"serial", "unchecked", "rawtypes"})
 public class XDBHelperServiceLocator extends org.apache.axis.client.Service implements com.diy.xdb.XDBHelperService {
 
     public XDBHelperServiceLocator() {
@@ -23,7 +23,7 @@ public class XDBHelperServiceLocator extends org.apache.axis.client.Service impl
     }
 
     // Use to get a proxy class for XDBHelper
-    private java.lang.String XDBHelper_address = "http://localhost:8080/XDBHelper/services/XDBHelper";
+    private java.lang.String XDBHelper_address = "http://xpression:18080/XDBHelper/services/XDBHelper";
 
     public java.lang.String getXDBHelperAddress() {
         return XDBHelper_address;

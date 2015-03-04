@@ -10,11 +10,6 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-//import javax.servlet.ServletContext;
-//import javax.servlet.http.HttpServlet;
-
-//import org.apache.axis.MessageContext;
-//import org.apache.axis.transport.http.HTTPConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.ls.LSInput;
@@ -33,10 +28,12 @@ import com.xhive.query.interfaces.XhiveXQueryValueIf;
 
 public class XDBHelper {
 
-	/*XhiveDriverIf driver;
-	XhiveSessionIf session;*/
+	/*
+	XhiveDriverIf driver;
+	XhiveSessionIf session;
+	boolean persist = false;
 	
-	/*public ServletContext getServletContext() {
+	public ServletContext getServletContext() {
 		HttpServlet servlet = (HttpServlet)(
 				MessageContext
 					.getCurrentContext()
@@ -44,14 +41,15 @@ public class XDBHelper {
 		);
 		ServletContext ctx = servlet.getServletContext();
 		return ctx;
-	}*/
+	}
 
-	/*public XDBHelper() {
+	public XDBHelper() {
 		if (
 			(XhiveSessionIf)(getServletContext().getAttribute("XDBS"))
 			==
 			null
 		) {
+			Log("session created");
 			ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 			driver = XhiveDriverFactory.getDriver(
 					"xhive://"
@@ -63,9 +61,11 @@ public class XDBHelper {
 			session = driver.createSession();
 			this.getServletContext().setAttribute("XDBS", session);
 		} else {
+			Log("session reused");
 			session = (XhiveSessionIf)(getServletContext().getAttribute("XDBS"));
 		}
-	}*/
+	}
+	*/
 	
 	public static void main(String[] args) {
 		XDBHelper h = new XDBHelper();
@@ -293,13 +293,15 @@ public class XDBHelper {
 	public String runXQueryReadOnly(String strQuery) {
 		String strReturn = "";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
-		Log("runXQuery on "+rb.getString("XDBHost"));
+		Log("runXQueryReadOnly on "+rb.getString("XDBHost"));
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
 		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
-		XhiveDriverIf driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
+		XhiveDriverIf driver;
+		XhiveSessionIf session;
+		driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
 		if (!driver.isInitialized()) driver.init();
-		XhiveSessionIf session = driver.createSession();
+		session = driver.createSession();
 		try {
 			session.connect(administratorName, administratorPassword, databaseName);
 			session.setReadOnlyMode(true);

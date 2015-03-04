@@ -15,7 +15,7 @@ public class dfcHelperTest
 			String strAdminPassword = "demo.demo";
 			String strAdminUserName = "dmadmin";
 			String strGroup = "wp02_member";
-			String strUser = "john.doe5612125178";
+			String strUser = "svinchon";
 			dfch.AddUserToGroup(strRep, strAdminUserName, strAdminPassword, strUser, strGroup);
 		} catch (DfException e) {
 			e.printStackTrace();

@@ -126,6 +126,7 @@ public class XDBHelper {
 		}
 		return strReturn;
 	}
+	
 	public String storeDoc(String strFileName, String strDocumentName, String strLibrary) {
 		String strReturn = "NA";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
@@ -258,60 +259,75 @@ public class XDBHelper {
 		if (!driver.isInitialized()) driver.init();
 		XhiveSessionIf session = driver.createSession();
 		try {
-			// open a connection to the database
 			session.connect(administratorName, administratorPassword, databaseName);
-			// begin the transaction
 			session.begin();
-			// get a handle to the database
 			XhiveDatabaseIf xData = session.getDatabase();
-			// get a handle to the root library
 			XhiveLibraryIf rootLibrary = xData.getRoot();
-			//XhiveLibraryIf myLibrary;
-			//= xData.ge.get("xPressionHelper");
-			// Create a query (find all the short chapter titles)
-			/*String theQuery = 
-				"<xData>{for $i in document('/')/xData/xTransaction "
-				//+ "where string-length($i) lt 16 \n"
-				+ "return $i}</xData>";*/
-			// Execute the query (place the results in the new document)
-			//System.out.println("#running query:\n" + strQuery);
-			XhiveXQueryResultIf result = rootLibrary.executeXQuery(strQuery); //rootLibrary
-			//XhiveXQueryResultIf result = myLibrary.executeXQuery(strQuery); //rootLibrary
-			// Process the results
+			XhiveXQueryResultIf result = rootLibrary.executeXQuery(strQuery);
 			while (result.hasNext()) {
-				// Get the next value from the result sequence
 				XhiveXQueryValueIf value = result.next();
-				// Print this value
-				//System.out.println(value.toString());
 				Node n = (Node)value;
 				LSSerializer writer = rootLibrary.createLSSerializer(); 
 				writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE); 
 				strReturn = writer.writeToString(n);
 				n = null;
 				writer = null;
-				//.writeToURI(n, new File(strFileName).toURI().toString());
-				//String output = writer.writeToString(n);
-				//System.out.println(output);
 			}
 			result.close();
 			rootLibrary = null;
 			xData = null;
 			session.commit();
-			//session = null;
-			//dr
 		} catch (Exception e) {
 			Log("XQuery sample failed: ");
 			Log("ERROR: " + e.getMessage());
 			e.printStackTrace();
 			strReturn = "ERROR: " + e.getMessage();
 		} finally {
-			// disconnect and remove the session
-			if (session.isOpen()) {
-				session.rollback();
+			if (session.isOpen()) { session.rollback(); }
+			if (session.isConnected()) { session.disconnect(); }
+			driver.close();
+		}
+		return strReturn;
+	}
+	
+	public String runXQueryReadOnly(String strQuery) {
+		String strReturn = "";
+		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
+		Log("runXQuery on "+rb.getString("XDBHost"));
+		String databaseName = rb.getString("DatabaseName");//"xData";
+		String administratorName = rb.getString("AdministratorName");//"Administrator";
+		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
+		XhiveDriverIf driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
+		if (!driver.isInitialized()) driver.init();
+		XhiveSessionIf session = driver.createSession();
+		try {
+			session.connect(administratorName, administratorPassword, databaseName);
+			session.setReadOnlyMode(true);
+			session.begin();
+			XhiveDatabaseIf xData = session.getDatabase();
+			XhiveLibraryIf rootLibrary = xData.getRoot();
+			XhiveXQueryResultIf result = rootLibrary.executeXQuery(strQuery);
+			while (result.hasNext()) {
+				XhiveXQueryValueIf value = result.next();
+				Node n = (Node)value;
+				LSSerializer writer = rootLibrary.createLSSerializer(); 
+				writer.getDomConfig().setParameter("format-pretty-print", Boolean.TRUE); 
+				strReturn = writer.writeToString(n);
+				n = null;
+				writer = null;
 			}
-			if (session.isConnected()) {
-				session.disconnect();
-			}
+			result.close();
+			rootLibrary = null;
+			xData = null;
+			session.commit();
+		} catch (Exception e) {
+			Log("XQuery sample failed: ");
+			Log("ERROR: " + e.getMessage());
+			e.printStackTrace();
+			strReturn = "ERROR: " + e.getMessage();
+		} finally {
+			if (session.isOpen()) { session.rollback(); }
+			if (session.isConnected()) { session.disconnect(); }
 			driver.close();
 		}
 		return strReturn;

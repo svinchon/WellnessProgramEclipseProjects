@@ -14,19 +14,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="mainResponse">
     <complexType/>
    </element>
-   <element name="storeStringAsDoc">
+   <element name="runXQueryFile">
     <complexType>
      <sequence>
-      <element name="string" type="xsd:string"/>
-      <element name="strDocumentName" type="xsd:string"/>
-      <element name="strLibrary" type="xsd:string"/>
+      <element name="strQueryFile" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="storeStringAsDocResponse">
+   <element name="runXQueryFileResponse">
     <complexType>
      <sequence>
-      <element name="storeStringAsDocReturn" type="xsd:string"/>
+      <element name="runXQueryFileReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -43,6 +41,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="storeDocReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="storeStringAsDoc">
+    <complexType>
+     <sequence>
+      <element name="string" type="xsd:string"/>
+      <element name="strDocumentName" type="xsd:string"/>
+      <element name="strLibrary" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="storeStringAsDocResponse">
+    <complexType>
+     <sequence>
+      <element name="storeStringAsDocReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -75,17 +89,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="runXQueryFile">
+   <element name="runXQueryReadOnly">
     <complexType>
      <sequence>
-      <element name="strQueryFile" type="xsd:string"/>
+      <element name="strQuery" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
-   <element name="runXQueryFileResponse">
+   <element name="runXQueryReadOnlyResponse">
     <complexType>
      <sequence>
-      <element name="runXQueryFileReturn" type="xsd:string"/>
+      <element name="runXQueryReadOnlyReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -108,6 +122,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="runXQueryReadOnlyRequest">
+
+      <wsdl:part element="impl:runXQueryReadOnly" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="runXQueryResponse">
 
       <wsdl:part element="impl:runXQueryResponse" name="parameters">
@@ -124,9 +146,33 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="storeDocResponse">
+   <wsdl:message name="removeDocRequest">
 
-      <wsdl:part element="impl:storeDocResponse" name="parameters">
+      <wsdl:part element="impl:removeDoc" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="runXQueryReadOnlyResponse">
+
+      <wsdl:part element="impl:runXQueryReadOnlyResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="removeDocResponse">
+
+      <wsdl:part element="impl:removeDocResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="runXQueryFileRequest">
+
+      <wsdl:part element="impl:runXQueryFile" name="parameters">
 
       </wsdl:part>
 
@@ -140,9 +186,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="removeDocRequest">
+   <wsdl:message name="storeDocResponse">
 
-      <wsdl:part element="impl:removeDoc" name="parameters">
+      <wsdl:part element="impl:storeDocResponse" name="parameters">
 
       </wsdl:part>
 
@@ -164,25 +210,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="removeDocResponse">
-
-      <wsdl:part element="impl:removeDocResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="storeDocRequest">
 
       <wsdl:part element="impl:storeDoc" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="runXQueryFileRequest">
-
-      <wsdl:part element="impl:runXQueryFile" name="parameters">
 
       </wsdl:part>
 
@@ -202,13 +232,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="storeStringAsDoc">
+      <wsdl:operation name="runXQueryFile">
 
-         <wsdl:input message="impl:storeStringAsDocRequest" name="storeStringAsDocRequest">
+         <wsdl:input message="impl:runXQueryFileRequest" name="runXQueryFileRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:storeStringAsDocResponse" name="storeStringAsDocResponse">
+         <wsdl:output message="impl:runXQueryFileResponse" name="runXQueryFileResponse">
 
        </wsdl:output>
 
@@ -221,6 +251,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:storeDocResponse" name="storeDocResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="storeStringAsDoc">
+
+         <wsdl:input message="impl:storeStringAsDocRequest" name="storeStringAsDocRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:storeStringAsDocResponse" name="storeStringAsDocResponse">
 
        </wsdl:output>
 
@@ -250,13 +292,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="runXQueryFile">
+      <wsdl:operation name="runXQueryReadOnly">
 
-         <wsdl:input message="impl:runXQueryFileRequest" name="runXQueryFileRequest">
+         <wsdl:input message="impl:runXQueryReadOnlyRequest" name="runXQueryReadOnlyRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:runXQueryFileResponse" name="runXQueryFileResponse">
+         <wsdl:output message="impl:runXQueryReadOnlyResponse" name="runXQueryReadOnlyResponse">
 
        </wsdl:output>
 
@@ -286,17 +328,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="storeStringAsDoc">
+      <wsdl:operation name="runXQueryFile">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="storeStringAsDocRequest">
+         <wsdl:input name="runXQueryFileRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="storeStringAsDocResponse">
+         <wsdl:output name="runXQueryFileResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -315,6 +357,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="storeDocResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="storeStringAsDoc">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="storeStringAsDocRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="storeStringAsDocResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -358,17 +418,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="runXQueryFile">
+      <wsdl:operation name="runXQueryReadOnly">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="runXQueryFileRequest">
+         <wsdl:input name="runXQueryReadOnlyRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="runXQueryFileResponse">
+         <wsdl:output name="runXQueryReadOnlyResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -382,7 +442,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdl:port binding="impl:XDBHelperSoapBinding" name="XDBHelper">
 
-         <wsdlsoap:address location="http://localhost:8080/XDBHelper/services/XDBHelper"/>
+         <wsdlsoap:address location="http://localhost:18080/XDBHelper/services/XDBHelper"/>
 
       </wsdl:port>
 

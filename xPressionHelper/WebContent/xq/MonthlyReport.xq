@@ -1,4 +1,4 @@
-let $current_day := xs:date("2015-02-15")
+let $current_day := xs:date("2015-03-04")
 let $first_day := $current_day - xs:dayTimeDuration("P28D")
 let $source := doc('/xPressionHelper/FromDailyUpdates/')
 let $award_threshold := 300

@@ -52,7 +52,8 @@ public class initiateXBatchJob extends HttpServlet {
 			metadata += "<"+"file_name"+">"+"</"+"file_name"+">";
 			metadata += "<"+"request_type"+">"+"initiateXBatchJob"+"</"+"request_type"+">";
 			metadata += "</metadata>";
-			XDBHelperProxy xdbhp = new XDBHelperProxy("http://xcp:8080/XDBHelper/services/XDBHelper");
+			XDBHelperProxy xdbhp = new XDBHelperProxy("http://xpression:18080/XDBHelper/services/XDBHelper");
+			//XDBHelperProxy xdbhp = new XDBHelperProxy("http://xcp:8080/XDBHelper/services/XDBHelper");
 			//Log("XDBHelper created with endpoint: "+xdbhp.getEndpoint());
 			String strQueueId;
 			String strXQ;
@@ -95,7 +96,7 @@ public class initiateXBatchJob extends HttpServlet {
 
 	
 	String generateTimeStamp() {
-		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyy-MM-DD@HH-mm-ss-SSS", Locale.US);
+		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd@HH-mm-ss-SSS", Locale.US);
 		Date d = new Date();
 		return DateFormat.format(d);
 	}

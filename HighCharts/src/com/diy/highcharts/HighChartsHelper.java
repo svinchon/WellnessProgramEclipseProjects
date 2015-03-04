@@ -37,28 +37,16 @@ public class HighChartsHelper extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String xq = request.getParameter("xq");
-		xq = "TS1";
-		//String xml = request.getParameter("xml");
-		//String xml = File2String("C:/GIT/WellnessProgramXPression/xDWTemplates/zMonthlyReport/LineChartDataV1.xml");
-		//String xqfolder = this.getServletContext().getRealPath("/xq");
-		//String xqfolder = this.getServletContext().getRealPath("/xq");
-		//String xquery = File2String(xqfolder + "/" + "HRStats.xq");
-		String xquery = File2String("c:/zWP/HRStats.xq");
-		//String html = strRunXQuery(xml, xquery);
-		XDBHelperProxy xdhp = new XDBHelperProxy();
-		//Log(xdhp.getEndpoint());
-		//String xml = xdhp.runXQueryFile("http://localhost:8080/XDBHelper/xq/HRStats.xq");
-		String xml = xdhp.runXQuery(xquery);
+		String xq = ""+request.getParameter("xq");
+		if (xq.equals("null")) {xq="TS1";}
+		String xqfolder = "C:/Users/dmadmin/git/WellnessProgramEclipseProjects/HighCharts/WebContent/xq";
+		String xquery = File2String(xqfolder+"/HRStats2.xq");
+		XDBHelperProxy xdhp = new XDBHelperProxy("http://xpression:18080/XDBHelper/services/XDBHelper");
+		String xml = xdhp.runXQuery(xquery).replaceAll("[\\n\\r\\t]*", "").replaceAll("> *<", "><");
 		xdhp = null;
-		Log("From XDBHelperProxy: " +xml);
-		String xqfolder = this.getServletContext().getRealPath("/xq");
 		xquery = File2String(xqfolder+"/" +xq+ ".xq");
-		//xquery = File2String(xqfolder+"/TS1.xq");
-		Log(xquery);
 		String html = strRunXQuerySaxon(xml, xquery);
 		response.getWriter().write(html);
-		Log(html); 
 	}
 
 	public String strRunXQuerySaxon(String strInputAsString, String strXQUERYAsString) {
@@ -83,10 +71,10 @@ public class HighChartsHelper extends HttpServlet {
 			con.close();
 		} catch (Exception e) {
 			//e.printStackTrace();
-			Log("strRunXQuerySaxon: Input data: "+strInputAsString.replaceAll("[\r\n\t]*","").replaceAll("> *<", "><"));
-			Log("strRunXQuerySaxon: Input xquery: "+strXQUERYAsString.replaceAll("[\r\n\t]*",""));
+			Log("strRunXQuerySaxon: Input data: "+strInputAsString.replaceAll("[\r\n\t]+","").replaceAll("> *<", "><"));
+			Log("strRunXQuerySaxon: Input xquery: "+strXQUERYAsString.replaceAll("[\r\n\t]+"," "));
 			Log("strRunXQuerySaxon: Error message : "+e.getMessage());
-			strResult = "strRunXQuerySaxon: ERROR: "+e.getMessage();
+			strResult = "strRunXQuerySaxon: ERROR";//: "+e.getMessage();
 		}
 		return strResult;
     }

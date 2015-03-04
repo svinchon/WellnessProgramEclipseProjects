@@ -10,6 +10,11 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+//import javax.servlet.ServletContext;
+//import javax.servlet.http.HttpServlet;
+
+//import org.apache.axis.MessageContext;
+//import org.apache.axis.transport.http.HTTPConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.ls.LSInput;
@@ -28,9 +33,39 @@ import com.xhive.query.interfaces.XhiveXQueryValueIf;
 
 public class XDBHelper {
 
-	public XDBHelper() {
-		
-	}
+	/*XhiveDriverIf driver;
+	XhiveSessionIf session;*/
+	
+	/*public ServletContext getServletContext() {
+		HttpServlet servlet = (HttpServlet)(
+				MessageContext
+					.getCurrentContext()
+					.getProperty(HTTPConstants.MC_HTTP_SERVLET)
+		);
+		ServletContext ctx = servlet.getServletContext();
+		return ctx;
+	}*/
+
+	/*public XDBHelper() {
+		if (
+			(XhiveSessionIf)(getServletContext().getAttribute("XDBS"))
+			==
+			null
+		) {
+			ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
+			driver = XhiveDriverFactory.getDriver(
+					"xhive://"
+					+ rb.getString("XDBHost")
+					+":"
+					+ rb.getString("XDBPort")
+			);
+			if (!driver.isInitialized()) driver.init();
+			session = driver.createSession();
+			this.getServletContext().setAttribute("XDBS", session);
+		} else {
+			session = (XhiveSessionIf)(getServletContext().getAttribute("XDBS"));
+		}
+	}*/
 	
 	public static void main(String[] args) {
 		XDBHelper h = new XDBHelper();
@@ -282,7 +317,7 @@ public class XDBHelper {
 		return strReturn;
 	}
 
-	public String runXQueryFile(String strQueryFile) {
+	public synchronized String runXQueryFile(String strQueryFile) {
 		String strReturn = "";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		Log("runXQueryFile: xdbhost="+rb.getString("XDBHost"));
@@ -294,9 +329,12 @@ public class XDBHelper {
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
 		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
-		XhiveDriverIf driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
+		XhiveDriverIf driver = null;
+		XhiveSessionIf session = null;
+		driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");			
 		if (!driver.isInitialized()) driver.init();
-		XhiveSessionIf session = driver.createSession();
+		session = driver.createSession();
+		/**/
 		try {
 			// open a connection to the database
 			session.connect(administratorName, administratorPassword, databaseName);
@@ -332,27 +370,24 @@ public class XDBHelper {
 				//System.out.println(output);
 			}
 			session.commit();
-			//session.disconnect();
-			//session = null;
+			session.disconnect();
+			session = null;
 			//driver.close();
 			//driver = null;
 		} catch (Exception e) {
-			System.err.println("XQuery sample failed: ");
+			Log("runXQueryFile: XQuery sample failed: ");
 			e.printStackTrace();
 			strReturn = "ERROR: " + e.getMessage();
-			Log("XQuery:" + strQuery);
-			Log("ERROR:" + e.getMessage());
+			Log("runXQueryFile: XQuery:" + strQuery);
+			Log("runXQueryFile: runXQueryFile: ERROR:" + e.getMessage());
 		} finally {
 			// disconnect and remove the session
-			if (session.isOpen()) {
-				session.rollback();
+			if (session!= null) {
+				if (session.isOpen()) { session.rollback(); }
+				if (session.isConnected()) { session.disconnect(); }				
 			}
-			if (session.isConnected()) {
-				session.disconnect();
-			}
-			driver.close();
+			if (driver!=null) { driver.close(); }
 		}
-		//driver.
 		return strReturn;
 	}
 	

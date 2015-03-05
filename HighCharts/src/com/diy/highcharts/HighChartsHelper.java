@@ -42,7 +42,7 @@ public class HighChartsHelper extends HttpServlet {
 		String xqfolder = "C:/Users/dmadmin/git/WellnessProgramEclipseProjects/HighCharts/WebContent/xq";
 		String xquery = File2String(xqfolder+"/HRStats2.xq");
 		XDBHelperProxy xdhp = new XDBHelperProxy("http://xpression:18080/XDBHelper/services/XDBHelper");
-		String xml = xdhp.runXQuery(xquery).replaceAll("[\\n\\r\\t]*", "").replaceAll("> *<", "><");
+		String xml = xdhp.runXQueryReadOnly(xquery).replaceAll("[\\n\\r\\t]*", "").replaceAll("> *<", "><");
 		xdhp = null;
 		xquery = File2String(xqfolder+"/" +xq+ ".xq");
 		String html = strRunXQuerySaxon(xml, xquery);

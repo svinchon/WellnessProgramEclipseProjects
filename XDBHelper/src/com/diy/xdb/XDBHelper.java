@@ -50,11 +50,12 @@ public class XDBHelper {
 
 	public XDBHelper() {
 		if (
-			(XhiveSessionIf)(getServletContext().getAttribute("XDBS"))
+			//(XhiveSessionIf)(getServletContext().getAttribute("XDBS"))
+			(XhiveDriverIf)(getServletContext().getAttribute("XDBD"))
 			==
 			null
 		) {
-			Log("session created");
+			Log("session/driver created");
 			ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 			driver = XhiveDriverFactory.getDriver(
 					"xhive://"
@@ -62,17 +63,20 @@ public class XDBHelper {
 					+":"
 					+ rb.getString("XDBPort")
 			);
+			getServletContext().setAttribute("XDBD", driver);
 			if (!driver.isInitialized()) driver.init(1024);
-			session = driver.createSession();
-			String databaseName = rb.getString("DatabaseName");//"xData";
-			String administratorName = rb.getString("AdministratorName");//"Administrator";
-			String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
-			session.connect(administratorName, administratorPassword, databaseName);
+			//session = driver.createSession();
+			//String databaseName = rb.getString("DatabaseName");//"xData";
+			//String administratorName = rb.getString("AdministratorName");//"Administrator";
+			//String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
+			//session.connect(administratorName, administratorPassword, databaseName);
 			//session.setReadOnlyMode(true);
-			this.getServletContext().setAttribute("XDBS", session);
+			getServletContext().setAttribute("XDBS", session);
 		} else {
-			Log("session reused");
-			session = (XhiveSessionIf)(getServletContext().getAttribute("XDBS"));
+			Log("session/driver reused");
+			driver = (XhiveDriverIf)(getServletContext().getAttribute("XDBD"));
+			//session = (XhiveSessionIf)(getServletContext().getAttribute("XDBS"));
+			//session.join();
 		}
 	}
 	
@@ -303,19 +307,20 @@ public class XDBHelper {
 		String strReturn = "";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		Log("runXQueryReadOnly on "+rb.getString("XDBHost"));
-		//String databaseName = rb.getString("DatabaseName");//"xData";
-		//String administratorName = rb.getString("AdministratorName");//"Administrator";
-		//String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
+		String databaseName = rb.getString("DatabaseName");//"xData";
+		String administratorName = rb.getString("AdministratorName");//"Administrator";
+		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
 		//XhiveDriverIf driver;
 		//XhiveSessionIf session;
 		//driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
 		//if (!driver.isInitialized()) driver.init();
-		//session = driver.createSession();
+		session = driver.createSession();
 		try {
-			session.join();
-			//session.connect(administratorName, administratorPassword, databaseName);
+			//session.join(); // the session joins the current thread
+			session.connect(administratorName, administratorPassword, databaseName);
 			//session.setReadOnlyMode(true);
 			session.begin();
+			//session.setWaitOption(XhiveSessionIf.NO_WAIT);
 			XhiveDatabaseIf xData = session.getDatabase();
 			XhiveLibraryIf rootLibrary = xData.getRoot();
 			XhiveXQueryResultIf result = rootLibrary.executeXQuery(strQuery);
@@ -332,14 +337,19 @@ public class XDBHelper {
 			rootLibrary = null;
 			xData = null;
 			session.commit();
+			session.disconnect();
+			//session.leave(); //the session leaves the current thread
 		} catch (Exception e) {
 			Log("XQuery sample failed: ");
 			Log("ERROR: " + e.getMessage());
-			e.printStackTrace();
 			strReturn = "ERROR: " + e.getMessage();
+			e.printStackTrace();
 		} finally {
+			//after error
 			if (session.isOpen()) { session.rollback(); }
 			if (session.isConnected()) { session.disconnect(); }
+			//session.leave();
+			session.terminate();
 			//driver.close();
 		}
 		return strReturn;

@@ -1,5 +1,3 @@
-// session reuse version
-
 package com.diy.xdb;
 
 import java.io.File;
@@ -12,11 +10,6 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServlet;
-
-import org.apache.axis.MessageContext;
-import org.apache.axis.transport.http.HTTPConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.ls.LSInput;
@@ -33,51 +26,10 @@ import com.xhive.dom.interfaces.XhiveLibraryIf;
 import com.xhive.query.interfaces.XhiveXQueryResultIf;
 import com.xhive.query.interfaces.XhiveXQueryValueIf;
 
-public class XDBHelper {
+public class XDBHelperStd {
 
-	XhiveDriverIf driver;
-	XhiveSessionIf session;
-	
-	public ServletContext getServletContext() {
-		HttpServlet servlet = (HttpServlet)(
-				MessageContext
-					.getCurrentContext()
-					.getProperty(HTTPConstants.MC_HTTP_SERVLET)
-		);
-		ServletContext ctx = servlet.getServletContext();
-		return ctx;
-	}
-
-	public XDBHelper() {
-		if (
-			(XhiveSessionIf)(getServletContext().getAttribute("XDBS"))
-			==
-			null
-		) {
-			Log("session created");
-			ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
-			driver = XhiveDriverFactory.getDriver(
-					"xhive://"
-					+ rb.getString("XDBHost")
-					+":"
-					+ rb.getString("XDBPort")
-			);
-			if (!driver.isInitialized()) driver.init(1024);
-			session = driver.createSession();
-			String databaseName = rb.getString("DatabaseName");//"xData";
-			String administratorName = rb.getString("AdministratorName");//"Administrator";
-			String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
-			session.connect(administratorName, administratorPassword, databaseName);
-			//session.setReadOnlyMode(true);
-			this.getServletContext().setAttribute("XDBS", session);
-		} else {
-			Log("session reused");
-			session = (XhiveSessionIf)(getServletContext().getAttribute("XDBS"));
-		}
-	}
-	
 	public static void main(String[] args) {
-		XDBHelper h = new XDBHelper();
+		XDBHelperStd h = new XDBHelperStd();
 		Log(h.runXQueryFile("http://localhost:8080/XDBHelper/xq/HRStats.xq"));
 		/*h.storeDoc(
 			"C:/tmp/submitForBatch_from0-0-0-0-0-0-0-1_On_2015-01-16@12-00-17-591.xml",
@@ -303,18 +255,17 @@ public class XDBHelper {
 		String strReturn = "";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		Log("runXQueryReadOnly on "+rb.getString("XDBHost"));
-		//String databaseName = rb.getString("DatabaseName");//"xData";
-		//String administratorName = rb.getString("AdministratorName");//"Administrator";
-		//String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
-		//XhiveDriverIf driver;
-		//XhiveSessionIf session;
-		//driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
-		//if (!driver.isInitialized()) driver.init();
-		//session = driver.createSession();
+		String databaseName = rb.getString("DatabaseName");//"xData";
+		String administratorName = rb.getString("AdministratorName");//"Administrator";
+		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
+		XhiveDriverIf driver;
+		XhiveSessionIf session;
+		driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
+		if (!driver.isInitialized()) driver.init();
+		session = driver.createSession();
 		try {
-			session.join();
-			//session.connect(administratorName, administratorPassword, databaseName);
-			//session.setReadOnlyMode(true);
+			session.connect(administratorName, administratorPassword, databaseName);
+			session.setReadOnlyMode(true);
 			session.begin();
 			XhiveDatabaseIf xData = session.getDatabase();
 			XhiveLibraryIf rootLibrary = xData.getRoot();
@@ -340,12 +291,12 @@ public class XDBHelper {
 		} finally {
 			if (session.isOpen()) { session.rollback(); }
 			if (session.isConnected()) { session.disconnect(); }
-			//driver.close();
+			driver.close();
 		}
 		return strReturn;
 	}
 
-	public String runXQueryFile(String strQueryFile) {
+	public  String runXQueryFile(String strQueryFile) {
 		String strReturn = "";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		Log("runXQueryFile: xdbhost="+rb.getString("XDBHost"));

@@ -184,7 +184,8 @@ public class ProcessFormData extends HttpServlet {
 				try {
 					DefaultResponse dr = wp02p.submitRegistration(parameters);
 					String wi = dr.getWorkflowId();
-					msg = "New user successfully created under Vitex Id '"+vitex_id+"' and xCP registration workflow started ('" + wi + "')";
+					//msg = "New user successfully created under Vitex Id '"+vitex_id+"' and xCP registration workflow started ('" + wi + "')";
+					msg = "Your request has been received.  You will get a confirmation email with instruction to follow.  Thank you and welcome to the Wellness Program!";
 					strQuery= ""
 							+ "let $e:="
 							+ "<member>"

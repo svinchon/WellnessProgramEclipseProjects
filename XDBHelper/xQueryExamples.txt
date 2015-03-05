@@ -1061,4 +1061,99 @@ return
 </last_four_weeks_history>
 </hr_stats>
 
+****
+let $m := /members/member[./last_name = 'Doe'][1]
+return delete node $m
 
+****
+let $m := /daily_data/daily_member_data[1]
+return
+if ($m/daily_index_value > 350)
+then insert node <daily_index_level_label>outstanding</daily_index_level_label> after $m/daily_index_value
+else insert node <daily_index_level_label>caca</daily_index_level_label> after $m/daily_index_value
+
+****
+let $m := /daily_data/daily_member_data[1]
+return
+if ($m/daily_index_value > 350)
+   then
+      insert node (
+	<daily_index_level>1</daily_index_level>,
+	<daily_index_level_label>outstanding</daily_index_level_label>,
+	<daily_index_color>00AA00</daily_index_color>
+      ) after $m/daily_index_value
+   else
+      if ($m/daily_index_value > 200)
+         then
+            insert node (
+               <daily_index_level>2</daily_index_level>,
+               <daily_index_level_label>acceptable</daily_index_level_label>,
+               <daily_index_color>AAAA00</daily_index_color>
+            ) after $m/daily_index_value
+         else
+            insert node (
+               <daily_index_level>3</daily_index_level>,
+               <daily_index_level_label>just</daily_index_level_label>,
+               <daily_index_color>0000AA</daily_index_color>
+            ) after $m/daily_index_value
+            
+****
+for $m in /daily_data/daily_member_data
+return
+if ($m/daily_index_value > 350)
+   then
+      insert node (
+	<daily_index_level>1</daily_index_level>,
+	<daily_index_level_label>outstanding</daily_index_level_label>,
+	<daily_index_color>00AA00</daily_index_color>
+      ) after $m/daily_index_value
+   else
+      if ($m/daily_index_value > 200)
+         then
+            insert node (
+               <daily_index_level>2</daily_index_level>,
+               <daily_index_level_label>acceptable</daily_index_level_label>,
+               <daily_index_color>AAAA00</daily_index_color>
+            ) after $m/daily_index_value
+         else
+            insert node (
+               <daily_index_level>3</daily_index_level>,
+               <daily_index_level_label>just</daily_index_level_label>,
+               <daily_index_color>0000AA</daily_index_color>
+            ) after $m/daily_index_value
+
+
+****
+for $m in doc('/xPressionHelper/FromDailyUpdates/')//daily_data/daily_member_data
+return
+if ($m/daily_index_value > 350)
+  then
+  insert node (
+    <daily_index_level>1</daily_index_level>,
+    <daily_index_level_label>outstanding</daily_index_level_label>,
+    <daily_index_color>00AA00</daily_index_color>
+    ) after $m/daily_index_value
+  else
+  if ($m/daily_index_value > 200)
+    then
+    insert node (
+      <daily_index_level>2</daily_index_level>,
+      <daily_index_level_label>acceptable</daily_index_level_label>,
+      <daily_index_color>AAAA00</daily_index_color>
+      ) after $m/daily_index_value
+    else
+    insert node (
+      <daily_index_level>3</daily_index_level>,
+      <daily_index_level_label>just</daily_index_level_label>,
+      <daily_index_color>0000AA</daily_index_color>
+      ) after $m/daily_index_value
+
+****
+for $m in doc('/xPressionHelper/FromWeeklyUpdates/')//weekly_data/weekly_member_data
+return
+  insert node (
+    <weekly_index_value>350</weekly_index_value>,
+    <weekly_index_level>1</weekly_index_level>,
+    <weekly_index_level_label>good</weekly_index_level_label>,
+    <weekly_index_color>00AA00</weekly_index_color>
+  ) before $m/week_start_date

@@ -313,7 +313,7 @@ public class XDBHelper {
 		//XhiveDriverIf driver;
 		//XhiveSessionIf session;
 		//driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
-		//if (!driver.isInitialized()) driver.init();
+		if (!driver.isInitialized()) driver.init();
 		session = driver.createSession();
 		try {
 			//session.join(); // the session joins the current thread

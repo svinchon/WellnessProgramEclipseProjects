@@ -37,15 +37,25 @@ public class HighChartsHelper extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String xq = ""+request.getParameter("xq");
-		if (xq.equals("null")) {xq="TS1";}
+		String visu_xq = ""+request.getParameter("xq");
+		String data_xq = ""+request.getParameter("data_xq");
+		if (visu_xq.equals("null")) {visu_xq="GaugeAndTS1";}
+		if (data_xq.equals("null")) {data_xq="HRStats2";}
 		String xqfolder = "C:/Users/dmadmin/git/WellnessProgramEclipseProjects/HighCharts/WebContent/xq";
-		String xquery = File2String(xqfolder+"/HRStats2.xq");
-		XDBHelperProxy xdhp = new XDBHelperProxy("http://xpression:18080/XDBHelper/services/XDBHelper");
-		String xml = xdhp.runXQueryReadOnly(xquery).replaceAll("[\\n\\r\\t]*", "").replaceAll("> *<", "><");
+		String data_xquery = File2String(xqfolder+"/"+data_xq+".xq");
+		XDBHelperProxy xdhp = new XDBHelperProxy(
+			"http://xpression:18080/XDBHelper/services/XDBHelper"
+		);
+		String xml = xdhp.runXQueryReadOnly(data_xquery)
+		//		.replaceAll("[\\n\\r\\t]*", "")
+		//		.replaceAll("> *<", "><");
+				;
 		xdhp = null;
-		xquery = File2String(xqfolder+"/" +xq+ ".xq");
-		String html = strRunXQuerySaxon(xml, xquery);
+		String visu_xquery = File2String(xqfolder+"/" +visu_xq+ ".xq");
+		Log(visu_xq);
+		Log(data_xq);
+		Log(xml);
+		String html = strRunXQuerySaxon(xml, visu_xquery);
 		response.getWriter().write(html);
 	}
 

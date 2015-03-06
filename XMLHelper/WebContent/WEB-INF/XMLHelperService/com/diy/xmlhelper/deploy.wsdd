@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from XMLHelperService WSDL service -->
+
+  <service name="XMLHelper" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://xmlhelper.diy.com"/>
+      <parameter name="wsdlServiceElement" value="XMLHelperService"/>
+      <parameter name="schemaQualified" value="http://xmlhelper.diy.com"/>
+      <parameter name="wsdlServicePort" value="XMLHelper"/>
+      <parameter name="className" value="com.diy.xmlhelper.XMLHelper"/>
+      <parameter name="wsdlPortType" value="XMLHelper"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://xmlhelper.diy.com" xmlns:retNS="http://xmlhelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="strGetValuesFromXML" qname="operNS:strGetValuesFromXML" returnQName="retNS:strGetValuesFromXMLReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://xmlhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strXML" type="tns:string"/>
+        <parameter xmlns:pns="http://xmlhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strXPath" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://xmlhelper.diy.com" xmlns:retNS="http://xmlhelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="strGetValueFromXML" qname="operNS:strGetValueFromXML" returnQName="retNS:strGetValueFromXMLReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://xmlhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strXML" type="tns:string"/>
+        <parameter xmlns:pns="http://xmlhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strXPath" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://xmlhelper.diy.com" xmlns:retNS="http://xmlhelper.diy.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="strRunXQuery" qname="operNS:strRunXQuery" returnQName="retNS:strRunXQueryReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://xmlhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strInputAsString" type="tns:string"/>
+        <parameter xmlns:pns="http://xmlhelper.diy.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:strXQUERYAsString" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="strGetValueFromXML strRunXQuery strGetValuesFromXML"/>
+
+  </service>
+</deployment>

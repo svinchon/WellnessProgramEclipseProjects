@@ -34,6 +34,7 @@ public class XMLHelper {
 			if (nodes!=null && nodes.getLength()>0) {
 				String strValue=nodes.item(0).getTextContent();
 				//System.out.println("XML Helper => Extracted "+strXPath+" value: "+strValue);
+				Log(strXPath + ": " + strValue);
 				return strValue;
 			} else {
 				result = "ERROR strGetValueFromXML (xpath returned null or empty)";
@@ -117,4 +118,8 @@ public class XMLHelper {
 		}
 		return strResult;
     }
+	
+	static void Log(String str) {
+		System.out.println("XMLHelper => "+str);
+	}
 }

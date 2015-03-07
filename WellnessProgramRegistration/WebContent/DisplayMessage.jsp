@@ -108,7 +108,7 @@ input[type="password"]:focus {
 		<form name="test" action="ProcessFormData">
 			<table style="width:470px; color:white">
 				<tr>
-					<td  colspan="2" align="center">
+					<td  colspan="2" align="left">
 						<% //= ((""+request.getParameter("MessageType")).equals("ERROR"))?"<span style=\"color: red\">":"<span style=\"color: blue\">" %>
 						<br/><%=request.getParameter("Message")%><br/><br/>
 						<% //= "</span>" %>

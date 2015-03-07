@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project activeEnvironment="Default" name="XDBHelper?wsdl" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="XDBHelperSoapBinding" type="wsdl" bindingName="{http://xdb.diy.com}XDBHelperSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:18080/XDBHelper/services/XDBHelper?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:18080/XDBHelper/services/XDBHelper?wsdl"><con:part><con:url>http://localhost:18080/XDBHelper/services/XDBHelper?wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://xdb.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://xdb.diy.com" xmlns:intf="http://xdb.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<con:soapui-project activeEnvironment="Default" name="XDBHelper?wsdl" resourceRoot="" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="XDBHelperSoapBinding" type="wsdl" bindingName="{http://xdb.diy.com}XDBHelperSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://xpression:18080/XDBHelper/services/XDBHelper?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://xpression:18080/XDBHelper/services/XDBHelper?wsdl"><con:part><con:url>http://xpression:18080/XDBHelper/services/XDBHelper?wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://xdb.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://xdb.diy.com" xmlns:intf="http://xdb.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <!--WSDL created by Apache Axis version: 1.4
 Built on Apr 22, 2006 (06:55:48 PDT)-->
   <wsdl:types>
     <schema elementFormDefault="qualified" targetNamespace="http://xdb.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="main">
+        <complexType>
+          <sequence>
+            <element maxOccurs="unbounded" name="args" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="mainResponse">
+        <complexType/>
+      </element>
+      <element name="runXQueryFile">
+        <complexType>
+          <sequence>
+            <element name="strQueryFile" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="runXQueryFileResponse">
+        <complexType>
+          <sequence>
+            <element name="runXQueryFileReturn" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
       <element name="storeDoc">
         <complexType>
           <sequence>
             <element name="strFileName" type="xsd:string"/>
             <element name="strDocumentName" type="xsd:string"/>
+            <element name="strLibrary" type="xsd:string"/>
           </sequence>
         </complexType>
       </element>
@@ -19,10 +44,27 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
           </sequence>
         </complexType>
       </element>
+      <element name="storeStringAsDoc">
+        <complexType>
+          <sequence>
+            <element name="string" type="xsd:string"/>
+            <element name="strDocumentName" type="xsd:string"/>
+            <element name="strLibrary" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="storeStringAsDocResponse">
+        <complexType>
+          <sequence>
+            <element name="storeStringAsDocReturn" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
       <element name="removeDoc">
         <complexType>
           <sequence>
             <element name="strDocumentName" type="xsd:string"/>
+            <element name="strLibrary" type="xsd:string"/>
           </sequence>
         </complexType>
       </element>
@@ -37,7 +79,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
         <complexType>
           <sequence>
             <element name="strQuery" type="xsd:string"/>
-            <element name="strFileName" type="xsd:string"/>
           </sequence>
         </complexType>
       </element>
@@ -48,30 +89,80 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
           </sequence>
         </complexType>
       </element>
+      <element name="runXQueryReadOnly">
+        <complexType>
+          <sequence>
+            <element name="strQuery" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="runXQueryReadOnlyResponse">
+        <complexType>
+          <sequence>
+            <element name="runXQueryReadOnlyReturn" type="xsd:string"/>
+          </sequence>
+        </complexType>
+      </element>
     </schema>
   </wsdl:types>
+  <wsdl:message name="storeStringAsDocRequest">
+    <wsdl:part element="impl:storeStringAsDoc" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="runXQueryFileResponse">
+    <wsdl:part element="impl:runXQueryFileResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="runXQueryReadOnlyRequest">
+    <wsdl:part element="impl:runXQueryReadOnly" name="parameters"></wsdl:part>
+  </wsdl:message>
   <wsdl:message name="runXQueryResponse">
     <wsdl:part element="impl:runXQueryResponse" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="runXQueryRequest">
     <wsdl:part element="impl:runXQuery" name="parameters"></wsdl:part>
   </wsdl:message>
-  <wsdl:message name="storeDocResponse">
-    <wsdl:part element="impl:storeDocResponse" name="parameters"></wsdl:part>
-  </wsdl:message>
   <wsdl:message name="removeDocRequest">
     <wsdl:part element="impl:removeDoc" name="parameters"></wsdl:part>
   </wsdl:message>
+  <wsdl:message name="runXQueryReadOnlyResponse">
+    <wsdl:part element="impl:runXQueryReadOnlyResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
   <wsdl:message name="removeDocResponse">
     <wsdl:part element="impl:removeDocResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="runXQueryFileRequest">
+    <wsdl:part element="impl:runXQueryFile" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="mainRequest">
+    <wsdl:part element="impl:main" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="storeDocResponse">
+    <wsdl:part element="impl:storeDocResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="storeStringAsDocResponse">
+    <wsdl:part element="impl:storeStringAsDocResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="mainResponse">
+    <wsdl:part element="impl:mainResponse" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:message name="storeDocRequest">
     <wsdl:part element="impl:storeDoc" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:portType name="XDBHelper">
+    <wsdl:operation name="main">
+      <wsdl:input message="impl:mainRequest" name="mainRequest"></wsdl:input>
+      <wsdl:output message="impl:mainResponse" name="mainResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="runXQueryFile">
+      <wsdl:input message="impl:runXQueryFileRequest" name="runXQueryFileRequest"></wsdl:input>
+      <wsdl:output message="impl:runXQueryFileResponse" name="runXQueryFileResponse"></wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="storeDoc">
       <wsdl:input message="impl:storeDocRequest" name="storeDocRequest"></wsdl:input>
       <wsdl:output message="impl:storeDocResponse" name="storeDocResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="storeStringAsDoc">
+      <wsdl:input message="impl:storeStringAsDocRequest" name="storeStringAsDocRequest"></wsdl:input>
+      <wsdl:output message="impl:storeStringAsDocResponse" name="storeStringAsDocResponse"></wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="removeDoc">
       <wsdl:input message="impl:removeDocRequest" name="removeDocRequest"></wsdl:input>
@@ -81,15 +172,46 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
       <wsdl:input message="impl:runXQueryRequest" name="runXQueryRequest"></wsdl:input>
       <wsdl:output message="impl:runXQueryResponse" name="runXQueryResponse"></wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="runXQueryReadOnly">
+      <wsdl:input message="impl:runXQueryReadOnlyRequest" name="runXQueryReadOnlyRequest"></wsdl:input>
+      <wsdl:output message="impl:runXQueryReadOnlyResponse" name="runXQueryReadOnlyResponse"></wsdl:output>
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="XDBHelperSoapBinding" type="impl:XDBHelper">
     <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="main">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="mainRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="mainResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="runXQueryFile">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="runXQueryFileRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="runXQueryFileResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="storeDoc">
       <wsdlsoap:operation soapAction=""/>
       <wsdl:input name="storeDocRequest">
         <wsdlsoap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="storeDocResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="storeStringAsDoc">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="storeStringAsDocRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="storeStringAsDocResponse">
         <wsdlsoap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
@@ -111,33 +233,74 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
         <wsdlsoap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="runXQueryReadOnly">
+      <wsdlsoap:operation soapAction=""/>
+      <wsdl:input name="runXQueryReadOnlyRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="runXQueryReadOnlyResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="XDBHelperService">
     <wsdl:port binding="impl:XDBHelperSoapBinding" name="XDBHelper">
-      <wsdlsoap:address location="http://localhost:18080/XDBHelper/services/XDBHelper"/>
+      <wsdlsoap:address location="http://xpression:18080/XDBHelper/services/XDBHelper"/>
     </wsdl:port>
   </wsdl:service>
-</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:18080/XDBHelper/services/XDBHelper</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="removeDoc" bindingOperationName="removeDoc" type="Request-Response" outputName="removeDocResponse" inputName="removeDocRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:18080/XDBHelper/services/XDBHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xdb="http://xdb.diy.com">
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://xpression:18080/XDBHelper/services/XDBHelper</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="main" bindingOperationName="main" type="Request-Response" outputName="mainResponse" inputName="mainRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://xpression:18080/XDBHelper/services/XDBHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xdb="http://xdb.diy.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xdb:main>
+         <!--1 or more repetitions:-->
+         <xdb:args>?</xdb:args>
+      </xdb:main>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xdb.diy.com/XDBHelper/mainRequest"/></con:call></con:operation><con:operation isOneWay="false" action="" name="removeDoc" bindingOperationName="removeDoc" type="Request-Response" outputName="removeDocResponse" inputName="removeDocRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://xpression:18080/XDBHelper/services/XDBHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xdb="http://xdb.diy.com">
    <soapenv:Header/>
    <soapenv:Body>
       <xdb:removeDoc>
          <xdb:strDocumentName>?</xdb:strDocumentName>
+         <xdb:strLibrary>?</xdb:strLibrary>
       </xdb:removeDoc>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xdb.diy.com/XDBHelper/removeDocRequest"/></con:call></con:operation><con:operation isOneWay="false" action="" name="runXQuery" bindingOperationName="runXQuery" type="Request-Response" outputName="runXQueryResponse" inputName="runXQueryRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:18080/XDBHelper/services/XDBHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xdb="http://xdb.diy.com">
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xdb.diy.com/XDBHelper/removeDocRequest"/></con:call></con:operation><con:operation isOneWay="false" action="" name="runXQuery" bindingOperationName="runXQuery" type="Request-Response" outputName="runXQueryResponse" inputName="runXQueryRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://xpression:18080/XDBHelper/services/XDBHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xdb="http://xdb.diy.com">
    <soapenv:Header/>
    <soapenv:Body>
       <xdb:runXQuery>
          <xdb:strQuery>?</xdb:strQuery>
-         <xdb:strFileName>?</xdb:strFileName>
       </xdb:runXQuery>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xdb.diy.com/XDBHelper/runXQueryRequest"/></con:call></con:operation><con:operation isOneWay="false" action="" name="storeDoc" bindingOperationName="storeDoc" type="Request-Response" outputName="storeDocResponse" inputName="storeDocRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:18080/XDBHelper/services/XDBHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xdb="http://xdb.diy.com">
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xdb.diy.com/XDBHelper/runXQueryRequest"/></con:call></con:operation><con:operation isOneWay="false" action="" name="runXQueryFile" bindingOperationName="runXQueryFile" type="Request-Response" outputName="runXQueryFileResponse" inputName="runXQueryFileRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://xpression:18080/XDBHelper/services/XDBHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xdb="http://xdb.diy.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xdb:runXQueryFile>
+         <xdb:strQueryFile>?</xdb:strQueryFile>
+      </xdb:runXQueryFile>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xdb.diy.com/XDBHelper/runXQueryFileRequest"/></con:call></con:operation><con:operation isOneWay="false" action="" name="runXQueryReadOnly" bindingOperationName="runXQueryReadOnly" type="Request-Response" outputName="runXQueryReadOnlyResponse" inputName="runXQueryReadOnlyRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://xpression:18080/XDBHelper/services/XDBHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xdb="http://xdb.diy.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xdb:runXQueryReadOnly>
+         <xdb:strQuery>doc('ProgramConfiguration.xml')/program_configuration</xdb:strQuery>
+      </xdb:runXQueryReadOnly>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xdb.diy.com/XDBHelper/runXQueryReadOnlyRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="storeDoc" bindingOperationName="storeDoc" type="Request-Response" outputName="storeDocResponse" inputName="storeDocRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://xpression:18080/XDBHelper/services/XDBHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xdb="http://xdb.diy.com">
    <soapenv:Header/>
    <soapenv:Body>
       <xdb:storeDoc>
-         <xdb:strFileName>c:/tmp/ggsubmitForBatch_from0-0-0-0-0-0-0-1_On_2015-01-19@14-27-15-271.xml</xdb:strFileName>
-         <xdb:strDocumentName>Test</xdb:strDocumentName>
+         <xdb:strFileName>?</xdb:strFileName>
+         <xdb:strDocumentName>?</xdb:strDocumentName>
+         <xdb:strLibrary>?</xdb:strLibrary>
       </xdb:storeDoc>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xdb.diy.com/XDBHelper/storeDocRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xdb.diy.com/XDBHelper/storeDocRequest"/></con:call></con:operation><con:operation isOneWay="false" action="" name="storeStringAsDoc" bindingOperationName="storeStringAsDoc" type="Request-Response" outputName="storeStringAsDocResponse" inputName="storeStringAsDocRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://xpression:18080/XDBHelper/services/XDBHelper</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xdb="http://xdb.diy.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <xdb:storeStringAsDoc>
+         <xdb:string>?</xdb:string>
+         <xdb:strDocumentName>?</xdb:strDocumentName>
+         <xdb:strLibrary>?</xdb:strLibrary>
+      </xdb:storeStringAsDoc>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xdb.diy.com/XDBHelper/storeStringAsDocRequest"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

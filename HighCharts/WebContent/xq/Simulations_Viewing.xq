@@ -31,17 +31,24 @@ $(function () {{
 	            //,y:40                
         	}},
 			title: 'xxx',
-        }},
+			plotLines: [{{
+				color: 'red', // Color value
+				dashStyle: 'longdashdot', // Style of the plot line. Default to solid
+				value: 1,
+				//value: '{$doc/simulations/simulation/needed_days/text()}', // Value of where the line will appear
+				width: 2 // Width of the line    
+			}}]
+		}},
         yAxis: {{
             min: 0,
 			title: {{
                 text: 'Awards Count'
             }},
-            plotLines: [{{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }}]
+            //plotLines: [{{
+            //    value: 0,
+            //    width: 1,
+            //    color: '#808080'
+            //}}]
         }},
         tooltip: {{
             valueSuffix: ''
@@ -88,18 +95,20 @@ $(function () {{
 	            //,y:40                
         	}},
 			title: 'xxx',
-        }},
+ 			plotLines: [{{
+				color: 'red', // Color value
+				dashStyle: 'longdashdot', // Style of the plot line. Default to solid
+			//	value: {$doc/simulations/simulation/threshold/text()}, // Value of where the line will appear
+				value: 3.2, // Value of where the line will appear
+				width: 2 // Width of the line    
+			}}]
+       }},
         yAxis: {{
             min: 0,
 			title: {{
                 text: 'Awards Count'
             }},
-            plotLines: [{{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }}]
-        }},
+       }},
         tooltip: {{
             valueSuffix: ''
         }},

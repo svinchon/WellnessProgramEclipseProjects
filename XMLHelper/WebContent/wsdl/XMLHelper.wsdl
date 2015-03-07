@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://xmlhelper.diy.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://xmlhelper.diy.com" xmlns:intf="http://xmlhelper.diy.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://xmlhelper.diy.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="strGetValuesFromXML">
+    <complexType>
+     <sequence>
+      <element name="strXML" type="xsd:string"/>
+      <element name="strXPath" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strGetValuesFromXMLResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="strGetValuesFromXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strGetValueFromXML">
+    <complexType>
+     <sequence>
+      <element name="strXML" type="xsd:string"/>
+      <element name="strXPath" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strGetValueFromXMLResponse">
+    <complexType>
+     <sequence>
+      <element name="strGetValueFromXMLReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strRunXQuery">
+    <complexType>
+     <sequence>
+      <element name="strInputAsString" type="xsd:string"/>
+      <element name="strXQUERYAsString" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="strRunXQueryResponse">
+    <complexType>
+     <sequence>
+      <element name="strRunXQueryReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="strRunXQueryResponse">
+
+      <wsdl:part element="impl:strRunXQueryResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strGetValueFromXMLResponse">
+
+      <wsdl:part element="impl:strGetValueFromXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strGetValuesFromXMLResponse">
+
+      <wsdl:part element="impl:strGetValuesFromXMLResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strRunXQueryRequest">
+
+      <wsdl:part element="impl:strRunXQuery" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strGetValuesFromXMLRequest">
+
+      <wsdl:part element="impl:strGetValuesFromXML" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="strGetValueFromXMLRequest">
+
+      <wsdl:part element="impl:strGetValueFromXML" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="XMLHelper">
+
+      <wsdl:operation name="strGetValuesFromXML">
+
+         <wsdl:input message="impl:strGetValuesFromXMLRequest" name="strGetValuesFromXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:strGetValuesFromXMLResponse" name="strGetValuesFromXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strGetValueFromXML">
+
+         <wsdl:input message="impl:strGetValueFromXMLRequest" name="strGetValueFromXMLRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:strGetValueFromXMLResponse" name="strGetValueFromXMLResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strRunXQuery">
+
+         <wsdl:input message="impl:strRunXQueryRequest" name="strRunXQueryRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:strRunXQueryResponse" name="strRunXQueryResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="XMLHelperSoapBinding" type="impl:XMLHelper">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="strGetValuesFromXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="strGetValuesFromXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="strGetValuesFromXMLResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strGetValueFromXML">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="strGetValueFromXMLRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="strGetValueFromXMLResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="strRunXQuery">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="strRunXQueryRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="strRunXQueryResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="XMLHelperService">
+
+      <wsdl:port binding="impl:XMLHelperSoapBinding" name="XMLHelper">
+
+         <wsdlsoap:address location="http://localhost:8080/XMLHelper/services/XMLHelper"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

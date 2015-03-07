@@ -1,4 +1,4 @@
-let $threshold := 100
+let $threshold := 350
 let $needed_days := 5
 let $end_date := xs:date("2015-03-06")
 let $start_date := $end_date - xs:dayTimeDuration("P28D")
@@ -9,6 +9,10 @@ where count
       ./member_id = $m/badge_number
       and
       ./daily_index_value > $threshold
+	  and
+	  xs:date(./date_stamp) >= $start_date
+	  and
+	  xs:date(./date_stamp) <= $end_date
     ]
   ) >= $needed_days
 return $m
@@ -30,6 +34,10 @@ where count
       ./member_id = $m/badge_number
       and
       ./daily_index_value > $threshold
+	  and
+	  xs:date(./date_stamp) >= $start_date
+	  and
+	  xs:date(./date_stamp) <= $end_date
     ]
   ) >= $nd
 return $m
@@ -47,7 +55,11 @@ where count
       ./member_id = $m/badge_number
       and
       ./daily_index_value > $t
-    ]
+ 	  and
+	  xs:date(./date_stamp) >= $start_date
+	  and
+	  xs:date(./date_stamp) <= $end_date
+   ]
   ) >= $needed_days
 return $m
 return <item><threshold>{$t}</threshold><pam>{count($possibly_awarded_members3)}</pam></item>

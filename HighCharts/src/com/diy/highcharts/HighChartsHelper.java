@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,9 +55,13 @@ public class HighChartsHelper extends HttpServlet {
 				;
 		xdhp = null;
 		String visu_xquery = File2String(xqfolder+"/" +visu_xq+ ".xq");
-		Log(visu_xq);
-		Log(data_xq);
-		Log(xml);
+		Log("visu xq: "+visu_xq);
+		Log("data_xq: "+data_xq);
+		xml = xml
+				.replaceAll("\n", " ")
+				.replaceAll("> *<", "><")
+		;
+		Log("xml: " + xml);
 		String html = strRunXQuerySaxon(xml, visu_xquery);
 		response.getWriter().write(html);
 	}
@@ -107,7 +114,8 @@ public class HighChartsHelper extends HttpServlet {
 	}
 	
 	static void Log(String str) {
-		System.out.println("HighChartsHelper => " + str);
+		//"yyyy-MM-dd@HH-mm-ss-SSS"
+		System.out.println(new SimpleDateFormat("HH:mm:ss:SSS ", Locale.US).format(new Date())+"HighChartsHelper => " + str);
 	}
 	
 }

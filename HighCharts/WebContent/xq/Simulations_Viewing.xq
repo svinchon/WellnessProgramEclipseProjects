@@ -13,7 +13,7 @@ $(function () {{
             zoomType: 'x'
 		}},
         title: {{
-            text: 'Impact of needed days on award count'
+            text: 'Impact of needed days above threshold on award count'
         }},
         /*subtitle: {{
             text: 'based on last 28 days statistics',
@@ -27,25 +27,42 @@ $(function () {{
 				concat("'", string($x),"'"),",")
 			}]
 			,labels: {{
-	            rotation: 300
+	            //rotation: 300
 	            //,y:40                
         	}},
-			title: 'xxx',
-        }},
+			title: {{
+                text: 'Days Required'
+            }},
+			plotLines: [{{
+				color: 'red', // Color value
+				//dashStyle: 'longdashdot', // Style of the plot line. Default to solid
+				//value: 1,
+				value: {$doc/simulations/simulation/needed_days/text() - 1}, // (value/ max val /val count -1)
+				width: 2 // Width of the line    
+			}}],
+			plotBands: [{{
+				color: 'grey', // Color value
+				from: -0.5,
+				to: {$doc/simulations/simulation/needed_days/text() - 1}, // (value/ max val /val count -1)
+			}}]
+		}},
         yAxis: {{
             min: 0,
 			title: {{
                 text: 'Awards Count'
             }},
-            plotLines: [{{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }}]
+            //plotLines: [{{
+            //    value: 0,
+            //    width: 1,
+            //    color: '#808080'
+            //}}]
         }},
         tooltip: {{
             valueSuffix: ''
         }},
+        legend: {{
+            enabled: false
+		}},
         /*legend: {{
             layout: 'vertical',
             align: 'right',
@@ -84,26 +101,38 @@ $(function () {{
 				concat("'", string($x),"'"),",")
 			}]
 			,labels: {{
-	            rotation: 300
+	            //rotation: 300
 	            //,y:40                
         	}},
-			title: 'xxx',
-        }},
+			title: {{
+                text: 'Index Required'
+            }},
+ 			plotLines: [{{
+				color: 'red', // Color value
+				//dashStyle: 'longdashdot', // Style of the plot line. Default to solid
+				value: {$doc/simulations/simulation/threshold/text() div 700 * 14 -1 }, // Value of where the line will appear
+				//value: 3.2, // Value of where the line will appear
+				width: 2 // Width of the line    
+			}}],
+			plotBands: [{{
+				color: 'grey', // Color value
+				from: -0.5,
+				to: {$doc/simulations/simulation/threshold/text() div 700 * 14 -1 }, // (value/ max val /val count -1)
+			}}]
+       }},
         yAxis: {{
             min: 0,
 			title: {{
                 text: 'Awards Count'
             }},
-            plotLines: [{{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }}]
-        }},
+       }},
         tooltip: {{
             valueSuffix: ''
         }},
-        /*legend: {{
+        legend: {{
+            enabled: false
+		}},
+		/*legend: {{
             layout: 'vertical',
             align: 'right',
             verticalAlign: 'middle',

@@ -7,7 +7,7 @@
 
 package WellnessProgram;
 
-@SuppressWarnings({"serial", "rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes", "serial", "unchecked"})
 public class WP02ServiceLocator extends org.apache.axis.client.Service implements WellnessProgram.WP02Service {
 
     public WP02ServiceLocator() {
@@ -23,7 +23,7 @@ public class WP02ServiceLocator extends org.apache.axis.client.Service implement
     }
 
     // Use to get a proxy class for WP02Port
-    private java.lang.String WP02Port_address = "http://localhost:7000/bps/webservice/4b0d8b668000fcc2/WP02";
+    private java.lang.String WP02Port_address = "http://localhost:7000/bps/webservice/4b0d8b6680018175/WP02";
 
     public java.lang.String getWP02PortAddress() {
         return WP02Port_address;

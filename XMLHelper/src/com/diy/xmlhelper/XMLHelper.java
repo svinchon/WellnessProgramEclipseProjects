@@ -36,22 +36,22 @@ public class XMLHelper {
 			NodeList nodes = (NodeList) xpath.evaluate(strXPath, doc, XPathConstants.NODESET);
 			if (nodes!=null && nodes.getLength()>0) {
 				String strValue=nodes.item(0).getTextContent();
-				//System.out.println("XML Helper => Extracted "+strXPath+" value: "+strValue);
+				//Log("XML Helper => Extracted "+strXPath+" value: "+strValue);
 				Log(strXPath + ": " + strValue);
 				return strValue;
 			} else {
 				result = "ERROR strGetValueFromXML (xpath returned null or empty)";
-				System.out.println("Input data: "+strXML.replaceAll("[\n\t]",""));
-				System.out.println("Input xquery: "+strXPath.replaceAll("[\n\t]",""));
-				System.out.println("Error message : "+"xpath returned null or empty");			}
+				Log("Input data: "+strXML.replaceAll("[\n\t]",""));
+				Log("Input xquery: "+strXPath.replaceAll("[\n\t]",""));
+				Log("Error message : "+"xpath returned null or empty");			}
 			nodes = null;
 			xpath = null;
 			doc = null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Input data: "+strXML.replaceAll("[\n\t]",""));
-			System.out.println("Input xquery: "+strXPath.replaceAll("[\n\t]",""));
-			System.out.println("Error message : "+e.getMessage());
+			Log("Input data: "+strXML.replaceAll("[\n\t]",""));
+			Log("Input xquery: "+strXPath.replaceAll("[\n\t]",""));
+			Log("Error message : "+e.getMessage());
 			result = "ERROR: "+e.getMessage();
 		}
 		return result;
@@ -74,18 +74,18 @@ public class XMLHelper {
 			} else {
 				result = new String[1];
 				result[0] = "ERROR strGetValueFromXML (xpath returned null or empty)";
-				System.out.println("Input data: "+strXML.replaceAll("[\n\t]",""));
-				System.out.println("Input xquery: "+strXPath.replaceAll("[\n\t]",""));
-				System.out.println("Error message : "+"xpath returned null or empty");
+				Log("Input data: "+strXML.replaceAll("[\n\t]",""));
+				Log("Input xquery: "+strXPath.replaceAll("[\n\t]",""));
+				Log("Error message : "+"xpath returned null or empty");
 			}
 			nodes = null;
 			xpath = null;
 			doc = null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Input data: "+strXML.replaceAll("[\n\t]",""));
-			System.out.println("Input xquery: "+strXPath.replaceAll("[\n\t]",""));
-			System.out.println("Error message : "+e.getMessage());
+			Log("Input data: "+strXML.replaceAll("[\n\t]",""));
+			Log("Input xquery: "+strXPath.replaceAll("[\n\t]",""));
+			Log("Error message : "+e.getMessage());
 			result = new String[1];
 			result[0] = "ERROR: "+e.getMessage();
 		}
@@ -114,9 +114,9 @@ public class XMLHelper {
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Input data: "+strInputAsString.replaceAll("[\n\t]",""));
-			System.out.println("Input xquery: "+strXQUERYAsString.replaceAll("[\n\t]",""));
-			System.out.println("Error message : "+e.getMessage());
+			Log("Input data: "+strInputAsString.replaceAll("[\n\t]",""));
+			Log("Input xquery: "+strXQUERYAsString.replaceAll("[\n\t]",""));
+			Log("Error message : "+e.getMessage());
 			strResult = "ERROR: "+e.getMessage();
 		}
 		return strResult;

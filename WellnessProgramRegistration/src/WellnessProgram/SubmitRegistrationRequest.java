@@ -7,7 +7,7 @@
 
 package WellnessProgram;
 
-@SuppressWarnings({"serial", "rawtypes"})
+@SuppressWarnings({"rawtypes", "unused", "serial"})
 public class SubmitRegistrationRequest  implements java.io.Serializable {
     private java.lang.String email_type;
 
@@ -23,9 +23,9 @@ public class SubmitRegistrationRequest  implements java.io.Serializable {
 
     private java.math.BigInteger age;
 
-    private java.lang.String badge_number;
-
     private java.lang.String last_name;
+
+    private java.lang.String badge_number;
 
     private java.lang.String gender;
 
@@ -48,8 +48,8 @@ public class SubmitRegistrationRequest  implements java.io.Serializable {
            java.lang.String birth_date,
            java.lang.String email,
            java.math.BigInteger age,
-           java.lang.String badge_number,
            java.lang.String last_name,
+           java.lang.String badge_number,
            java.lang.String gender,
            java.lang.String login,
            java.lang.String vitex_id,
@@ -62,8 +62,8 @@ public class SubmitRegistrationRequest  implements java.io.Serializable {
            this.birth_date = birth_date;
            this.email = email;
            this.age = age;
-           this.badge_number = badge_number;
            this.last_name = last_name;
+           this.badge_number = badge_number;
            this.gender = gender;
            this.login = login;
            this.vitex_id = vitex_id;
@@ -213,26 +213,6 @@ public class SubmitRegistrationRequest  implements java.io.Serializable {
 
 
     /**
-     * Gets the badge_number value for this SubmitRegistrationRequest.
-     * 
-     * @return badge_number
-     */
-    public java.lang.String getBadge_number() {
-        return badge_number;
-    }
-
-
-    /**
-     * Sets the badge_number value for this SubmitRegistrationRequest.
-     * 
-     * @param badge_number
-     */
-    public void setBadge_number(java.lang.String badge_number) {
-        this.badge_number = badge_number;
-    }
-
-
-    /**
      * Gets the last_name value for this SubmitRegistrationRequest.
      * 
      * @return last_name
@@ -249,6 +229,26 @@ public class SubmitRegistrationRequest  implements java.io.Serializable {
      */
     public void setLast_name(java.lang.String last_name) {
         this.last_name = last_name;
+    }
+
+
+    /**
+     * Gets the badge_number value for this SubmitRegistrationRequest.
+     * 
+     * @return badge_number
+     */
+    public java.lang.String getBadge_number() {
+        return badge_number;
+    }
+
+
+    /**
+     * Sets the badge_number value for this SubmitRegistrationRequest.
+     * 
+     * @param badge_number
+     */
+    public void setBadge_number(java.lang.String badge_number) {
+        this.badge_number = badge_number;
     }
 
 
@@ -355,6 +355,7 @@ public class SubmitRegistrationRequest  implements java.io.Serializable {
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof SubmitRegistrationRequest)) return false;
         SubmitRegistrationRequest other = (SubmitRegistrationRequest) obj;
+        if (obj == null) return false;
         if (this == obj) return true;
         if (__equalsCalc != null) {
             return (__equalsCalc == obj);
@@ -381,12 +382,12 @@ public class SubmitRegistrationRequest  implements java.io.Serializable {
             ((this.age==null && other.getAge()==null) || 
              (this.age!=null &&
               this.age.equals(other.getAge()))) &&
-            ((this.badge_number==null && other.getBadge_number()==null) || 
-             (this.badge_number!=null &&
-              this.badge_number.equals(other.getBadge_number()))) &&
             ((this.last_name==null && other.getLast_name()==null) || 
              (this.last_name!=null &&
               this.last_name.equals(other.getLast_name()))) &&
+            ((this.badge_number==null && other.getBadge_number()==null) || 
+             (this.badge_number!=null &&
+              this.badge_number.equals(other.getBadge_number()))) &&
             ((this.gender==null && other.getGender()==null) || 
              (this.gender!=null &&
               this.gender.equals(other.getGender()))) &&
@@ -432,11 +433,11 @@ public class SubmitRegistrationRequest  implements java.io.Serializable {
         if (getAge() != null) {
             _hashCode += getAge().hashCode();
         }
-        if (getBadge_number() != null) {
-            _hashCode += getBadge_number().hashCode();
-        }
         if (getLast_name() != null) {
             _hashCode += getLast_name().hashCode();
+        }
+        if (getBadge_number() != null) {
+            _hashCode += getBadge_number().hashCode();
         }
         if (getGender() != null) {
             _hashCode += getGender().hashCode();
@@ -506,14 +507,14 @@ public class SubmitRegistrationRequest  implements java.io.Serializable {
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("badge_number");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "badge_number"));
+        elemField.setFieldName("last_name");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "last_name"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("last_name");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "last_name"));
+        elemField.setFieldName("badge_number");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "badge_number"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

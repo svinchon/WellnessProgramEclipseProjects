@@ -1,6 +1,7 @@
 package com.diy.wellnessprogram;
 
 import java.util.Date;
+import java.util.Locale;
 //import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -8,23 +9,23 @@ import java.text.Normalizer;
 import java.util.regex.Pattern;
 import java.text.SimpleDateFormat;
 
+@SuppressWarnings("deprecation")
 public class WellnessProgramHelper {
 	
 	public static void main(String[] args) {
 		WellnessProgramHelper.getMemberPerformances("");
 	}
 
-	@SuppressWarnings("deprecation")
 	public static String getEmailPrefix(String strEmail) {
 		String str = strEmail.substring(0, strEmail.indexOf("@"));
-		System.out.println("HealthProgramHelper => getEmailPrefix: "+str+" at "+new Date().toGMTString());
+		Log("getEmailPrefix: "+str+" at "+new Date().toGMTString());
 	    return str;
 	}
 
 	public static String deAccent(String str) {
 	    String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD); 
 	    Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
-		System.out.println("HealthProgramHelper => deAccent");
+		Log("deAccent");
 	    return pattern.matcher(nfdNormalizedString).replaceAll("");
 	}
 	
@@ -34,7 +35,6 @@ public class WellnessProgramHelper {
 	    return randomNum;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static String getMemberPerformances(String strMemberId) {
 		ResourceBundle rb = ResourceBundle.getBundle("WellnessProgramHelper");
 		int iDelay = 0;
@@ -44,7 +44,6 @@ public class WellnessProgramHelper {
 			Date dToday = new Date();
 			Long lDelay = (dToday.getTime() - dStart.getTime())/1000/3600/24;
 			iDelay = lDelay.intValue();
-			//writeToLog(""+iDelay);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -61,7 +60,6 @@ public class WellnessProgramHelper {
 		fExerciceTime = fExerciceTime * (1+ (new Float(getRandomInteger(iMin, iMax)).floatValue()/100));
 		fHealthIndexInteger = (fHealthIndexInteger+iDelay) * (1+(new Float(getRandomInteger(iMin, iMax)).floatValue()/100));
 		int iHealthIndexInteger =Math.round(fHealthIndexInteger);
-		//System.out.println("HPH => W: "+fWeightLoss);
 		StringBuffer strbuffMembPerf = new StringBuffer();
 		strbuffMembPerf.append("<MemberPerformances>\n");
 		strbuffMembPerf.append(""
@@ -74,11 +72,29 @@ public class WellnessProgramHelper {
 			+"	<HealthIndexInteger>"+iHealthIndexInteger+"</HealthIndexInteger>\n");
 		strbuffMembPerf.append("</MemberPerformances>");
 		String strMembPerf=strbuffMembPerf.toString();
-		System.out.println("HealthProgramHelper => Extracted XML: \n"+strMembPerf+"\nat "+new Date().toGMTString());
+		Log("Extracted XML: \n"+strMembPerf+"\nat "+new Date().toGMTString());
 		return strMembPerf;
 	}
 
+	static void Log(String str) {
+		System.out.println(
+				new SimpleDateFormat(
+						"HH:mm:ss:SSS ",
+						Locale.US
+						).format(new Date())
+				+"WellnessProgramHelper => "
+				+ str
+				);
+	}
+	
 	public static void writeToLog(String str) {
-		System.out.println("WellnessProgramHelper => "+str);
+		System.out.println(
+				new SimpleDateFormat(
+						"HH:mm:ss:SSS ",
+						Locale.US
+						).format(new Date())
+				+"WellnessProgramHelper => Write To Log: "
+				+str
+				);
 	}
 }

@@ -1,7 +1,10 @@
 package com.diy.wellnessprogram;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +29,7 @@ public class NotifyOfNewXCPMember extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Log("START");
 		String badgeNumber = ""+request.getParameter("badge_number");
 		String firstName = ""+request.getParameter("first_name");
 		String lastName =  ""+request.getParameter("last_name");
@@ -37,6 +41,7 @@ public class NotifyOfNewXCPMember extends HttpServlet {
 		if (errors.size()!=0) {
 			String[] errorsArray = errors.toArray(new String[errors.size()]);
 			String errorString = StringUtils.join(errorsArray, ",");
+			Log("END");
 			response.getWriter().write("{ "+ errorString + " }");
 		} else {
 			XDBHelperProxy x = new XDBHelperProxy(
@@ -50,9 +55,22 @@ public class NotifyOfNewXCPMember extends HttpServlet {
 					+ "<last_name>"+lastName+"</last_name>"
 					+ "<vitex_id>"+vitexId+"</vitex_id>"
 					+ "</member> "
-					+ "return insert node $e as first into /members";
+					+ "return insert node $e as first into /members"
+					;
 			x.runXQuery(xquery );
+			Log("END (happy)");
 		}		
 	}
 
+	static void Log(String str) {
+		System.out.println(
+				new SimpleDateFormat(
+						"HH:mm:ss:SSS ",
+						Locale.US
+						).format(new Date())
+				+"NotifyOfNewXCPMember => "
+				+ str
+				);
+	}
+	
 }

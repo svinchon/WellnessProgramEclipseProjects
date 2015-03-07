@@ -3,6 +3,9 @@ package com.diy.xmlhelper;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -120,6 +123,8 @@ public class XMLHelper {
     }
 	
 	static void Log(String str) {
-		System.out.println("XMLHelper => "+str);
+		//"yyyy-MM-dd@HH-mm-ss-SSS"
+		System.out.println(new SimpleDateFormat("HH:mm:ss:SSS ", Locale.US).format(new Date())+"XMLHelper => " + str);
 	}
+
 }

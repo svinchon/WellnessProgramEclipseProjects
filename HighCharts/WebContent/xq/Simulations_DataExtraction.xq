@@ -1,4 +1,4 @@
-let $threshold := 100
+let $threshold := 350
 let $needed_days := 5
 let $end_date := xs:date("2015-03-06")
 let $start_date := $end_date - xs:dayTimeDuration("P28D")

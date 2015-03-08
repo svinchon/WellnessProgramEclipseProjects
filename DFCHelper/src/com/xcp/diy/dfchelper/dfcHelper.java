@@ -1,6 +1,9 @@
 package com.xcp.diy.dfchelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import com.documentum.com.DfClientX;
@@ -79,24 +82,24 @@ public class dfcHelper extends DfSingleDocbaseModule {
 	throws DfException
 	{
 		try {
-			System.out.println("HealthProgramHelper => AddUserToGroup: "+"BEGIN");
+			Log("AddUserToGroup: "+"BEGIN");
 			IDfSession mySession = null;
 			DfClientX clientx = new DfClientX();
-			System.out.println("HealthProgramHelper => AddUserToGroup: "+"got clientx");
+			Log("AddUserToGroup: "+"got clientx");
 			IDfClient client = clientx.getLocalClient();
-			System.out.println("HealthProgramHelper => AddUserToGroup: "+"got client");
+			Log("AddUserToGroup: "+"got client");
 			IDfSessionManager mySessMgr = client.newSessionManager();
-			System.out.println("HealthProgramHelper => AddUserToGroup: "+"got session mgr");
+			Log("AddUserToGroup: "+"got session mgr");
 			IDfLoginInfo logininfo = clientx.getLoginInfo();
 			logininfo.setUser(strAdminUserName);
 			logininfo.setPassword(strAdminPassword);
 			mySessMgr.setIdentity(strRep, logininfo);
 			mySession = mySessMgr.getSession(strRep);
-			System.out.println("HealthProgramHelper => AddUserToGroup: "+"got session");
+			Log("AddUserToGroup: "+"got session");
 			mySession.getGroup(strGroup).addUser(strUser);
 			mySession.getGroup(strGroup).save();
 			mySessMgr.release(mySession);
-			System.out.println("HealthProgramHelper => AddUserToGroup: "+"END");
+			Log("AddUserToGroup: "+"END");
 		} catch (DfIdentityException e) {
 			e.printStackTrace();
 		} catch (DfAuthenticationException e) {
@@ -109,6 +112,17 @@ public class dfcHelper extends DfSingleDocbaseModule {
 			e.printStackTrace();
 		}
 		return "SUCCESS";
+	}
+	
+	static void Log(String str) {
+		System.out.println(
+				new SimpleDateFormat(
+						"HH:mm:ss:SSS ",
+						Locale.US
+						).format(new Date())
+				+"WellnessProgramHelper => "
+				+ str
+				);
 	}
 	
 	public static void WriteToLog(String str) {

@@ -1,7 +1,6 @@
 package com.diy.wellnessprogram;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,8 +54,7 @@ public class ProcessFormData extends HttpServlet {
 
 	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Log("doPost");
-		VITEXRESTHelper vrh = new VITEXRESTHelper();
+		Log("START");
 		String username = ""+request.getParameter("username");
 		String password = ""+request.getParameter("password");
 		String badge_number = ""+request.getParameter("badge_number");
@@ -66,55 +64,27 @@ public class ProcessFormData extends HttpServlet {
 		String birth_date = ""+request.getParameter("birth_date");
 		String first_name = ""+request.getParameter("first_name");
 		String last_name = ""+request.getParameter("last_name");
-		//Log(""+strEmail.matches("[a-zA-Z0-9_.]*@[a-zA-Z0-9]*\\.[a-zA-Z]*"));
 		ArrayList<String> Errors = new ArrayList<String>();
-		if (
-			!username.matches("[a-zA-Z0-9_.]*"))
-		{
-			Errors.add("Incorrect User Name");
-		}
-		if (
-			password.length()<6)
-		{
-			Errors.add("Too short password");
-		}
-		if (
-			!birth_date.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")
-		) {
-			Errors.add("Incorrect birth date format (YYYY-MM-DD)");
-		}
-		if (
-			!email.matches("[a-zA-Z0-9_.]*@[a-zA-Z0-9]*\\.[a-zA-Z]*")		
-		) {
-			Errors.add("Incorrect Email");
-		}
-		if (
-			!weight.matches("[0-9][0-9]*")
-		) {
-			Errors.add("Incorrect Weight: '"+weight+"'");
-		}
-		if (
-			!first_name.matches("[a-zA-Z0-9 -]*")
-		) {
-			Errors.add("Incorrect First Name");
-		}
-		if (
-			!last_name.matches("[a-zA-Z0-9 -]*")
-		) {
-			Errors.add("Incorrect Last Name");
-		}
-		if (
-			!badge_number.matches("[0-9]*")
-		) {
-			Errors.add("Incorrect Badge Number");
+		if (!username.matches("[a-zA-Z0-9_.]*")){	Errors.add("Incorrect User Name");		}
+		if (password.length()<6){					Errors.add("Too short password");}
+		if (!birth_date.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
+													Errors.add("Incorrect birth date format (YYYY-MM-DD)");}
+		if (!email.matches("[a-zA-Z0-9_.]*@[a-zA-Z0-9]*\\.[a-zA-Z]*")) {
+													Errors.add("Incorrect Email");}
+		if (!weight.matches("[0-9][0-9]*")) {		Errors.add("Incorrect Weight: '"+weight+"'");}
+		if (!first_name.matches("[a-zA-Z0-9 -]*")) {Errors.add("Incorrect First Name");}
+		if (!last_name.matches("[a-zA-Z0-9 -]*")) {	Errors.add("Incorrect Last Name");}
+		if (!badge_number.matches("[0-9]*")) {		Errors.add("Incorrect Badge Number");
 		}
 		if (Errors.size()!=0) {
 			String[] ErrorsArray = Errors.toArray(new String[Errors.size()]);
 			String strErrors = StringUtils.join(ErrorsArray, ",");
+			Log("END");
 			response.sendRedirect("DisplayMessage.jsp?MessageType=ERROR&Message=Incorrect Data: "+strErrors);
 		} else {
 			int sport_activity = new Integer(request.getParameter("iSportActivity"));
-			/*String strVitexReturn = vrh.submitNewUser(
+			/*VITEXRESTHelper vrh = new VITEXRESTHelper();
+			String strVitexReturn = vrh.submitNewUser(
 					username,
 					email,
 					password,
@@ -139,6 +109,7 @@ public class ProcessFormData extends HttpServlet {
 				}				
 				String[] ErrorsArray = Errors.toArray(new String[Errors.size()]);
 				String strErrors = StringUtils.join(ErrorsArray, "  ");
+				Log("END");
 				response.sendRedirect("DisplayMessage.jsp?MessageType=ERROR&Message="+strErrors);
 			} else {
 				String vitex_id = strVitexReturn.substring("SUCCESS:id=".length());
@@ -178,7 +149,7 @@ public class ProcessFormData extends HttpServlet {
 				parameters.setVitex_id(vitex_id);
 				parameters.setWeight(new Float(weight));
 				parameters.setEmail_type("NA");
-				parameters.setEmail_count(new BigInteger("0"));
+				//parameters.setEmail_count(new BigInteger("0"));
 				parameters.setEmail(email);
 				String msg;
 				try {
@@ -186,37 +157,33 @@ public class ProcessFormData extends HttpServlet {
 					String wi = dr.getWorkflowId();
 					//msg = "New user successfully created under Vitex Id '"+vitex_id+"' and xCP registration workflow started ('" + wi + "')";
 					msg = "Your request has been received.  You will get a confirmation email with instruction to follow.  Thank you and welcome to the Wellness Program!";
-					strQuery= ""
-							+ "let $e:="
-							+ "<member>"
-							+ "<badge_number>"+badge_number+"</badge_number>"
-							+ "<first_name>"+first_name+"</first_name>"
-							+ "<last_name>"+last_name+"</last_name>"
-							+ "<vitex_id>"+vitex_id+"</vitex_id>"
-							+ "</member> "
-							+ "return insert node $e as first into /members";
-					xdbh.runXQuery(strQuery );
 				} catch (Exception e) {
+					e.printStackTrace();
 					msg = "Unable to connect to xCP";				
 				}
+				Log("END");
 				response.sendRedirect("DisplayMessage.jsp?Message="+msg);
 			}
-			// create xCP/DCTM user
-			// Send welcome email
-			// else
-				// Send Sorry email
-			// end if			
 		}
 	}
 
 	String generateTimeStamp() {
-		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyy-MM-dd@HH-mm-ss-SSS", Locale.US);
+		SimpleDateFormat DateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd@HH-mm-ss-SSS", Locale.US
+				);
 		Date d = new Date();
 		return DateFormat.format(d);
 	}
 	
-	void Log(String msg) {
-		System.out.println("ProcesFormData: "+msg);
+	void Log(String str) {
+		System.out.println(
+				new SimpleDateFormat(
+						"HH:mm:ss:SSS ",
+						Locale.US
+						).format(new Date())
+				+"ProcesFormData => "
+				+ str
+				);
 	}
 
 }

@@ -1224,3 +1224,34 @@ return <item><threshold>{$t}</threshold><pam>{count($possibly_awarded_members3)}
     </threshold_impact_chart>
   </simulation>
 </simulations>
+
+****
+let $input_date := xs:date("2015-03-03")
+let $start_date := $input_date - xs:dayTimeDuration("P28D")
+let $members := doc('/Members.xml')/members/member
+let $daily_member_data := doc('/xPressionHelper/FromDailyUpdates')/daily_data/daily_member_data
+return
+<teams>
+{
+for $team in distinct-values($members/team)
+return
+<team>
+<team_name>{$team}</team_name>
+<last_four_weeks_history>
+{
+for $day_offset in (1 to 28)
+let $current_date := xs:date($start_date) + xs:dayTimeDuration(concat("P", $day_offset, "D"))
+let $daily_index_values := for $m in $members where $m/team = $team return $daily_member_data/daily_index_value[xs:date(../date_stamp) = $current_date and ../member_id = $m/badge_number]
+let $c := count($daily_index_values)
+let $a := avg($daily_index_values)
+return
+<item>
+<date>{$current_date}</date>
+<sample_count>{$c}</sample_count>
+<avg>{if ($c>0) then $a else 0}</avg>
+</item>
+}
+</last_four_weeks_history>
+</team>
+}
+</teams>

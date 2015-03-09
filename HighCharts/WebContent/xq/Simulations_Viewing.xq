@@ -10,7 +10,9 @@ $(function () {{
     var C1 = new Highcharts.Chart({{
         chart: {{
 			renderTo: 'container1',
-            zoomType: 'x'
+            zoomType: 'x',
+			width: 650,
+			height: 300
 		}},
         title: {{
             text: 'Impact of needed days above threshold on award count'
@@ -84,7 +86,9 @@ $(function () {{
     var C2 = new Highcharts.Chart({{
         chart: {{
 			renderTo: 'container2',
-            zoomType: 'x'
+            zoomType: 'x',
+			width: 650,
+			height: 300
 		}},
         title: {{
             text: 'Impact of threshold on award count'
@@ -154,14 +158,16 @@ $(function () {{
 }});
 		</script>
 	</head>
-	<body>
+	<body style="background-color: white">
 <script src="http://xcp:8080/HighCharts/Highcharts-4.0.4/js/highcharts.js">//keep this</script>
 <script src="http://xcp:8080/HighCharts/Highcharts-4.0.4/js/modules/exporting.js">//keep that</script>
 <div id="content">
-   <div style="display: table-row">
-		<div id="container1" style="display: table-cell; height: 300px; ">www</div>
-		<div id="container2" style="display: table-cell; height: 300px; ">www</div>
+	<center>
+	<div style="display: table-row">
+		<div id="container1" style="display: table-cell; ">www</div>
+		<div id="container2" style="display: table-cell; ">www</div>
 	</div>
+	</center>
 </div>
 	</body>
 </html>

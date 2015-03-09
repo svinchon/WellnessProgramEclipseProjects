@@ -74,7 +74,7 @@ public class GaugeChartHelper {
 					jfc,
 					strDir,
 					strFileName,
-					350,
+					300,
 					55,//65,
 					true//transparency
 			);

@@ -15,10 +15,10 @@ $(function () {{
         title: {{
             text: 'Impact of needed days above threshold on award count'
         }},
-        /*subtitle: {{
+        subtitle: {{
             text: 'based on last 28 days statistics',
             x: -20
-        }},*/
+        }},
         xAxis: {{
             categories: [{
 			fn:string-join(
@@ -89,10 +89,10 @@ $(function () {{
         title: {{
             text: 'Impact of threshold on award count'
         }},
-        /*subtitle: {{
+        subtitle: {{
             text: 'based on last 28 days statistics',
             x: -20
-        }},*/
+        }},
         xAxis: {{
             categories: [{
 			fn:string-join(

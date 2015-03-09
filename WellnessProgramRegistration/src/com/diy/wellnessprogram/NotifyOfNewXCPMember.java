@@ -54,6 +54,8 @@ public class NotifyOfNewXCPMember extends HttpServlet {
 					+ "<first_name>"+firstName+"</first_name>"
 					+ "<last_name>"+lastName+"</last_name>"
 					+ "<vitex_id>"+vitexId+"</vitex_id>"
+					+ "<enrollment_date>"+new SimpleDateFormat("yyyy-MM-dd ",Locale.US).format(new Date())+"</enrollment_date>"
+					+ "<team>Italy</team>"
 					+ "</member> "
 					+ "return insert node $e as first into /members"
 					;

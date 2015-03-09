@@ -109,6 +109,23 @@ input[type="password"] {
 input[type="password"]:focus {
 	border: solid 5px #FFB347;
 }
+select {
+	display: block;
+	margin: 0;
+	width: 100%;
+	font: bold 1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	font-size: 100%;
+	appearance: none;
+	box-shadow: none;
+	border-radius: none;
+	padding: 10px;
+	border: solid 5px #c9c9c9;
+	box-shadow: inset 0 0 0 1px #707070;
+	transition: box-shadow 0.3s, border 0.3s;
+}
+select:focus {
+	border: solid 5px #FFB347;
+}
 #lists * {
 	border-radius:15px;
 	background-color:#c9c9c9;
@@ -187,7 +204,7 @@ input[type="password"]:focus {
 					</td>
 				</tr>
 				<tr>
-					<td id="para1">email:</td>
+					<td id="para1">Email:</td>
 					<td>
 						<input type="text" name="email" value="john.doe<%= ts%>@gmail.com">
 					</td>

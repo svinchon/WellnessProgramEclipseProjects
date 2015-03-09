@@ -26,8 +26,6 @@ import WellnessProgram.WP02Proxy;
 
 import com.diy.xdb.XDBHelperProxy;
 
-//import org.apache.axis.utils.StringUtils;
-
 @WebServlet("/ProcessFormData")
 public class ProcessFormData extends HttpServlet {
 	

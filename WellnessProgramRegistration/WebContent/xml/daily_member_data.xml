@@ -1,0 +1,21 @@
+
+<daily_member_data>
+	<id>--VITEX_ID--</id>
+	<member_id>--BADGE_NUMBER--</member_id>
+	<weight>--WEIGHT--</weight>
+	<daily_index_value>--DAILY_INDEX_VALUE--</daily_index_value>
+	<daily_index_level>--DAILY_INDEX_LEVEL--</daily_index_level>
+	<daily_index_level_label>--DAILY_INDEX_LEVEL_LABEL--</daily_index_level_label>
+	<daily_index_color>--DAILY_INDEX_COLOR--</daily_index_color>
+	<date_stamp>--DATE_STAMP--</date_stamp>
+	<indicators>
+		<indicator>
+			<label>Steps</label>
+			<value>80</value>
+		</indicator>
+		<indicator>
+			<label>Runs</label>
+			<value>30</value>
+		</indicator>
+	</indicators>
+</daily_member_data>

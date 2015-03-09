@@ -42,6 +42,8 @@ import javax.xml.xpath.XPathFactory;
 //import javax.xml.xquery.XQSequence;
 //import javax.xml.xquery.XQStaticContext;
 
+
+
 //saxon8
 //import net.sf.saxon.xqj.SaxonXQDataSource;
 import net.sf.saxon.query.XQueryExpression;
@@ -67,11 +69,12 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.Range;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.Day;
-import org.jfree.data.time.Month;
 import org.jfree.data.time.TimePeriodAnchor;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleInsets;
+import org.jfree.ui.TextAnchor;
 
 public class XML2ChartHelper {
 
@@ -156,26 +159,27 @@ public class XML2ChartHelper {
 	    
 	    NumberAxis da;
 	    da = (NumberAxis)xyp.getRangeAxis();
-	    da.setRangeWithMargins(new Range(0, 500));
-	    //da.setVisible(false);
+	    da.setRangeWithMargins(new Range(0, 700));
+	    da.setVisible(false);
 	    da.setUpperMargin(100);
 	    
 	    PeriodAxis pa = new PeriodAxis("Date");
 	    //pa.set
 	    pa.setTimeZone(TimeZone.getDefault());
 	    pa.setAutoRangeTimePeriodClass(Day.class);
-	    PeriodAxisLabelInfo[] arrayOfPeriodAxisLabelInfo = new PeriodAxisLabelInfo[2];
+	    PeriodAxisLabelInfo[] arrayOfPeriodAxisLabelInfo = new PeriodAxisLabelInfo[1];
 	    arrayOfPeriodAxisLabelInfo[0] = new PeriodAxisLabelInfo(
 	    		Day.class,
 	    		new SimpleDateFormat("d"),
 	    		new RectangleInsets(2.0D, 2.0D, 2.0D, 2.0D),
-	    		new Font("SansSerif", 1, 10),
+	    		new Font("SansSerif", Font.BOLD, 12),
 	    		Color.white,
 	    		false,
 	    		new BasicStroke(0.0F),
 	    		Color.lightGray
 	    );
-	    arrayOfPeriodAxisLabelInfo[1] = new PeriodAxisLabelInfo(
+	    pa.setLabel(null);
+	    /*arrayOfPeriodAxisLabelInfo[1] = new PeriodAxisLabelInfo(
 	    		Month.class,
 	    		new SimpleDateFormat("MMM"),
 	    		new RectangleInsets(2.0D, 2.0D, 2.0D, 2.0D),
@@ -184,7 +188,7 @@ public class XML2ChartHelper {
 	    		false,
 	    		new BasicStroke(0.0F),
 	    		Color.lightGray
-	    );
+	    );*/
 	    //arrayOfPeriodAxisLabelInfo[2] = new PeriodAxisLabelInfo(Year.class, new SimpleDateFormat("yyyy"));
 	    pa.setLabelInfo(arrayOfPeriodAxisLabelInfo);
 	    //pa.setVisible(false);
@@ -192,22 +196,45 @@ public class XML2ChartHelper {
 	    
 	    
 	    
+		//lasr.setSeriesPaint(0, new Color(0, 250, 0)); // line color
+		//lasr.setSeriesPaint(0, Color.white); // line color
+		//lasr.setDrawOutlines(true); // draw shape border
+		//lasr.setUseFillPaint(true); // draw fill of shape
+		//lasr.setBaseFillPaint(Color.white); // fill color
+		//lasr.setSeriesStroke(0, new BasicStroke(3.0F)); // line thickness
+		//lasr.setSeriesOutlineStroke(0, new BasicStroke(2.0F)); // shape border thickness 
+		//lasr.setSeriesShape(0, new Ellipse2D.Double(/* x offset */-5.0D, /* y offset */-5.0D, /* x size */10.0D,/* y size */ 10.0D)); // draw shape as ellipse
 	    //adjust line properties
 	    XYLineAndShapeRenderer lsr = (XYLineAndShapeRenderer)xyp.getRenderer();
 	    //show or not dots
-	    lsr.setBaseShapesVisible(false);
+	    lsr.setBaseShapesVisible(true);
 	    //lsr.setDrawSeriesLineAsPath(true);
 	    //needed for line changes to be taken
 	    lsr.setAutoPopulateSeriesStroke(false);
 	    // line with width 2
-	    lsr.setBaseStroke(new BasicStroke(2.0F, 1, 2), false);
+	    lsr.setBaseStroke(
+	    		new BasicStroke(3.0F, 1, 2),
+	    		false
+	    );
+	    lsr.setSeriesShape(0, new Ellipse2D.Double(/* x offset */-5.0D, /* y offset */-5.0D, /* x size */10.0D,/* y size */ 10.0D)); // draw shape as ellipse
 	    //line color white for first serie
 	    lsr.setSeriesPaint(0, Color.white);
 	    //horizontal line to mark threshold 
-	    ValueMarker localValueMarker = new ValueMarker(300.0D);
-	    localValueMarker.setPaint(Color.blue);
-	    localValueMarker.setAlpha(0.8F);
-	    xyp.addRangeMarker(localValueMarker);
+	    ValueMarker lvm = new ValueMarker(300.0D);
+	    lvm.setPaint(Color.white);
+	    lvm.setLabel("300");
+	    lvm.setLabelFont(new Font("SansSerif", Font.BOLD, 12));
+	    lvm.setLabelPaint(Color.white);
+	    lvm.setLabelAnchor(RectangleAnchor.BOTTOM_RIGHT);
+	    lvm.setLabelTextAnchor(TextAnchor.TOP_RIGHT);
+	    lvm.setStroke(
+	    		new BasicStroke(
+	    		        2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
+	    		        1.0f, new float[] {6.0f, 6.0f}, 0.0f
+	    		    )
+	    		);
+	    lvm.setAlpha(1F);
+	    xyp.addRangeMarker(lvm);
 	    //xyp.getDomainAxis().setLowerMargin(0.0D);
 	    
 	    // save chart
@@ -305,7 +332,7 @@ public class XML2ChartHelper {
 		// x axis
 		CategoryAxis ca;
 		ca = (CategoryAxis)cp.getDomainAxis();
-		ca.setVisible(true); // hide
+		ca.setVisible(false); // hide
 		ca.setAxisLinePaint(Color.white);
 		ca.setTickLabelPaint(Color.white);
 		ca.setTickLabelFont(new Font("Arial", Font.PLAIN, 14));

@@ -262,6 +262,8 @@ public class XDBHelper {
 	}
 
 	public String runXQuery(String strQuery) {
+		Log("START");
+		Log(strQuery);
 		String strReturn = "";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
 		Log("runXQuery on "+rb.getString("XDBHost"));
@@ -290,8 +292,10 @@ public class XDBHelper {
 			rootLibrary = null;
 			xData = null;
 			session.commit();
+			Log("(HAPPY) END");
 		} catch (Exception e) {
-			Log("XQuery sample failed: ");
+			Log("XQuery failed");
+			Log("runXQueryFile: XQuery:" + strQuery);
 			Log("ERROR: " + e.getMessage());
 			e.printStackTrace();
 			strReturn = "ERROR: " + e.getMessage();

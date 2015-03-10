@@ -92,6 +92,8 @@ public class XML2ChartHelper {
 		//int dataSetCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/series/serie)"));
 		int itemCount = new Integer(strRunXQuery(xml, "count(/chart_data/categories/values/value)"));
 		int dataSetCount = new Integer(strRunXQuery(xml, "count(/chart_data/series/serie)"));
+		int horizontal_marker_value = new Integer(strRunXQuery(xml, "/chart_data/horizontal_marker/value/text()"));
+		String horizontal_marker_color = strRunXQuery(xml, "/chart_data/horizontal_marker/line_color/text()");
 		String labels = strRunXQuery(
 				xml,
 				"string-join(for $v in /chart_data/categories/values/value return $v, ';')"
@@ -220,13 +222,17 @@ public class XML2ChartHelper {
 	    //line color white for first serie
 	    lsr.setSeriesPaint(0, Color.white);
 	    //horizontal line to mark threshold 
-	    ValueMarker lvm = new ValueMarker(300.0D);
-	    lvm.setPaint(Color.white);
-	    lvm.setLabel("300");
+	    ValueMarker lvm = new ValueMarker(horizontal_marker_value);
+		Color c = Color.decode("0x"+horizontal_marker_color);
+		// solid
+		lvm.setPaint(new Color(c.getRed(),c.getGreen(),c.getBlue()));
+	    lvm.setLabel(""+horizontal_marker_value);
 	    lvm.setLabelFont(new Font("SansSerif", Font.BOLD, 12));
-	    lvm.setLabelPaint(Color.white);
+	    lvm.setLabelPaint(c);
 	    lvm.setLabelAnchor(RectangleAnchor.BOTTOM_RIGHT);
-	    lvm.setLabelTextAnchor(TextAnchor.TOP_RIGHT);
+	    lvm.setLabelTextAnchor(TextAnchor.BOTTOM_RIGHT);
+		RectangleInsets offset = new RectangleInsets(0, 0, -5, 5);
+		lvm.setLabelOffset(offset);
 	    lvm.setStroke(
 	    		new BasicStroke(
 	    		        2.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,

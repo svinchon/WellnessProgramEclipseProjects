@@ -1,13 +1,15 @@
-let $current_day := xs:date("2015-03-04")
+let $input_date := xs:date(substring(xs:string(current-date()),1,10))
+let $current_day := $input_date
 let $first_day := $current_day - xs:dayTimeDuration("P28D")
 let $source := doc('/xPressionHelper/FromDailyUpdates/')
-let $award_threshold := 300
-let $award_days_above_threshold_required := 1
+let $award_threshold := doc('/ProgramConfiguration.xml')/program_configuration/awards_threshold/text()
+let $award_days_above_threshold_required := doc('/ProgramConfiguration.xml')/program_configuration/awards_days_above_needed/text()
 return
 <documents>
 {
 for $m in doc('/Members.xml')/members/member
 let $days_above_threshold := count(distinct-values($source/daily_data/daily_member_data[./member_id = $m/badge_number and xs:date(./date_stamp) > $first_day and xs:date(./date_stamp) < $current_day and ./daily_index_value > $award_threshold]/date_stamp))
+let $active_days := count(distinct-values($source/daily_data/daily_member_data[./member_id = $m/badge_number and xs:date(./date_stamp) > $first_day and xs:date(./date_stamp) < $current_day and ./daily_index_value > 0]/date_stamp))
 return
 	<document>
 		<document_type>Monthly</document_type>
@@ -20,6 +22,7 @@ return
 		<first_date>{$first_day}</first_date>
 		<award_threshold>{$award_threshold}</award_threshold>
 		<days_above_threshold>{$days_above_threshold}</days_above_threshold>
+		<active_days>{$active_days}</active_days>
 		<award>{$days_above_threshold > $ award_days_above_threshold_required}</award>
 		<index_history_nvp>
 	{
@@ -94,6 +97,12 @@ return
 	{
 	concat(
 		'<chart_data>',
+		'<horizontal_marker>',
+		'<value>', $award_threshold, '</value>',
+		'<line_style></line_style>',
+		'<line_color>FFFF00</line_color>',
+		'<label>AT</label>',
+		'</horizontal_marker>',
 		concat(
 			'<categories><title>Date</title><values>',
 			fn:string-join(

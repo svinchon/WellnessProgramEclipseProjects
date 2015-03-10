@@ -1,6 +1,6 @@
 let $threshold := 350
 let $needed_days := 5
-let $end_date := xs:date("2015-03-06")
+let $end_date := xs:date(substring(xs:string(current-date()),1,10))
 let $start_date := $end_date - xs:dayTimeDuration("P28D")
 let $possibly_awarded_members := for $m in doc('Members.xml')/members/member
 where count

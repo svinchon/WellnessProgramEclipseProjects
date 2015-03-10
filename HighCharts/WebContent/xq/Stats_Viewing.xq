@@ -16,6 +16,92 @@ $(function () {{
     $(document).ready(function() {{
 	var C1 = new Highcharts.Chart({{
         chart: {{
+            type: 'spline',
+			renderTo: 'container1',
+            zoomType: 'x',
+			width: 500,
+			height: 250
+        }},
+        title: {{
+            text: 'Team Comparison - Daily Team Average Index'
+        }},
+        subtitle: {{
+            text: document.ontouchstart === undefined ?
+                    'Click and drag in the plot area to zoom in' :
+                    'Pinch the chart to zoom in'
+        }},
+        xAxis: {{
+            type: 'datetime',
+            dateTimeLabelFormats: {{ // don't display the dummy year
+                month: '%e. %b',
+                year: '%b'
+            }},
+            title: {{
+                //text: 'Date'
+            }}
+        }},
+        yAxis: {{
+            title: {{
+                text: 'index'
+            }},
+            min: 0
+        }},
+        tooltip: {{
+        //    headerFormat: '<b>{{series.name}}</b>',
+        //    pointFormat: '{{point.x:%e. %b}}: {{point.y:.2f}} m'
+        }},
+
+        plotOptions: {{
+            spline: {{
+                marker: {{
+                    enabled: true
+                }}
+            }}
+        }},
+		legend:	{{
+			layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'middle'
+		}},
+		series: [
+{
+string-join(
+	for $t in distinct-values($doc/stats/last_four_weeks_history/items/item/teams/team[sum(./team_avg) != 0]/team_name)
+		return concat(
+			'{
+type: "spline",
+name: "', $t, '",
+data: [
+',
+			string-join(
+				for $x in $doc/stats/last_four_weeks_history/items/item/teams/team[team_name = $t]/team_avg
+					where $x>0
+					return string(
+						concat(
+							'[Date.UTC(',
+							substring($x/../../../date,1,4),
+							', ',
+							substring($x/../../../date,6,2),
+							', ',
+							substring($x/../../../date,9,2),
+							'), ',
+							$x,
+							']'
+						)
+					),
+				',
+'
+			),
+			'
+]
+}'
+		),
+	","
+)
+}
+		]
+/*
+        chart: {{
 			renderTo: 'container1',
             zoomType: 'x',
 			width: 500,
@@ -99,7 +185,7 @@ return concat(
 ),
 ","
 )
-		}]
+		}]*/
     }});
     var C2 = new Highcharts.Chart({{
         chart: {{

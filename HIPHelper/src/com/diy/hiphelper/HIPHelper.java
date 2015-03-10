@@ -36,7 +36,8 @@ public class HIPHelper {
 //			hiphop.storeDoc("WP_BATCH_RUN", "SEB_DOC_08", "<root>hello world</root>".getBytes());
 //			Log("</CALL>");
 			Log("<CALL>");
-			String[] strDocNames = hiphop.getPatientDocNamesList("WP_BATCH_RUN");
+			//String[] strDocNames = hiphop.getPatientDocNamesList("WP_BATCH_RUN");
+			String[] strDocNames = hiphop.getPatientDocNamesList("56112433386");
 			Log("</CALL>");
 			Log("<OUTPUT>");
 			//Log("nDocuments:");
@@ -45,13 +46,14 @@ public class HIPHelper {
 			}
 			Log("</OUTPUT>");
 			Log("<CALL>");
-			byte[] bDoc = hiphop.getDocContentByDocId("BATCH_1421915624");
+			//byte[] bDoc = hiphop.getDocContentByDocId("BATCH_1421915624");
+			byte[] bDoc = hiphop.getDocContentByDocId("vitex_daily_20150305_130648.xml");
 			Log("</CALL>");
 			Log("<OUTPUT>");
 			//Log("Doc content:");
 			Log(new String(bDoc));
 			Log("</OUTPUT>");
-			FileOutputStream fos = new FileOutputStream("C:/Users/admin/Desktop/BATCH_1421309514.xml");
+			FileOutputStream fos = new FileOutputStream("C:/Users/dmadmin/Desktop/vitex_daily_20150305_130648.xml");
 			fos.write(bDoc);
 			fos.close();
 			Log("</LOG>");

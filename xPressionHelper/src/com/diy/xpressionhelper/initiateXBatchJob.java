@@ -71,7 +71,8 @@ public class initiateXBatchJob extends HttpServlet {
 					String strXML = xdbhp.runXQuery(strXQ);
 					String2File(strXML, strDataFileFullName);*/		
 				} else {
-					String xqfolder = this.getServletContext().getRealPath("/xq");
+					//String xqfolder = this.getServletContext().getRealPath("/xq");
+					String xqfolder = "C:/Users/dmadmin/git/WellnessProgramEclipseProjects/xPressionHelper/WebContent/xq";
 					strXQ = File2String(xqfolder + "/" + XQuery);
 					String strXML = xdbhp.runXQuery(strXQ);
 					String2File(strXML, strDataFileFullName);			

@@ -19,7 +19,7 @@ $(function () {{
             type: 'spline',
 			renderTo: 'container1',
             zoomType: 'x',
-			width: 500,
+			width: 400,
 			height: 250
         }},
         title: {{
@@ -104,7 +104,7 @@ data: [
         chart: {{
 			renderTo: 'container1',
             zoomType: 'x',
-			width: 500,
+			width: 400,
 			height: 250
       	}},
         title: {{

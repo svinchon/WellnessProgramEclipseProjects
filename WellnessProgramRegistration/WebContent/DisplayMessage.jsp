@@ -4,6 +4,7 @@
 	pageEncoding="ISO-8859-1"
 %>
 <html>
+<title>Wellness Program</title>
 <style type="text/css">
 body {
 	background: 
@@ -27,11 +28,11 @@ h1 {
 	margin: 0;
 	white-space: nowrap;
 	text-align: center;
-	font: bold 1.5em/100px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	font: bold 1.2em/100px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 }
 .loginTable {
 	margin: 0;
-	font-size: 1.5rem;
+	font-size: 1.2em;
 	color: white;
 	text-align: center;
 }
@@ -51,7 +52,7 @@ a.button {
 #para1 {
 	text-align: left;
 	color: white;
-	font:  1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;	
+	font:  1.2em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;	
 }
 form table tr td {
 	color:white; 
@@ -71,7 +72,7 @@ input[type="text"] {
 	appearance: none;
 	box-shadow: none;
 	border-radius: none;
-	padding: 10px;
+	padding: 5px;
 	border: solid 5px #c9c9c9;
 	box-shadow: inset 0 0 0 1px #707070;
 	transition: box-shadow 0.3s, border 0.3s;
@@ -88,7 +89,7 @@ input[type="password"] {
 	appearance: none;
 	box-shadow: none;
 	border-radius: none;
-	padding: 10px;
+	padding: 5px;
 	border: solid 5px #c9c9c9;
 	box-shadow: inset 0 0 0 1px #707070;
 	transition: box-shadow 0.3s, border 0.3s;

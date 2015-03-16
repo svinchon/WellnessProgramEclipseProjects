@@ -1,5 +1,6 @@
 let $source1 := doc('/xPressionHelper/FromWeeklyUpdates/')
 let $source2 := doc('/xPressionHelper/FromDailyUpdates/')
+let $award_threshold := doc('/ProgramConfiguration.xml')/program_configuration/awards_threshold/text()
 return
 <documents>
 {
@@ -88,6 +89,12 @@ return
 	{
 	concat(
 		'<chart_data>',
+		'<horizontal_marker>',
+		'<value>', $award_threshold, '</value>',
+		'<line_style></line_style>',
+		'<line_color>FFFF00</line_color>',
+		'<label>AT</label>',
+		'</horizontal_marker>',
 		concat(
 			'<categories><title>Date</title><values>',
 			fn:string-join(

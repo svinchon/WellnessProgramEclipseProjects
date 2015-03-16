@@ -64,7 +64,7 @@ public class XDBHelper {
 					+ rb.getString("XDBPort")
 			);
 			getServletContext().setAttribute("XDBD", driver);
-			if (!driver.isInitialized()) driver.init(1024);
+			//if (!driver.isInitialized()) driver.init(1024);
 			//session = driver.createSession();
 			//String databaseName = rb.getString("DatabaseName");//"xData";
 			//String administratorName = rb.getString("AdministratorName");//"Administrator";
@@ -270,9 +270,10 @@ public class XDBHelper {
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
 		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
-		XhiveDriverIf driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
+		//XhiveDriverIf driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
 		if (!driver.isInitialized()) driver.init();
-		XhiveSessionIf session = driver.createSession();
+		XhiveSessionIf session;
+		session = driver.createSession();
 		try {
 			session.connect(administratorName, administratorPassword, databaseName);
 			session.begin();
@@ -302,7 +303,8 @@ public class XDBHelper {
 		} finally {
 			if (session.isOpen()) { session.rollback(); }
 			if (session.isConnected()) { session.disconnect(); }
-			driver.close();
+			//driver.close();
+			session.terminate();
 		}
 		return strReturn;
 	}

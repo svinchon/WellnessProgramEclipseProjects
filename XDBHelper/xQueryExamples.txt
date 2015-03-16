@@ -1366,3 +1366,50 @@ return
 
 ****
 let $adc:=110, $ab:=10000, $at:=350, $adan:=10, $pc:=doc('ProgramConfiguration.xml')/program_configuration return (replace value of node $pc/available_devices_count with $adc, replace value of node $pc/awards_budget with $ab, replace value of node $pc/awards_threshold with $at, replace value of node $pc/awards_days_above_needed with $adan)
+
+
+****
+for $m in doc('users.json.xml')/members/member
+return insert node (
+<!-- added using xQuery - Start -->,
+<badge_number>{$m/member_id/text()}</badge_number>,
+<first_name>{$m/display_name/text()}</first_name>,
+<last_name></last_name>,
+<vitex_id>{$m/username/text()}</vitex_id>,
+<enrollment_date>2015-01-12</enrollment_date>,
+<team>Sales</team>,
+<!-- added using xQuery - End -->
+)
+before $m/username
+
+****
+for $m in doc('users.json.xml')/members/member
+return concat(
+"CREATE wp02_member OBJECT ",
+"SET badge_number='", $m/badge_number, "', ",
+"SET email='", $m/email, "', ",
+"SET first_name='", $m/display_name, "', ",
+"SET gender='", $m/gender, "', ",
+"SET member_id='", $m/member_id, "', ",
+"SET login='", $m/username, "'
+GO"
+)
+
+for $m in doc('users.json.xml')/members/member
+return concat(
+"CREATE dm_user OBJECT ",
+"SET user_name = '", $m/username, "', ",
+"SET user_address = '", $m/email, "', ",
+"SET description = 'Member', ",
+"SET user_source = 'inline password', ",
+"SET user_login_name = '", $m/username, "', ",
+"SET user_password='", $m/password, "', ",
+"SET user_state = 0
+GO"
+)
+
+concat(
+"ALTER GROUP wp02_member ADD ",
+string-join(for $m in doc('users.json.xml')/members/member return $m/username, ", "),
+""
+)

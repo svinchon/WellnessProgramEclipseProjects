@@ -92,8 +92,18 @@ public class XML2ChartHelper {
 		//int dataSetCount = new Integer(strRunXQuery(xml, "declare variable $doc external;count($doc/chart_data/series/serie)"));
 		int itemCount = new Integer(strRunXQuery(xml, "count(/chart_data/categories/values/value)"));
 		int dataSetCount = new Integer(strRunXQuery(xml, "count(/chart_data/series/serie)"));
-		int horizontal_marker_value = new Integer(strRunXQuery(xml, "/chart_data/horizontal_marker/value/text()"));
-		String horizontal_marker_color = strRunXQuery(xml, "/chart_data/horizontal_marker/line_color/text()");
+		String horizontal_marker_node_value = strRunXQuery(xml, "/chart_data/horizontal_marker/value/text()");
+		//horizontal_marker_node_value = horizontal_marker_node_value;
+		int horizontal_marker_value;
+		if (!horizontal_marker_node_value.equals("")) {
+			horizontal_marker_value = new Integer(horizontal_marker_node_value);
+		} else {
+			horizontal_marker_value = 300;
+		}
+		String horizontal_marker_color = strRunXQuery(xml, "/chart_data/horizontal_marker/value/text()");
+		if (!horizontal_marker_color.matches("[a-zA-Z]{6}")) {
+			horizontal_marker_color = "FF0000";
+		}
 		String labels = strRunXQuery(
 				xml,
 				"string-join(for $v in /chart_data/categories/values/value return $v, ';')"
@@ -128,7 +138,11 @@ public class XML2ChartHelper {
 				    Day jfcday = new Day(day, month, year);
 				    //Log(day+"-"+month+"-"+year);
 					//Day date = new Day(labels[l]);
-					ts.add(jfcday, value);
+					if (value > 0) {
+						ts.add(jfcday, value);
+					} else {
+						//ts.add(jfcday, null);
+					}
 				} catch (ParseException e) {
 					e.printStackTrace();
 					Log("incorrect date format in xml for timeserie");

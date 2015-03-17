@@ -141,6 +141,7 @@ public class XML2ChartHelper {
 					if (value > 0) {
 						ts.add(jfcday, value);
 					} else {
+						ts.add(jfcday, value);
 						//ts.add(jfcday, null);
 					}
 				} catch (ParseException e) {

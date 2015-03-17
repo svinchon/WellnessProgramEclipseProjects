@@ -233,7 +233,7 @@ public class XML2ChartHelper {
 	    		new BasicStroke(3.0F, 1, 2),
 	    		false
 	    );
-	    lsr.setSeriesShape(0, new Ellipse2D.Double(/* x offset */-5.0D, /* y offset */-5.0D, /* x size */10.0D,/* y size */ 10.0D)); // draw shape as ellipse
+	    lsr.setSeriesShape(0, new Ellipse2D.Double(/* x offset */-3.0D, /* y offset */-3.0D, /* x size */6.0D,/* y size */6.0D)); // draw shape as ellipse
 	    //line color white for first serie
 	    lsr.setSeriesPaint(0, Color.white);
 	    //horizontal line to mark threshold 

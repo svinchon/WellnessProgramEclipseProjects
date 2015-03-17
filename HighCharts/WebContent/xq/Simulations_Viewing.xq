@@ -11,8 +11,8 @@ $(function () {{
         chart: {{
 			renderTo: 'container1',
             zoomType: 'x',
-			width: 650,
-			height: 300
+			width: 550,
+			height: 270
 		}},
         title: {{
             text: 'Impact of needed days above threshold on award count'
@@ -87,8 +87,8 @@ $(function () {{
         chart: {{
 			renderTo: 'container2',
             zoomType: 'x',
-			width: 650,
-			height: 300
+			width: 550,
+			height: 270
 		}},
         title: {{
             text: 'Impact of threshold on award count'

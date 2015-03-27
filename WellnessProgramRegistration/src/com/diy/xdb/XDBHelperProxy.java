@@ -44,28 +44,46 @@ public class XDBHelperProxy implements com.diy.xdb.XDBHelper {
     return xDBHelper;
   }
   
-  public java.lang.String storeDoc(java.lang.String strFileName, java.lang.String strDocumentName) throws java.rmi.RemoteException{
+  public void main(java.lang.String[] args) throws java.rmi.RemoteException{
     if (xDBHelper == null)
       _initXDBHelperProxy();
-    return xDBHelper.storeDoc(strFileName, strDocumentName);
+    xDBHelper.main(args);
   }
   
-  public java.lang.String storeStringAsDoc(java.lang.String string, java.lang.String strDocumentName) throws java.rmi.RemoteException{
+  public java.lang.String runXQueryFile(java.lang.String strQueryFile) throws java.rmi.RemoteException{
     if (xDBHelper == null)
       _initXDBHelperProxy();
-    return xDBHelper.storeStringAsDoc(string, strDocumentName);
+    return xDBHelper.runXQueryFile(strQueryFile);
   }
   
-  public java.lang.String removeDoc(java.lang.String strDocumentName) throws java.rmi.RemoteException{
+  public java.lang.String storeDoc(java.lang.String strFileName, java.lang.String strDocumentName, java.lang.String strLibrary) throws java.rmi.RemoteException{
     if (xDBHelper == null)
       _initXDBHelperProxy();
-    return xDBHelper.removeDoc(strDocumentName);
+    return xDBHelper.storeDoc(strFileName, strDocumentName, strLibrary);
+  }
+  
+  public java.lang.String storeStringAsDoc(java.lang.String string, java.lang.String strDocumentName, java.lang.String strLibrary) throws java.rmi.RemoteException{
+    if (xDBHelper == null)
+      _initXDBHelperProxy();
+    return xDBHelper.storeStringAsDoc(string, strDocumentName, strLibrary);
+  }
+  
+  public java.lang.String removeDoc(java.lang.String strDocumentName, java.lang.String strLibrary) throws java.rmi.RemoteException{
+    if (xDBHelper == null)
+      _initXDBHelperProxy();
+    return xDBHelper.removeDoc(strDocumentName, strLibrary);
   }
   
   public java.lang.String runXQuery(java.lang.String strQuery) throws java.rmi.RemoteException{
     if (xDBHelper == null)
       _initXDBHelperProxy();
     return xDBHelper.runXQuery(strQuery);
+  }
+  
+  public java.lang.String runXQueryReadOnly(java.lang.String strQuery) throws java.rmi.RemoteException{
+    if (xDBHelper == null)
+      _initXDBHelperProxy();
+    return xDBHelper.runXQueryReadOnly(strQuery);
   }
   
   

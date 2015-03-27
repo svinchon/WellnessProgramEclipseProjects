@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.xml.soap.AttachmentPart;
@@ -24,6 +27,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import com.diy.xmlhelper.XMLHelper;
 
 public class HIPHelper {
@@ -35,27 +42,52 @@ public class HIPHelper {
 //			Log("<CALL>");
 //			hiphop.storeDoc("WP_BATCH_RUN", "SEB_DOC_08", "<root>hello world</root>".getBytes());
 //			Log("</CALL>");
-			Log("<CALL>");
 			//String[] strDocNames = hiphop.getPatientDocNamesList("WP_BATCH_RUN");
-			String[] strDocNames = hiphop.getPatientDocNamesList("56112433386");
-			Log("</CALL>");
-			Log("<OUTPUT>");
-			//Log("nDocuments:");
-			for (int i=0;i<strDocNames.length;i++) {
-				Log(strDocNames[i]);
+			//String patientId="111111";
+			DateTimeFormatter format = DateTimeFormat.forPattern("yyyy-MM-dd 00:00:00.000000000");
+			DateTimeFormatter format2 = DateTimeFormat.forPattern("yyyyMMdd");
+			DateTime now = new DateTime();
+			now = new DateTime("2015-03-25");
+			System.out.println("Previous :" + format.print(now));
+			DateTime oneDayAgo = now.minusDays(1);
+			System.out.println("Updated :" + format.print(oneDayAgo));
+			//String today = new SimpleDateFormat(
+			//		"yyyyMMdd",
+			//		Locale.US
+			//		).format(new Date());
+			int iPatientId=111111;
+			for (int p = iPatientId;p<iPatientId+20;p++) {
+				Log("<CALL>");
+				String[] strDocNames = hiphop.getPatientDocNamesList(""+p);
+				Log("</CALL>");
+				Log("<OUTPUT>");
+				//Log("nDocuments:");
+				Log("Documents found for patient id "+p);
+				for (int i=0;i<strDocNames.length;i++) {
+					Log(strDocNames[i]);
+				}
+				Log("</OUTPUT>");
+				//byte[] bDoc = hiphop.getDocContentByDocId("BATCH_1421915624");
+				for (int i=0;i<strDocNames.length;i++) {
+					Log(format2.print(oneDayAgo));
+					if (strDocNames[i].indexOf(format2.print(oneDayAgo)) >=0) {
+						String docName = strDocNames[i];
+						Log("<CALL>");
+						byte[] bDoc = hiphop.getDocContentByDocId(docName);
+						Log("Found and retrived "+docName+" that is dated from today for patient id "+p);
+						Log("</CALL>");
+						Log("<OUTPUT>");
+						Log(new String(bDoc));
+						Log("</OUTPUT>");
+						FileOutputStream fos = new FileOutputStream(
+								"C:/Users/dmadmin/Desktop/VitexData/"
+								+ docName
+								);
+						fos.write(bDoc);
+						fos.close();					
+					}
+				}
 			}
-			Log("</OUTPUT>");
-			Log("<CALL>");
-			//byte[] bDoc = hiphop.getDocContentByDocId("BATCH_1421915624");
-			byte[] bDoc = hiphop.getDocContentByDocId("vitex_daily_20150305_130648.xml");
-			Log("</CALL>");
-			Log("<OUTPUT>");
-			//Log("Doc content:");
-			Log(new String(bDoc));
-			Log("</OUTPUT>");
-			FileOutputStream fos = new FileOutputStream("C:/Users/dmadmin/Desktop/vitex_daily_20150305_130648.xml");
-			fos.write(bDoc);
-			fos.close();
 			Log("</LOG>");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -229,7 +261,7 @@ public class HIPHelper {
 	}
 	
 	private static void Log(String string) {
-		System.out.println("\n"+string);
+		System.out.println(string);
 	}
 	
 }

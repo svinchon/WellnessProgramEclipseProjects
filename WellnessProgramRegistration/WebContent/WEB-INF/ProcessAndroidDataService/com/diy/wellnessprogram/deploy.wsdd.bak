@@ -1,0 +1,29 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ProcessAndroidDataService WSDL service -->
+
+  <service name="ProcessAndroidData" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://wellnessprogram.diy.com"/>
+      <parameter name="wsdlServiceElement" value="ProcessAndroidDataService"/>
+      <parameter name="schemaQualified" value="http://wellnessprogram.diy.com"/>
+      <parameter name="wsdlServicePort" value="ProcessAndroidData"/>
+      <parameter name="className" value="com.diy.wellnessprogram.ProcessAndroidDataSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="ProcessAndroidData"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getResult" qname="operNS:getResult" xmlns:operNS="http://wellnessprogram.diy.com" returnQName="retNS:getResultReturn" xmlns:retNS="http://wellnessprogram.diy.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:str" xmlns:pns="http://wellnessprogram.diy.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="getResult"/>
+
+  </service>
+</deployment>

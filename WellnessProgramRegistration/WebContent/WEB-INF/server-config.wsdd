@@ -3,7 +3,7 @@
   <ns1:parameter name="sendMultiRefs" value="true"/>
   <ns1:parameter name="disablePrettyXML" value="true"/>
   <ns1:parameter name="adminPassword" value="admin"/>
-  <ns1:parameter name="attachments.Directory" value="C:\CustomDevs\eclipse\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\WellnessProgramRegistration\WEB-INF\attachments"/>
+  <ns1:parameter name="attachments.Directory" value="C:\CustomDevs\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\WellnessProgramRegistration\WEB-INF\attachments"/>
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
@@ -23,16 +23,16 @@
  <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
  <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
  <ns1:service name="ProcessAndroidData" provider="java:RPC" style="wrapped" use="literal">
-  <ns2:operation name="getResult" qname="ns1:getResult" returnQName="ns1:getResultReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://healthprogram.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+  <ns2:operation name="uploadNewData" qname="ns1:uploadNewData" returnQName="ns1:uploadNewDataReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://wellnessprogram.diy.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
    <ns2:parameter qname="ns1:str" type="xsd:string"/>
   </ns2:operation>
-  <ns1:parameter name="allowedMethods" value="getResult"/>
+  <ns1:parameter name="allowedMethods" value="uploadNewData"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="ProcessAndroidData"/>
-  <ns1:parameter name="className" value="com.diy.healthprogram.ProcessAndroidData"/>
+  <ns1:parameter name="className" value="com.diy.wellnessprogram.ProcessAndroidData"/>
   <ns1:parameter name="wsdlServicePort" value="ProcessAndroidData"/>
-  <ns1:parameter name="schemaQualified" value="http://healthprogram.diy.com"/>
-  <ns1:parameter name="wsdlTargetNamespace" value="http://healthprogram.diy.com"/>
+  <ns1:parameter name="schemaQualified" value="http://wellnessprogram.diy.com"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://wellnessprogram.diy.com"/>
   <ns1:parameter name="wsdlServiceElement" value="ProcessAndroidDataService"/>
  </ns1:service>
  <ns1:service name="AdminService" provider="java:MSG">

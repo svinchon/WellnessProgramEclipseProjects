@@ -1,6 +1,7 @@
 let $input_date := xs:date(substring(xs:string(current-date()),1,10))
 let $start_date := $input_date - xs:dayTimeDuration("P28D")
-let $members := doc('/Members.xml')/members/member
+(:let $members := doc('/Members.xml')/members/member:)
+let $members := /members/member
 let $daily_member_data := doc('/xPressionHelper/FromDailyUpdates')/daily_data/daily_member_data
 let $audit_trail := doc('/AuditTrail.xml')/audit_trail
 let $program_config := doc('ProgramConfiguration.xml')/program_configuration
@@ -45,4 +46,23 @@ return
 }
 </items>
 </last_four_weeks_history>
-</stats>
+</stats>(: Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
+
+<metaInformation>
+	<scenarios>
+		<scenario default="yes" name="Scenario1" userelativepaths="yes" externalpreview="no" useresolver="yes" url="" outputurl="" processortype="datadirect" tcpport="0" profilemode="0" profiledepth="" profilelength="" urlprofilexml="" commandline=""
+		          additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" host="" port="0" user="" password="" validateoutput="no" validator="internal"
+		          customvalidator="">
+			<advancedProperties name="DocumentURIResolver" value=""/>
+			<advancedProperties name="CollectionURIResolver" value=""/>
+			<advancedProperties name="ModuleURIResolver" value=""/>
+		</scenario>
+	</scenarios>
+	<MapperMetaTag>
+		<MapperInfo srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
+		<MapperBlockPosition></MapperBlockPosition>
+		<TemplateContext></TemplateContext>
+		<MapperFilter side="source"></MapperFilter>
+	</MapperMetaTag>
+</metaInformation>
+:)

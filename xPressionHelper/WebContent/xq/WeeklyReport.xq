@@ -4,8 +4,8 @@ let $award_threshold := doc('/ProgramConfiguration.xml')/program_configuration/a
 return
 <documents>
 {
-for $m in doc('/Members.xml')/members/member
-for $r in $source1/weekly_data/weekly_member_data[./member_id = $m/badge_number]
+for $m in /members/member
+for $r in $source1/weekly_data/weekly_member_data[./member_id = $m/badge_number][last()]
 return
 	<document>
 		<document_type>Weekly</document_type>
@@ -15,7 +15,7 @@ return
 		<last_name>{$m/last_name/text()}</last_name>
 		<gender>{$m/gender/text()}</gender>
 	{$r/week_start_date}
-	{$r/recomendations}
+	{$r/recommendations}
 		<index_history_nvp>
 	{
 	fn:string-join(

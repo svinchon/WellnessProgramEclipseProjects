@@ -30,8 +30,8 @@ return
 <avg>{if ($c0>0) then $a0 else 0}</avg>
 <teams>
 {
-for $team in distinct-values($members/team)
-let $team_daily_index_values := for $m in $members where $m/team = $team return $daily_member_data/daily_index_value[xs:date(../date_stamp) = $current_date and ../member_id = $m/badge_number]
+for $team in distinct-values($members/gender)
+let $team_daily_index_values := for $m in $members where $m/gender = $team return $daily_member_data/daily_index_value[xs:date(../date_stamp) = $current_date and ../member_id = $m/badge_number]
 let $c1 := count($team_daily_index_values)
 let $a1 := avg($team_daily_index_values)
 return

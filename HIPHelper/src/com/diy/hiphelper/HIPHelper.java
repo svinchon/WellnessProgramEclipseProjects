@@ -47,7 +47,7 @@ public class HIPHelper {
 			DateTimeFormatter format = DateTimeFormat.forPattern("yyyy-MM-dd 00:00:00.000000000");
 			DateTimeFormatter format2 = DateTimeFormat.forPattern("yyyyMMdd");
 			DateTime now = new DateTime();
-			now = new DateTime("2015-03-27");
+			now = new DateTime("2015-04-01");
 			System.out.println("Previous :" + format.print(now));
 			DateTime oneDayAgo = now.minusDays(1);
 			System.out.println("Updated :" + format.print(oneDayAgo));
@@ -79,9 +79,15 @@ public class HIPHelper {
 						Log("<OUTPUT>");
 						Log(new String(bDoc));
 						Log("</OUTPUT>");
+						String folder = "C:/GIT/WellnessProgramXDB/";
+						if (docName.indexOf("daily")>=0) {
+							folder += "FromDailyUpdates/";
+						} else {
+							folder += "FromWeeklyUpdates/";
+						}
 						FileOutputStream fos = new FileOutputStream(
 								//"C:/Users/dmadmin/Desktop/VitexData/"
-								"T:/Exchange/VitexData/"
+								folder
 								+ docName
 								);
 						fos.write(bDoc);

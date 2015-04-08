@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.xml.soap.AttachmentPart;
@@ -38,47 +35,52 @@ public class HIPHelper {
 	public static void main(String[] args) {
 		try {
 			Log("<LOG>");
-			HIPHelper hiphop = new HIPHelper();
-//			Log("<CALL>");
-//			hiphop.storeDoc("WP_BATCH_RUN", "SEB_DOC_08", "<root>hello world</root>".getBytes());
-//			Log("</CALL>");
-			//String[] strDocNames = hiphop.getPatientDocNamesList("WP_BATCH_RUN");
+			HIPHelper h = new HIPHelper();
+			//Log("<CALL>");
+			//h.storeDoc("WP_BATCH_RUN", "SEB_DOC_08", "<root>hello world</root>".getBytes());
+			//Log("</CALL>");
+			//String[] strDocNames = h.getPatientDocNamesList("WP_BATCH_RUN");
 			//String patientId="111111";
-			DateTimeFormatter format = DateTimeFormat.forPattern("yyyy-MM-dd 00:00:00.000000000");
+			DateTimeFormatter format1 = DateTimeFormat.forPattern("yyyy-MM-dd 00:00:00.000000000");
 			DateTimeFormatter format2 = DateTimeFormat.forPattern("yyyyMMdd");
-			DateTime now = new DateTime();
-			now = new DateTime("2015-04-01");
-			System.out.println("Previous :" + format.print(now));
+			DateTime now;
+			//now = new DateTime();
+			now = new DateTime("2015-03-31");
 			DateTime oneDayAgo = now.minusDays(1);
-			System.out.println("Updated :" + format.print(oneDayAgo));
-			//String today = new SimpleDateFormat(
-			//		"yyyyMMdd",
-			//		Locale.US
-			//		).format(new Date());
+			System.out.println("Previous :" + format1.print(now));
+			System.out.println("Updated :" + format1.print(oneDayAgo));
+			//String today = new SimpleDateFormat("yyyyMMdd", Locale.US).format(new Date());
+			/**/
 			int iPatientId=111111;
 			for (int p = iPatientId;p<iPatientId+20;p++) {
-				Log("<CALL>");
-				String[] strDocNames = hiphop.getPatientDocNamesList(""+p);
-				Log("</CALL>");
-				Log("<OUTPUT>");
-				//Log("nDocuments:");
+				//Log("<CALL>");
+				String[] strDocNames = h.getPatientDocNamesList(""+p);
+				//Log("</CALL>");
+				//Log("<OUTPUT>");
+				//Log("Documents:");
+				/*
 				Log("Documents found for patient id "+p);
 				for (int i=0;i<strDocNames.length;i++) {
 					Log(strDocNames[i]);
 				}
-				Log("</OUTPUT>");
-				//byte[] bDoc = hiphop.getDocContentByDocId("BATCH_1421915624");
+				*/
+				//Log("</OUTPUT>");
+				//byte[] bDoc = h.getDocContentByDocId("BATCH_1421915624");
 				for (int i=0;i<strDocNames.length;i++) {
-					Log(format2.print(oneDayAgo));
+					//Log(format2.print(oneDayAgo));
 					if (strDocNames[i].indexOf(format2.print(oneDayAgo)) >=0) {
 						String docName = strDocNames[i];
 						Log("<CALL>");
-						byte[] bDoc = hiphop.getDocContentByDocId(docName);
-						Log("Found and retrived "+docName+" that is dated from today for patient id "+p);
+						byte[] bDoc = h.getDocContentByDocId(docName);
+						Log("Found and retrived "+docName+" for patient id "+p);
 						Log("</CALL>");
+						/*
+						 */
+						/*
 						Log("<OUTPUT>");
 						Log(new String(bDoc));
 						Log("</OUTPUT>");
+						*/
 						String folder = "C:/GIT/WellnessProgramXDB/";
 						if (docName.indexOf("daily")>=0) {
 							folder += "FromDailyUpdates/";
@@ -91,7 +93,8 @@ public class HIPHelper {
 								+ docName
 								);
 						fos.write(bDoc);
-						fos.close();					
+						fos.close();
+						/**/					
 					}
 				}
 			}

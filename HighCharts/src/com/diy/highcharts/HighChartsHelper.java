@@ -23,7 +23,15 @@ public class HighChartsHelper extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String visu_xq = ""+request.getParameter("xq");
 		String data_xq = ""+request.getParameter("data_xq");
-		String params = "?xq="+visu_xq+"&data_xq="+data_xq;
+		String index_threshold = ""+request.getParameter("index_threshold");
+		String days_above_required = ""+request.getParameter("days_above_required");
+		//Enum e = request.getParameterNames()
+		String params = ""
+				+"?xq="+visu_xq
+				+"&data_xq="+data_xq
+				+"&data_xq="+data_xq
+				+"&index_threshold="+index_threshold
+				+"&days_above_required="+days_above_required;
 		response.setContentType("text/html");
 		response.getWriter().write(""
 				+ "<html>"

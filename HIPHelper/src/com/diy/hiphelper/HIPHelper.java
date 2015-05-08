@@ -45,7 +45,7 @@ public class HIPHelper {
 			DateTimeFormatter format2 = DateTimeFormat.forPattern("yyyyMMdd");
 			DateTime now;
 			//now = new DateTime();
-			now = new DateTime("2015-03-31");
+			now = new DateTime("2015-04-16");
 			DateTime oneDayAgo = now.minusDays(1);
 			System.out.println("Previous :" + format1.print(now));
 			System.out.println("Updated :" + format1.print(oneDayAgo));

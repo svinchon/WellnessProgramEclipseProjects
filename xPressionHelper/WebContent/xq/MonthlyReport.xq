@@ -8,7 +8,7 @@ return
 <documents>
 {
 (:for $m in doc('/Members.xml')/members/member:)
-for $m in /members/member
+for $m in /members/member[./status = 'active']
 let $days_above_threshold := count(distinct-values($source/daily_data/daily_member_data[./member_id = $m/badge_number and xs:date(./date_stamp) > $first_day and xs:date(./date_stamp) < $current_day and ./daily_index_value > $award_threshold]/date_stamp))
 let $active_days := count(distinct-values($source/daily_data/daily_member_data[./member_id = $m/badge_number and xs:date(./date_stamp) > $first_day and xs:date(./date_stamp) < $current_day and ./daily_index_value > 0]/date_stamp))
 return

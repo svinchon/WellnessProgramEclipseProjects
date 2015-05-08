@@ -32,71 +32,79 @@ import com.diy.xmlhelper.XMLHelper;
 
 public class HIPHelper {
 
+	//Log("<CALL>");
+	//h.storeDoc("WP_BATCH_RUN", "SEB_DOC_08", "<root>hello world</root>".getBytes());
+	//Log("</CALL>");
+	//String[] strDocNames = h.getPatientDocNamesList("WP_BATCH_RUN");
+	//String patientId="111111";
+	//DateTimeFormatter format1 = DateTimeFormat.forPattern("yyyy-MM-dd 00:00:00.000000000");
+	//now = new DateTime();
+	//System.out.println("Previous :" + format1.print(now));
+	//System.out.println("Updated :" + format1.print(oneDayAgo));
+	//String today = new SimpleDateFormat("yyyyMMdd", Locale.US).format(new Date());
+	/**/
+	//Log("<CALL>");
+	//Log("</CALL>");
+	//Log("<OUTPUT>");
+	//Log("Documents:");
+	/*
+	Log("Documents found for patient id "+p);
+	for (int i=0;i<strDocNames.length;i++) {
+		Log(strDocNames[i]);
+	}
+	*/
+	//Log("</OUTPUT>");
+	//byte[] bDoc = h.getDocContentByDocId("BATCH_1421915624");
+	/*
+	 */
+	/*
+	Log("<OUTPUT>");
+	Log(new String(bDoc));
+	Log("</OUTPUT>");
+	*/
+	//"C:/Users/dmadmin/Desktop/VitexData/"
+	/**/					
+	//DateTime oneDayAgo = now.minusDays(1);
+	
 	public static void main(String[] args) {
 		try {
+			ResourceBundle rb = ResourceBundle.getBundle("HIPHelper");
+			String sStartDate = rb.getString("StartDate");
+			String sEndDate = rb.getString("EndDate");
 			Log("<LOG>");
 			HIPHelper h = new HIPHelper();
-			//Log("<CALL>");
-			//h.storeDoc("WP_BATCH_RUN", "SEB_DOC_08", "<root>hello world</root>".getBytes());
-			//Log("</CALL>");
-			//String[] strDocNames = h.getPatientDocNamesList("WP_BATCH_RUN");
-			//String patientId="111111";
-			DateTimeFormatter format1 = DateTimeFormat.forPattern("yyyy-MM-dd 00:00:00.000000000");
-			DateTimeFormatter format2 = DateTimeFormat.forPattern("yyyyMMdd");
-			DateTime now;
-			//now = new DateTime();
-			now = new DateTime("2015-04-16");
-			DateTime oneDayAgo = now.minusDays(1);
-			System.out.println("Previous :" + format1.print(now));
-			System.out.println("Updated :" + format1.print(oneDayAgo));
-			//String today = new SimpleDateFormat("yyyyMMdd", Locale.US).format(new Date());
-			/**/
-			int iPatientId=111111;
-			for (int p = iPatientId;p<iPatientId+20;p++) {
-				//Log("<CALL>");
-				String[] strDocNames = h.getPatientDocNamesList(""+p);
-				//Log("</CALL>");
-				//Log("<OUTPUT>");
-				//Log("Documents:");
-				/*
-				Log("Documents found for patient id "+p);
-				for (int i=0;i<strDocNames.length;i++) {
-					Log(strDocNames[i]);
-				}
-				*/
-				//Log("</OUTPUT>");
-				//byte[] bDoc = h.getDocContentByDocId("BATCH_1421915624");
-				for (int i=0;i<strDocNames.length;i++) {
-					//Log(format2.print(oneDayAgo));
-					if (strDocNames[i].indexOf(format2.print(oneDayAgo)) >=0) {
-						String docName = strDocNames[i];
-						Log("<CALL>");
-						byte[] bDoc = h.getDocContentByDocId(docName);
-						Log("Found and retrived "+docName+" for patient id "+p);
-						Log("</CALL>");
-						/*
-						 */
-						/*
-						Log("<OUTPUT>");
-						Log(new String(bDoc));
-						Log("</OUTPUT>");
-						*/
-						String folder = "C:/GIT/WellnessProgramXDB/";
-						if (docName.indexOf("daily")>=0) {
-							folder += "FromDailyUpdates/";
-						} else {
-							folder += "FromWeeklyUpdates/";
+			DateTimeFormatter format = DateTimeFormat.forPattern("yyyyMMdd");
+			DateTime dStartDate = new DateTime(sStartDate);
+			DateTime dEndDate = new DateTime(sEndDate);
+			DateTime dCurrentDate = dStartDate;
+			while (dCurrentDate.isBefore(dEndDate)) {
+				Log("<DAY>");
+				Log("<DATE>"+format.print(dCurrentDate)+"<DATE>");
+				int iPatientId=111111;
+				for (int p = iPatientId;p<iPatientId+20;p++) {
+					String[] strDocNames = h.getPatientDocNamesList(""+p);
+					for (int i=0;i<strDocNames.length;i++) {
+						//Log(format2.print(oneDayAgo));
+						if (strDocNames[i].indexOf(format.print(dCurrentDate)) >=0) {
+							String docName = strDocNames[i];
+							Log("<CALL>");
+							byte[] bDoc = h.getDocContentByDocId(docName);
+							Log("Found and retrived "+docName+" for patient id "+p);
+							Log("</CALL>");
+							String folder = "C:/GIT/WellnessProgramXDB/";
+							if (docName.indexOf("daily")>=0) {
+								folder += "FromDailyUpdates/";
+							} else {
+								folder += "FromWeeklyUpdates/";
+							}
+							FileOutputStream fos = new FileOutputStream(folder+docName);
+							fos.write(bDoc);
+							fos.close();
 						}
-						FileOutputStream fos = new FileOutputStream(
-								//"C:/Users/dmadmin/Desktop/VitexData/"
-								folder
-								+ docName
-								);
-						fos.write(bDoc);
-						fos.close();
-						/**/					
 					}
 				}
+				dCurrentDate = dCurrentDate.plusDays(1);
+				Log("</DAY>");
 			}
 			Log("</LOG>");
 		} catch (Exception e) {

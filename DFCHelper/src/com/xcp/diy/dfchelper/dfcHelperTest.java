@@ -4,6 +4,7 @@ import com.documentum.fc.common.DfException;
 
 public class dfcHelperTest
 {
+	@SuppressWarnings("unused")
 	public static void main(String[] args)
 	{
 		try {
@@ -16,7 +17,8 @@ public class dfcHelperTest
 			String strAdminUserName = "dmadmin";
 			String strGroup = "wp02_member";
 			String strUser = "svinchon";
-			dfch.AddUserToGroup(strRep, strAdminUserName, strAdminPassword, strUser, strGroup);
+			//dfch.AddUserToGroup(strRep, strAdminUserName, strAdminPassword, strUser, strGroup);
+			System.out.println("Path of of object 090d8b668000cdcf is: \""+dfch.GetFullPathFromId("090d8b668000cdcf")+"\"");
 		} catch (DfException e) {
 			e.printStackTrace();
 		}

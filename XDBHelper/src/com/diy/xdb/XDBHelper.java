@@ -309,6 +309,30 @@ public class XDBHelper {
 		return strReturn;
 	}
 	
+	//Log("lastXQuery: "+lastXQuery.substring(0, 5));
+	//Log("strQuery: "+strQuery.substring(0, 5));
+	//if (lastXQuery.equals(strQuery)) {
+	//XhiveDriverIf driver;
+	//XhiveSessionIf session;
+	//driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
+	//session.join(); // the session joins the current thread
+	//session.setReadOnlyMode(true);
+	//session.setWaitOption(XhiveSessionIf.NO_WAIT);
+	//session.leave(); //the session leaves the current thread
+	//after error
+	//session.leave();
+	//driver.close();
+	//getServletContext().setAttribute("lastXQuery",strQuery);
+	//Log("lastXQuery stored");
+	//getServletContext().setAttribute("lastXQueryResult",strReturn);
+	//Log("lastXQueryResult stored");
+	/*if (false) {
+		strReturn = ""+(String)(getServletContext().getAttribute("lastXQueryResult"));
+		Log("lastXQueryResult reused");
+	} else {
+	}*/
+	//String lastXQuery = ""+(String)(getServletContext().getAttribute("lastXQuery"));
+	
 	public synchronized String runXQueryReadOnly(String strQuery) {
 		String strReturn = "";
 		ResourceBundle rb = ResourceBundle.getBundle("XDBHelper");
@@ -316,17 +340,11 @@ public class XDBHelper {
 		String databaseName = rb.getString("DatabaseName");//"xData";
 		String administratorName = rb.getString("AdministratorName");//"Administrator";
 		String administratorPassword = rb.getString("AdministratorPassword");//"demo.demo";
-		//XhiveDriverIf driver;
-		//XhiveSessionIf session;
-		//driver = XhiveDriverFactory.getDriver("xhive://"+ rb.getString("XDBHost")+":"+ rb.getString("XDBPort"));//localhost:1235");
 		if (!driver.isInitialized()) driver.init();
 		session = driver.createSession();
 		try {
-			//session.join(); // the session joins the current thread
 			session.connect(administratorName, administratorPassword, databaseName);
-			//session.setReadOnlyMode(true);
 			session.begin();
-			//session.setWaitOption(XhiveSessionIf.NO_WAIT);
 			XhiveDatabaseIf xData = session.getDatabase();
 			XhiveLibraryIf rootLibrary = xData.getRoot();
 			XhiveXQueryResultIf result = rootLibrary.executeXQuery(strQuery);
@@ -344,19 +362,15 @@ public class XDBHelper {
 			xData = null;
 			session.commit();
 			session.disconnect();
-			//session.leave(); //the session leaves the current thread
 		} catch (Exception e) {
 			Log("XQuery sample failed: ");
 			Log("ERROR: " + e.getMessage());
 			strReturn = "ERROR: " + e.getMessage();
 			e.printStackTrace();
 		} finally {
-			//after error
 			if (session.isOpen()) { session.rollback(); }
 			if (session.isConnected()) { session.disconnect(); }
-			//session.leave();
 			session.terminate();
-			//driver.close();
 		}
 		return strReturn;
 	}

@@ -1,6 +1,7 @@
 package com.diy.hiphelper;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
@@ -87,19 +88,25 @@ public class HIPHelper {
 						//Log(format2.print(oneDayAgo));
 						if (strDocNames[i].indexOf(format.print(dCurrentDate)) >=0) {
 							String docName = strDocNames[i];
-							Log("<CALL>");
-							byte[] bDoc = h.getDocContentByDocId(docName);
-							Log("Found and retrived "+docName+" for patient id "+p);
-							Log("</CALL>");
 							String folder = "C:/GIT/WellnessProgramXDB/";
 							if (docName.indexOf("daily")>=0) {
 								folder += "FromDailyUpdates/";
 							} else {
 								folder += "FromWeeklyUpdates/";
 							}
-							FileOutputStream fos = new FileOutputStream(folder+docName);
-							fos.write(bDoc);
-							fos.close();
+							File f = new File(folder+docName);
+							Log("<CALL>");
+							if (f.exists()) {
+								Log(docName+" for patient id "+p+" already exist and not retrieved");								
+							} else {
+								byte[] bDoc = h.getDocContentByDocId(docName);
+								FileOutputStream fos = new FileOutputStream(f);
+								fos.write(bDoc);
+								fos.close();								
+								Log("Found and retrived "+docName+" for patient id "+p);
+							}
+							Log("</CALL>");
+
 						}
 					}
 				}
